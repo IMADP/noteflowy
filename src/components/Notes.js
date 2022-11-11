@@ -1,8 +1,17 @@
+import Note from "./Note";
 
-function Notes() {
+function Notes({ notes, onDelete }) {
   return (
     <main className="content">
-      <article>Notes</article>
+      <article>
+        <ul>
+          {notes.map((note) => (
+            <li key = {note.id}>
+              <Note note={note} onDelete={onDelete} />
+            </li>
+          ))}
+        </ul>
+      </article>
     </main>
   );
 } 
