@@ -1,6 +1,6 @@
 import Note from './Note';
 
-function Sidebar({ notes, onDelete, onAdd }) {
+function Sidebar({ showAdd, notes, onDelete, onAdd }) {
   return (
     <nav className="col-1">
       
@@ -12,7 +12,8 @@ function Sidebar({ notes, onDelete, onAdd }) {
         ))}
       </ul>
 
-      <button onClick={() => onAdd({text: 'new'})}>Add Note</button>
+        {showAdd && <button onClick={() => onAdd({text: 'new'})}>Add Note</button>}
+      
     </nav>
   );
 } 

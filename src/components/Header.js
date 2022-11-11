@@ -1,7 +1,10 @@
 
-function Header() {
-  return (
-    <header>Header</header>
+function Header({onLoad}) {
+return (
+    <header>
+      Header
+      <button onClick={onLoad}>Load File</button>  
+    </header>
   );
 } 
 
