@@ -1,7 +1,7 @@
 
 import './App.css';
-import Sidebar from './components/Sidebar';
-import Header from './components/Header';
+import Sidebar from './components/sidebar/Sidebar';
+import Header from './components/header/Header';
 import Notes from './components/Notes';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -45,9 +45,9 @@ function App() {
 
   return (
     <>
-      <Sidebar showAdd={fileHandle !== null} notes={notes} onDelete={onDelete} onAdd={onAdd} />
+      <Sidebar fileHandle={fileHandle} notes={notes} onAdd={onAdd}  onLoad={onLoad} />
       <div className="col-2">
-        <Header onLoad={onLoad} />
+        <Header />
         <Notes notes={notes} onDelete={onDelete}/>
       </div>
     </>
