@@ -1,18 +1,29 @@
 // https://blog.logrocket.com/building-inline-editable-ui-in-react/
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Component accept text, placeholder values and also pass what type of Input - input, textarea so that we can use it for styling accordingly
 const Editable = ({
-  text,
-  type,
-  placeholder,
-  children,
-  ...props
-}) => {
+    text,
+    type,
+    placeholder,
+    children,
+    childRef,
+    ...props
+  }) => {
   // Manage the state whether to show the label or the input box. By default, label will be shown.
 // Exercise: It can be made dynamic by accepting initial state as props outside the component 
   const [isEditing, setEditing] = useState(false);
 
+  /* 
+    using use effect, when isEditing state is changing, check whether it is set to true, if true, then focus on the reference element
+  */ 
+    useEffect(() => {
+        if (childRef && childRef.current && isEditing === true) {
+          childRef.current.focus();
+        }
+      }, [isEditing, childRef]);
+
+      
 // Event handler while pressing any key while editing
   const handleKeyDown = (event, type) => {
     // Handle when key is pressed
@@ -38,7 +49,7 @@ Note: For simplicity purpose, I removed all the classnames, you can check the re
           onClick={() => setEditing(true)}
         >
           <span>
-            {text || placeholder || "Editable content"}
+            {text || placeholder || "Click to Edit"}
           </span>
         </span>
       )}

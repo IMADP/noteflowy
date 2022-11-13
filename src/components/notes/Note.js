@@ -1,7 +1,10 @@
+import React, { useRef } from "react";
 import NoteMenu from "./NoteMenu";
 import Editable from "../global/Editable";
 
 function Note({ note, onAdd, onUpdate, onDelete }) {
+    const inputRef = useRef();
+
     return (
         <div>
             <span style={{marginRight: '10px'}}>
@@ -10,13 +13,13 @@ function Note({ note, onAdd, onUpdate, onDelete }) {
             <span >
                 <Editable
                     text={note.text}
-                    placeholder="Click to Edit"
+                    childRef={inputRef}
                     type="input"
                     >
                     <input
+                        ref={inputRef}
                         type="text"
                         name="task"
-                        placeholder="Click to Edit"
                         value={note.text}
                         onChange={(e) => onUpdate({...note, text: e.target.value})}
                     />
