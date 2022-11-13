@@ -2,7 +2,7 @@
 import './App.css';
 import Sidebar from './components/sidebar/Sidebar';
 import Header from './components/header/Header';
-import Notes from './components/Notes';
+import Notes from './components/notes/Notes';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
