@@ -1,13 +1,13 @@
 import NoteMenu from "./NoteMenu";
 
-function Note({ note, onDelete }) {
+function Note({ note, onAdd, onDelete }) {
     return (
         <div>
             <span style={{marginRight: '10px'}}>
-                <NoteMenu note={note} onDelete={onDelete} />
+                <NoteMenu note={note} onAdd={onAdd} onDelete={onDelete} />
             </span>
             <span >
-                {note.text} <i> - {note.id}</i>
+                {note.text}
             </span>
         </div>
     );

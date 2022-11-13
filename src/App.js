@@ -22,8 +22,10 @@ function App() {
   };
 
   const onAdd = (note) => {
-    note.id = uuidv4(); 
-    const newNotes = [...notes, note];
+    const id = uuidv4(); 
+    // create a new note because this method is also used to duplicate a note
+    const newNote = {...note, id}
+    const newNotes = [...notes, newNote];
     setNotes(newNotes);
     onWrite(JSON.stringify(newNotes));
   };
@@ -48,7 +50,7 @@ function App() {
       <Sidebar fileHandle={fileHandle} notes={notes} onAdd={onAdd} onLoad={onLoad} />
       <div className="col-2">
         <Header />
-        <Notes notes={notes} onDelete={onDelete}/>
+        <Notes notes={notes} onAdd={onAdd} onDelete={onDelete}/>
       </div>
     </>
   );
