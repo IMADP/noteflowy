@@ -30,6 +30,12 @@ function App() {
     onWrite(JSON.stringify(newNotes));
   };
 
+  const onUpdate = (note) => {
+    const newNotes = notes.map((n) => n.id !== note.id ? n : note );
+    setNotes(newNotes);
+    onWrite(JSON.stringify(newNotes));
+  };
+
   const onDelete = (id) => {
     const newNotes = notes.filter((note) => note.id !== id );
     setNotes(newNotes);
@@ -50,7 +56,7 @@ function App() {
       <Sidebar fileHandle={fileHandle} notes={notes} onAdd={onAdd} onLoad={onLoad} />
       <div className="col-2">
         <Header />
-        <Notes notes={notes} onAdd={onAdd} onDelete={onDelete}/>
+        <Notes notes={notes} onAdd={onAdd} onUpdate={onUpdate} onDelete={onDelete}/>
       </div>
     </>
   );
