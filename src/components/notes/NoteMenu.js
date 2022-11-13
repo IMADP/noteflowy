@@ -1,7 +1,7 @@
 import React from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import {
-  HamburgerMenuIcon
+  DotIcon
 } from '@radix-ui/react-icons';
 import './NoteMenu.css';
 import NoteDeleteDialog from './NoteDeleteDialog';
@@ -14,7 +14,7 @@ const DropdownMenuDemo = ({ note, onDelete }) => {
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <button className="IconButton" aria-label="Customise options">
-            <HamburgerMenuIcon />
+            <DotIcon />
           </button>
         </DropdownMenu.Trigger>
 
