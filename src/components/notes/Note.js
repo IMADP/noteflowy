@@ -7,7 +7,7 @@ function Note({ note, onDelete }) {
                 <NoteMenu note={note} onDelete={onDelete} />
             </span>
             <span >
-                {note.id}
+                {note.text} <i> - {note.id}</i>
             </span>
         </div>
     );

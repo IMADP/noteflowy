@@ -1,4 +1,3 @@
-
 import './App.css';
 import Sidebar from './components/sidebar/Sidebar';
 import Header from './components/header/Header';
@@ -22,6 +21,13 @@ function App() {
     onLoadAsync();
   };
 
+  const onAdd = (note) => {
+    note.id = uuidv4(); 
+    const newNotes = [...notes, note];
+    setNotes(newNotes);
+    onWrite(JSON.stringify(newNotes));
+  };
+
   const onDelete = (id) => {
     const newNotes = notes.filter((note) => note.id !== id );
     setNotes(newNotes);
@@ -37,15 +43,9 @@ function App() {
     await writable.close();
   }
 
-  const onAdd = (note) => {
-    note.id = uuidv4(); 
-    setNotes([...notes, note]);
-    onWrite(JSON.stringify(notes));
-  };
-
   return (
     <>
-      <Sidebar fileHandle={fileHandle} notes={notes} onAdd={onAdd}  onLoad={onLoad} />
+      <Sidebar fileHandle={fileHandle} notes={notes} onAdd={onAdd} onLoad={onLoad} />
       <div className="col-2">
         <Header />
         <Notes notes={notes} onDelete={onDelete}/>
