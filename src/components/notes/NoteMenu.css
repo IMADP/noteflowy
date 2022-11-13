@@ -2,11 +2,6 @@
 @import '@radix-ui/colors/mauve.css';
 @import '@radix-ui/colors/violet.css';
 
-/* reset - need to understand how to make this local not global */
-button {
-  all: unset;
-}
-
 .DropdownMenuContent,
 .DropdownMenuSubContent {
   min-width: 220px;
