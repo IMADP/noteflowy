@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import NoteMenu from "./NoteMenu";
 import Editable from "../global/Editable";
+import Details from "../details/Details";
 import "./Note.css";
 
 function Note({ note, onAdd, onUpdate, onDelete }) {
@@ -22,6 +23,7 @@ function Note({ note, onAdd, onUpdate, onDelete }) {
                     onChange={(e) => onUpdate({...note, text: e.target.value})}
                 />
             </Editable>
+            {note.details !== null && <Details details={note.details} />}
         </div>
     );
 }

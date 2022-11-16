@@ -10,7 +10,7 @@ import NoteDeleteDialog from './NoteDeleteDialog';
 const DropdownMenuDemo = ({ note, onAdd, onDelete }) => {
 
   return (
-    <span className='noteMenu' >
+    <span className='noteMenu'>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <button className="IconButton" aria-label="Customise options">
