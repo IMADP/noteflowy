@@ -28,9 +28,11 @@ const DropdownMenuDemo = ({ note, onAdd, onDelete, handleAddDetails }) => {
                 Delete Note <div className="RightSlot"></div>
               </DropdownMenu.Item>
             </NoteDeleteDialog>
-            <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => handleAddDetails()}>
-              Add Details
-            </DropdownMenu.Item>
+            {!note.details &&
+              <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => handleAddDetails()}>
+                Add Details
+              </DropdownMenu.Item>
+            }
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu.Root>

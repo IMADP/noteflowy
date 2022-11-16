@@ -8,11 +8,12 @@ const Editable = ({
     placeholder,
     children,
     childRef,
+    initialEditing = false,
     ...props
   }) => {
   // Manage the state whether to show the label or the input box. By default, label will be shown.
 // Exercise: It can be made dynamic by accepting initial state as props outside the component 
-  const [isEditing, setEditing] = useState(false);
+  const [isEditing, setEditing] = useState(initialEditing);
 
   /* 
     using use effect, when isEditing state is changing, check whether it is set to true, if true, then focus on the reference element
@@ -49,7 +50,7 @@ Note: For simplicity purpose, I removed all the classnames, you can check the re
           onClick={() => setEditing(true)}
         >
           <span>
-            {text || placeholder || "Click to Edit"}
+            {text || placeholder}
           </span>
         </span>
       )}

@@ -8,7 +8,18 @@ function Note({ note, onAdd, onUpdate, onDelete }) {
     const inputRef = useRef();
     const [showDetailEdit, setShowDetailEdit] = useState(false);
 
+    /**
+     * Clicking the Add Details option in the NoteMenu will
+     * open an editable Details component.
+     */
     const handleAddDetails = () => setShowDetailEdit(true);
+
+    const handleDetailUpdate = (e) => {
+        onUpdate({ ...note, details: e.target.value })
+        setShowDetailEdit(false);
+    }
+
+    console.log('show:', showDetailEdit);
 
     return (
         <div className="Note">
@@ -32,7 +43,13 @@ function Note({ note, onAdd, onUpdate, onDelete }) {
                     onChange={(e) => onUpdate({...note, text: e.target.value})}
                 />
             </Editable>
-            {(showDetailEdit || note.details !== null) && <Details details={note.details} inEditMode={showDetailEdit} />}
+            {(showDetailEdit || note.details) &&
+                <Details
+                    details={note.details}
+                    initialEditing={showDetailEdit}
+                    onChange={handleDetailUpdate}
+                />
+            }
         </div>
     );
 }

@@ -1,9 +1,4 @@
 .Details {
   color: #666;
-}
-
-.Details > p {
-  margin: 0;
-  padding: 0;
   font-size: 0.75rem;
 }
