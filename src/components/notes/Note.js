@@ -15,6 +15,7 @@ function Note({ note, onAdd, onUpdate, onDelete }) {
     const handleAddDetails = () => setShowDetailEdit(true);
 
     const handleDetailUpdate = (e) => {
+        console.log('in detail update');
         onUpdate({ ...note, details: e.target.value })
         setShowDetailEdit(false);
     }
