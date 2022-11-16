@@ -19,8 +19,6 @@ function Note({ note, onAdd, onUpdate, onDelete }) {
         setShowDetailEdit(false);
     }
 
-    console.log('show:', showDetailEdit);
-
     return (
         <div className="Note">
             <NoteMenu
