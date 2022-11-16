@@ -6,9 +6,9 @@ function Notes({ notes, onAdd, onUpdate, onDelete }) {
     <main className="Notes content">
       <article>
           {notes.map((note) => (
-            <div key = {note.id}>
+            <section key={note.id}>
               <Note note={note} onAdd={onAdd} onUpdate={onUpdate} onDelete={onDelete} />
-            </div>
+            </section>
           ))}
       </article>
     </main>
