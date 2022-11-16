@@ -7,7 +7,7 @@ import './NoteMenu.css';
 import NoteDeleteDialog from './NoteDeleteDialog';
 
 
-const DropdownMenuDemo = ({ note, onAdd, onDelete }) => {
+const DropdownMenuDemo = ({ note, onAdd, onDelete, handleAddDetails }) => {
 
   return (
     <span className="NoteMenu">
@@ -20,7 +20,7 @@ const DropdownMenuDemo = ({ note, onAdd, onDelete }) => {
 
         <DropdownMenu.Portal>
           <DropdownMenu.Content className="DropdownMenuContent" sideOffset={5}>
-          <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => onAdd(note)}>
+            <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => onAdd(note)}>
               Duplicate Note <div className="RightSlot"></div>
             </DropdownMenu.Item>
             <NoteDeleteDialog note={note} onDelete={onDelete}>
@@ -28,6 +28,9 @@ const DropdownMenuDemo = ({ note, onAdd, onDelete }) => {
                 Delete Note <div className="RightSlot"></div>
               </DropdownMenu.Item>
             </NoteDeleteDialog>
+            <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => handleAddDetails()}>
+              Add Details
+            </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
