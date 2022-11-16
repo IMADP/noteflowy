@@ -55,7 +55,7 @@ function App() {
     <>
       <Sidebar fileHandle={fileHandle} notes={notes} onAdd={onAdd} onLoad={onLoad} />
       <div className="col-2">
-        <Header />
+        <Header fileHandle={fileHandle} />
         <Notes notes={notes} onAdd={onAdd} onUpdate={onUpdate} onDelete={onDelete}/>
       </div>
     </>

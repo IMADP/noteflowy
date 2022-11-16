@@ -1,8 +1,10 @@
 
-function Header({onLoad}) {
-return (
+function Header({ fileHandle, onLoad }) {
+  const headerText = fileHandle !== null ? fileHandle.name : 'No file loaded';
+
+  return (
     <header>
-      Header
+      {headerText}
     </header>
   );
 } 

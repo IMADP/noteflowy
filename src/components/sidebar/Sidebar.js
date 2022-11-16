@@ -4,7 +4,7 @@ function Sidebar({ fileHandle, notes, onAdd, onLoad }) {
   return (
     <nav className="col-1">
       <button className='Button' onClick={onLoad}>
-        {fileHandle !== null ? fileHandle.name : 'Load File'}
+        {fileHandle !== null ? 'Switch File' : 'Load File'}
       </button>  
    
       <ul>
