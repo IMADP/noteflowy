@@ -42,7 +42,7 @@
   line-height: 1.5;
 }
 
-.Button {
+.NoteDeleteDialog .Button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -53,35 +53,35 @@
   font-weight: 500;
   height: 35px;
 }
-.Button.violet {
+.NoteDeleteDialog .Button.violet {
   background-color: white;
   color: var(--violet11);
   box-shadow: 0 2px 10px var(--blackA7);
 }
-.Button.violet:hover {
+.NoteDeleteDialog .Button.violet:hover {
   background-color: var(--mauve3);
 }
-.Button.violet:focus {
+.NoteDeleteDialog .Button.violet:focus {
   box-shadow: 0 0 0 2px black;
 }
-.Button.red {
+.NoteDeleteDialog .Button.red {
   background-color: var(--red4);
   color: var(--red11);
 }
-.Button.red:hover {
+.NoteDeleteDialog .Button.red:hover {
   background-color: var(--red5);
 }
-.Button.red:focus {
+.NoteDeleteDialog .Button.red:focus {
   box-shadow: 0 0 0 2px var(--red7);
 }
-.Button.mauve {
+.NoteDeleteDialog .Button.mauve {
   background-color: var(--mauve4);
   color: var(--mauve11);
 }
-.Button.mauve:hover {
+.NoteDeleteDialog .Button.mauve:hover {
   background-color: var(--mauve5);
 }
-.Button.mauve:focus {
+.NoteDeleteDialog .Button.mauve:focus {
   box-shadow: 0 0 0 2px var(--mauve7);
 }
 

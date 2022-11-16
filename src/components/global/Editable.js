@@ -20,7 +20,7 @@ const Editable = ({
 
   // Focus on reference element (input, textarea, etc.) if isEditing is true.
   useEffect(() => {
-    if (childRef && childRef.current && isEditing === true) {
+    if (childRef && childRef.current && isEditing) {
       childRef.current.focus();
     }
   }, [isEditing, childRef]);
@@ -49,7 +49,7 @@ const Editable = ({
   // Check if user clicked outside the input or textarea.
   const handleClickOutside = (e) => {
     if (childRef && childRef.current && !childRef.current.contains(e.target)) {
-      // Call optional function from props.
+      // Call optional function from props that parents might need.
       if (typeof onClickOutside === 'function') {
         onClickOutside();
       }

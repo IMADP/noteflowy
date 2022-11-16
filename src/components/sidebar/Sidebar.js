@@ -3,8 +3,8 @@ import SidebarNote from './SidebarNote';
 function Sidebar({ fileHandle, notes, onAdd, onLoad }) {
   return (
     <nav className="col-1">
-      <button className='block' onClick={onLoad}>
-        { fileHandle !== null ? fileHandle.name : 'Load File'}
+      <button className='Button' onClick={onLoad}>
+        {fileHandle !== null ? fileHandle.name : 'Load File'}
       </button>  
    
       <ul>
@@ -15,10 +15,9 @@ function Sidebar({ fileHandle, notes, onAdd, onLoad }) {
         ))}
       </ul>
 
-        {fileHandle !== null  && <button className='block' onClick={() => onAdd({text: 'New Note'})}>Add Note</button>}
-      
+      {fileHandle !== null && <button className='Button' onClick={() => onAdd({ text: 'New Note' })}>Add Note</button>}
     </nav>
   );
-} 
+}
 
 export default Sidebar;
