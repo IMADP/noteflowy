@@ -1,3 +1,5 @@
+import "./Details.css";
+
 function Details({ details }) {
   return (
     <div className="Details">

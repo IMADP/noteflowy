@@ -1,8 +1,9 @@
-import Note from "./Note";
+import Note from './Note';
+import './Notes.css';
 
 function Notes({ notes, onAdd, onUpdate, onDelete }) {
   return (
-    <main className="content">
+    <main className="Notes content">
       <article>
           {notes.map((note) => (
             <div key = {note.id}>
