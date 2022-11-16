@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import Editable from '../global/Editable';
 import "./Details.css";
 
-function Details({ details, initialEditing = false, onChange }) {
+function Details({ details, initialEditing = false, onChange, onClickOutside }) {
   const textareaRef = useRef(null);
 
   return (
@@ -11,6 +11,7 @@ function Details({ details, initialEditing = false, onChange }) {
         text={details}
         childRef={textareaRef}
         initialEditing={initialEditing}
+        onClickOutside={onClickOutside}
         type="textarea"
       >
         <textarea

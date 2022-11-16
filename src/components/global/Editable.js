@@ -12,6 +12,7 @@ const Editable = ({
     children,
     childRef,
     initialEditing = false,
+    onClickOutside = undefined,
     ...props
   }) => {
   // State to either show the plain value, or the editable element like input, textarea, etc.
@@ -48,6 +49,10 @@ const Editable = ({
   // Check if user clicked outside the input or textarea.
   const handleClickOutside = (e) => {
     if (childRef && childRef.current && !childRef.current.contains(e.target)) {
+      // Call optional function from props.
+      if (typeof onClickOutside === 'function') {
+        onClickOutside();
+      }
       setEditing(false);
     }
   }
