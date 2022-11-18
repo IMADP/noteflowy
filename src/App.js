@@ -14,7 +14,7 @@ function App() {
       let [fileHandle] = await window.showOpenFilePicker();
       const file = await fileHandle.getFile();
       const contents = await file.text();
-      var data = JSON.parse(contents);
+      var data = Object.keys(contents).length > 0 ? JSON.parse(contents) : [];
       setFileHandle(fileHandle);
       setNotes(data);
     }
@@ -22,13 +22,34 @@ function App() {
   };
 
   const onAdd = (note) => {
+    note.id = uuidv4();
+    note.level = 1;
+    note.children = [];
+    const newNotes = [...notes, note];
+    setNotes(newNotes);
+    onWrite(JSON.stringify(newNotes));
+  };
+
+  const onAddSubNote = (note) => {
     const id = uuidv4(); 
-    // create a new note because this method is also used to duplicate a note
-    const newNote = {...note, id}
+    const subNote = {id, children: [], level: note.level + 1, text: 'Sub Note', parent: note};
+    note.children.push(subNote);
+    const newNotes = notes.map((n) => n.id !== note.id ? n : note );
+    setNotes(newNotes);
+    onWrite(JSON.stringify(newNotes));
+  };
+
+  // TODO: Duplicate has to also update the parent note and add itself to parent.children
+
+  const onDuplicate = (note) => {
+    const id = uuidv4(); 
+    const newNote = {...note, id};
     const newNotes = [...notes, newNote];
     setNotes(newNotes);
     onWrite(JSON.stringify(newNotes));
   };
+
+  // TODO: These methods don't properly handle sub note searching yet
 
   const onUpdate = (note) => {
     const newNotes = notes.map((n) => n.id !== note.id ? n : note );
@@ -56,7 +77,7 @@ function App() {
       <Sidebar fileHandle={fileHandle} notes={notes} onAdd={onAdd} onLoad={onLoad} />
       <div className="col-2">
         <Header fileHandle={fileHandle} />
-        <Notes notes={notes} onAdd={onAdd} onUpdate={onUpdate} onDelete={onDelete}/>
+        <Notes notes={notes} onAdd={onAdd} onAddSubNote={onAddSubNote} onDuplicate={onDuplicate} onUpdate={onUpdate} onDelete={onDelete}/>
       </div>
     </>
   );

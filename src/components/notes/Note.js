@@ -4,7 +4,7 @@ import Editable from '../global/Editable';
 import Details from '../details/Details';
 import './Note.css';
 
-function Note({ note, onAdd, onUpdate, onDelete }) {
+function Note({ note, onAdd, onAddSubNote, onDuplicate, onUpdate, onDelete }) {
     const inputRef = useRef();
     const [showDetailEdit, setShowDetailEdit] = useState(false);
 
@@ -18,6 +18,8 @@ function Note({ note, onAdd, onUpdate, onDelete }) {
             <NoteMenu
                 note={note}
                 onAdd={onAdd}
+                onAddSubNote={onAddSubNote}
+                onDuplicate={onDuplicate}
                 onUpdate={onUpdate}
                 onDelete={onDelete}
                 handleAddDetails={() => setShowDetailEdit(true)}
@@ -35,6 +37,7 @@ function Note({ note, onAdd, onUpdate, onDelete }) {
                     onChange={(e) => onUpdate({...note, text: e.target.value})}
                 />
             </Editable>
+            
             {(showDetailEdit || note.details) &&
                 <Details
                     details={note.details}
@@ -43,6 +46,15 @@ function Note({ note, onAdd, onUpdate, onDelete }) {
                     onClickOutside={() => setShowDetailEdit(false)}
                 />
             }
+
+            <ul>
+            {note.children.map((n) => (
+                <li key={n.id}>
+                    <Note note={n} onAdd={onAdd} onAddSubNote={onAddSubNote} onDuplicate={onDuplicate} onUpdate={onUpdate} onDelete={onDelete} />
+                </li>
+            ))}
+            </ul>
+
         </div>
     );
 }
