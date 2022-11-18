@@ -32,7 +32,7 @@ function App() {
 
   const onAddSubNote = (note) => {
     const id = uuidv4(); 
-    const subNote = {id, children: [], level: note.level + 1, text: 'Sub Note', parent: note};
+    const subNote = {id, children: [], level: note.level + 1, text: 'Sub Note'};
     note.children.push(subNote);
     const newNotes = notes.map((n) => n.id !== note.id ? n : note );
     setNotes(newNotes);
