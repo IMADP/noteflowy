@@ -44,32 +44,20 @@ function App() {
     visit(note, (child, parent) => {
       child.id = uuidv4();
     })
-    parent.children.push(newNote);
-    const newNotes = notes.map(n => n);
-    setNotes(newNotes);
-    onWrite(JSON.stringify(newNotes));
-  };
-
-  const visit = (note, apply) => {
-    apply(note, null);
-    note.children.forEach(c => apply(c, note));
-    note.children.forEach(c => visit(c, apply));
-  }
-
-  const findNote = (notes, id) => {
-    if (notes) {
-      for (var i = 0; i < notes.length; i++) {
-        if (notes[i].id === id) {
-          return notes[i];
-        }
-        var found = findNote(notes[i].children, id);
-
-        if (found) {
-          return found;
-        }
-      }
+    
+    // need to find a more consistent way to mutate state
+    if(parent !== undefined) {
+      parent.children.push(newNote);
+      const newNotes = notes.map(n => n);
+      setNotes(newNotes);
+      onWrite(JSON.stringify(newNotes));
+    } else {
+      const newNotes = [...notes, newNote]
+      setNotes(newNotes);
+      onWrite(JSON.stringify(newNotes));
     }
-  }
+    
+  };
 
   const onUpdate = (note) => {
     const oldNote = findNote(notes, note.id);
@@ -100,18 +88,47 @@ function App() {
     onWrite(JSON.stringify(newNotes));
   };
 
+  const noteActions = {
+    onAdd,
+    onAddSubNote,
+    onDuplicate,
+    onUpdate,
+    onDelete
+  };
+
   async function onWrite(contents) {
     const writable = await fileHandle.createWritable();
     await writable.write(contents);
     await writable.close();
   }
 
+  function visit(note, apply) {
+    apply(note, null);
+    note.children.forEach(c => apply(c, note));
+    note.children.forEach(c => visit(c, apply));
+  }
+
+  function findNote(notes, id) {
+    if (notes) {
+      for (var i = 0; i < notes.length; i++) {
+        if (notes[i].id === id) {
+          return notes[i];
+        }
+        var found = findNote(notes[i].children, id);
+
+        if (found) {
+          return found;
+        }
+      }
+    }
+  }
+
   return (
     <>
-      <Sidebar fileHandle={fileHandle} notes={notes} onAdd={onAdd} onLoad={onLoad} />
+      <Sidebar fileHandle={fileHandle} notes={notes} onAdd={noteActions.onAdd} onLoad={onLoad} />
       <div className="col-2">
         <Header fileHandle={fileHandle} />
-        <Notes notes={notes} onAdd={onAdd} onAddSubNote={onAddSubNote} onDuplicate={onDuplicate} onUpdate={onUpdate} onDelete={onDelete} />
+        <Notes notes={notes} noteActions={noteActions} />
       </div>
     </>
   );

@@ -4,12 +4,12 @@ import Editable from '../global/Editable';
 import Details from '../details/Details';
 import './Note.css';
 
-function Note({ note, parent, onAdd, onAddSubNote, onDuplicate, onUpdate, onDelete }) {
+function Note({ note, parent, noteActions}) {
     const inputRef = useRef();
     const [showDetailEdit, setShowDetailEdit] = useState(false);
 
     const handleDetailUpdate = (e) => {
-        onUpdate({ ...note, details: e.target.value })
+        noteActions.onUpdate({ ...note, details: e.target.value })
         setShowDetailEdit(false);
     }
 
@@ -18,11 +18,7 @@ function Note({ note, parent, onAdd, onAddSubNote, onDuplicate, onUpdate, onDele
             <NoteMenu
                 note={note}
                 parent={parent}
-                onAdd={onAdd}
-                onAddSubNote={onAddSubNote}
-                onDuplicate={onDuplicate}
-                onUpdate={onUpdate}
-                onDelete={onDelete}
+                noteActions={noteActions}
                 handleAddDetails={() => setShowDetailEdit(true)}
             />
             <Editable
@@ -35,7 +31,7 @@ function Note({ note, parent, onAdd, onAddSubNote, onDuplicate, onUpdate, onDele
                     type="text"
                     name="task"
                     value={note.text}
-                    onChange={(e) => onUpdate({...note, text: e.target.value})}
+                    onChange={(e) => noteActions.onUpdate({...note, text: e.target.value})}
                 />
             </Editable>
             
@@ -51,7 +47,7 @@ function Note({ note, parent, onAdd, onAddSubNote, onDuplicate, onUpdate, onDele
             <ul>
             {note.children.map((n) => (
                 <li key={n.id}>
-                    <Note note={n} parent={note} onAdd={onAdd} onAddSubNote={onAddSubNote} onDuplicate={onDuplicate} onUpdate={onUpdate} onDelete={onDelete} />
+                    <Note note={n} parent={note} noteActions={noteActions} />
                 </li>
             ))}
             </ul>
