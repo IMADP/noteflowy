@@ -38,6 +38,8 @@ function App() {
     onWrite(JSON.stringify(newNotes));
   };
 
+  // TODO need to find a more consistent way to mutate state, duplicate is sharing object refs
+  // TODO: Looks like Immer is the library to use for this, will research
   const onDuplicate = (parent, note) => {
     const id = uuidv4();
     const newNote = { ...note, id };
@@ -45,7 +47,6 @@ function App() {
       child.id = uuidv4();
     })
     
-    // need to find a more consistent way to mutate state
     if(parent !== undefined) {
       parent.children.push(newNote);
       const newNotes = notes.map(n => n);
