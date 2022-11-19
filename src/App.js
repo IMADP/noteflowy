@@ -38,13 +38,14 @@ function App() {
     onWrite(JSON.stringify(newNotes));
   };
 
-  // TODO: Duplicate needs to clone the children and create new ids for them
-
   const onDuplicate = (parent, note) => {
     const id = uuidv4();
     const newNote = { ...note, id };
+    visit(note, (child, parent) => {
+      child.id = uuidv4();
+    })
     parent.children.push(newNote);
-    const newNotes = [...notes, newNote];
+    const newNotes = notes.map(n => n);
     setNotes(newNotes);
     onWrite(JSON.stringify(newNotes));
   };
