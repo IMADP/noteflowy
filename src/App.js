@@ -2,13 +2,18 @@ import './App.css';
 import Sidebar from './components/sidebar/Sidebar';
 import Header from './components/header/Header';
 import Notes from './components/notes/Notes';
-import { useState } from 'react';
+import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
+import _ from "lodash";
 
 function App() {
-  const [fileHandle, setFileHandle] = useState(null);
-  const [notes, setNotes] = useState([]);
+  const [fileHandle, setFileHandle] = useImmer(null);
+  const [notes, setNotes] = useImmer([]);
 
+  /**
+   * Loads a file and parses the notes data.
+   * 
+   */
   const onLoad = () => {
     const onLoadAsync = async () => {
       let [fileHandle] = await window.showOpenFilePicker();
@@ -21,72 +26,123 @@ function App() {
     onLoadAsync();
   };
 
-  const onAdd = (note) => {
-    note.id = uuidv4();
-    note.children = [];
-    const newNotes = [...notes, note];
-    setNotes(newNotes);
-    onWrite(JSON.stringify(newNotes));
+  /**
+   * Adds a new note to the note list.
+   * 
+   * @param {*} note 
+   */
+  const onAdd = () => {
+    setNotes((draftNotes) => {
+      draftNotes.push({
+        id: uuidv4(),
+        children: [],
+        text: 'New Note',
+        details: null
+      });
+    })
+
+    // TODO: This needs to run as a call back of the above somehow (useEffect?)
+    onWrite(JSON.stringify(notes));
   };
 
-  const onAddSubNote = (note) => {
-    const id = uuidv4();
-    const subNote = { id, children: [], text: 'Sub Note' };
-    note.children.push(subNote);
-    const newNotes = notes.map((n) => n.id !== note.id ? n : note);
-    setNotes(newNotes);
-    onWrite(JSON.stringify(newNotes));
+  /**
+   * Adds a sub note to a parent note.
+   * 
+   * @param {*} parent 
+   */
+  const onAddSubNote = (parent) => {
+    setNotes((draftNotes) => {
+      const note = findNote(draftNotes, parent.id);
+
+      note.children.push({
+        id: uuidv4(),
+        children: [],
+        text: 'New Sub Note',
+        details: ''
+      });
+    })
+
+    // TODO: This needs to run as a call back of the above somehow (useEffect?)
+    onWrite(JSON.stringify(notes));
   };
 
-  // TODO need to find a more consistent way to mutate state, duplicate is sharing object refs
-  // TODO: Looks like Immer is the library to use for this, will research
+  /**
+   * Updates the note contents.
+   * 
+   * @param {*} note 
+   */
+  const onUpdate = (note) => {
+    setNotes((draftNotes) => {
+      const draftNote = findNote(draftNotes, note.id);
+      draftNote.text = note.text;
+      draftNote.details = note.details;
+    })
+
+    // TODO: This needs to run as a call back of the above somehow (useEffect?)
+    onWrite(JSON.stringify(notes));
+  };
+
+  /**
+   * Duplicates a note and all sub notes.
+   * 
+   * @param {*} parent 
+   * @param {*} note 
+   */
   const onDuplicate = (parent, note) => {
-    const id = uuidv4();
-    const newNote = { ...note, id };
-    visit(note, (child, parent) => {
+
+    // deep clone the note and all sub notes
+    const duplicateNote = _.cloneDeep(note);
+
+    // update all notes and sub notes with new ids
+    visitNotes(duplicateNote, (child) => {
       child.id = uuidv4();
     })
-    
-    if(parent !== undefined) {
-      parent.children.push(newNote);
-      const newNotes = notes.map(n => n);
-      setNotes(newNotes);
-      onWrite(JSON.stringify(newNotes));
-    } else {
-      const newNotes = [...notes, newNote]
-      setNotes(newNotes);
-      onWrite(JSON.stringify(newNotes));
-    }
-    
+
+    setNotes((draftNotes) => {
+
+      // if the note has no parent, add it to the root notes list
+      if (parent === undefined) {
+        draftNotes.push(duplicateNote);
+        return;
+      }
+
+      // otherwise find the parent and add to the list of children
+      const parentNote = findNote(draftNotes, parent.id);
+      parentNote.children.push(duplicateNote);
+    })
+
+    // TODO: This needs to run as a call back of the above somehow (useEffect?)
+    onWrite(JSON.stringify(notes));
   };
 
-  const onUpdate = (note) => {
-    const oldNote = findNote(notes, note.id);
-    oldNote.text = note.text;
-    oldNote.details = note.details;
-    
-    // is this the right way to do this? clone the list just to update state of an internal note?
-    const newNotes = notes.map(n => n);
-    setNotes(newNotes);
-    onWrite(JSON.stringify(newNotes));
-  };
-
+  /**
+   * Deletes a note by id.
+   * 
+   * @param {*} id 
+   */
   const onDelete = (id) => {
+    setNotes((draftNotes) => {
+      const index = draftNotes.findIndex(note => note.id === id);
 
-    // filter out parent note
-    const newNotes = notes.filter(n => n.id !== id);
+      // if we found a parent note, remove it from the notes list
+      if (index !== -1) {
+        draftNotes.splice(index, 1)
+        return;
+      }
 
-    // filter out child note
-    newNotes.forEach(n => {
-      visit(n, (child, parent) => {
-         if(parent !== null && child.id === id) {
-          parent.children = parent.children.filter(childNote => childNote.id !== id);
-        }
+      // otherwise look for a child note and remove it from its parent
+      draftNotes.forEach(n => {
+        visitNotes(n, (child, parent) => {
+          if (child.id === id) {
+            parent.children = parent.children.filter(childNote => childNote.id !== id);
+          }
+        });
       });
-    });
 
-    setNotes(newNotes);
-    onWrite(JSON.stringify(newNotes));
+    })
+
+    // TODO: This needs to run as a call back of the above somehow (useEffect?)
+    onWrite(JSON.stringify(notes));
   };
 
   const noteActions = {
@@ -97,18 +153,36 @@ function App() {
     onDelete
   };
 
+  /**
+   * Writes the contents to the chosen file.
+   * 
+   * @param {*} contents 
+   */
   async function onWrite(contents) {
     const writable = await fileHandle.createWritable();
     await writable.write(contents);
     await writable.close();
   }
 
-  function visit(note, apply) {
+  /**
+   * Visits all notes and sub notes, applying the given function to them.
+   * 
+   * @param {*} note 
+   * @param {*} apply(note, parent) 
+   */
+  function visitNotes(note, apply) {
     apply(note, null);
     note.children.forEach(c => apply(c, note));
-    note.children.forEach(c => visit(c, apply));
+    note.children.forEach(c => visitNotes(c, apply));
   }
 
+  /**
+   * Finds a note by id, including nested child notes.
+   * 
+   * @param {*} notes 
+   * @param {*} id 
+   * @returns note
+   */
   function findNote(notes, id) {
     if (notes) {
       for (var i = 0; i < notes.length; i++) {

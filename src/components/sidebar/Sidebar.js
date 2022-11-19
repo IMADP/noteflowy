@@ -15,7 +15,7 @@ function Sidebar({ fileHandle, notes, onAdd, onLoad }) {
         ))}
       </ul>
 
-      {fileHandle !== null && <button className='Button' onClick={() => onAdd({ text: 'New Note' })}>Add Note</button>}
+      {fileHandle !== null && <button className='Button' onClick={onAdd}>Add Note</button>}
     </nav>
   );
 }
