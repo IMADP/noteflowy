@@ -74,6 +74,7 @@ function App() {
   const onUpdate = (note) => {
     const oldNote = findNote(notes, note.id);
     oldNote.text = note.text;
+    oldNote.details = note.details;
     
     // is this the right way to do this? clone the list just to update state of an internal note?
     const newNotes = notes.map(n => n);
