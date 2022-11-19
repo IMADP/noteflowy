@@ -5,10 +5,31 @@ import Notes from './components/notes/Notes';
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
 import _ from "lodash";
+import React, { useEffect } from 'react';
 
 function App() {
   const [fileHandle, setFileHandle] = useImmer(null);
   const [notes, setNotes] = useImmer([]);
+
+  /**
+   * This effect will save the notes state to a file on change.
+   * 
+   */
+  useEffect(() => {
+    
+    // create an async function to write to a file
+    const writeData = async () => {
+      const writable = await fileHandle.createWritable();
+      await writable.write(JSON.stringify(notes));
+      await writable.close();
+    }
+
+    // call the function if the file handle was provided
+    if (fileHandle != null) {
+      writeData();
+    }
+
+  }, [fileHandle, notes]);
 
   /**
    * Loads a file and parses the notes data.
@@ -40,9 +61,6 @@ function App() {
         details: null
       });
     })
-
-    // TODO: This needs to run as a call back of the above somehow (useEffect?)
-    onWrite(JSON.stringify(notes));
   };
 
   /**
@@ -61,9 +79,6 @@ function App() {
         details: ''
       });
     })
-
-    // TODO: This needs to run as a call back of the above somehow (useEffect?)
-    onWrite(JSON.stringify(notes));
   };
 
   /**
@@ -77,9 +92,6 @@ function App() {
       draftNote.text = note.text;
       draftNote.details = note.details;
     })
-
-    // TODO: This needs to run as a call back of the above somehow (useEffect?)
-    onWrite(JSON.stringify(notes));
   };
 
   /**
@@ -110,9 +122,6 @@ function App() {
       const parentNote = findNote(draftNotes, parent.id);
       parentNote.children.push(duplicateNote);
     })
-
-    // TODO: This needs to run as a call back of the above somehow (useEffect?)
-    onWrite(JSON.stringify(notes));
   };
 
   /**
@@ -140,9 +149,6 @@ function App() {
       });
 
     })
-
-    // TODO: This needs to run as a call back of the above somehow (useEffect?)
-    onWrite(JSON.stringify(notes));
   };
 
   const noteActions = {
@@ -152,17 +158,6 @@ function App() {
     onUpdate,
     onDelete
   };
-
-  /**
-   * Writes the contents to the chosen file.
-   * 
-   * @param {*} contents 
-   */
-  async function onWrite(contents) {
-    const writable = await fileHandle.createWritable();
-    await writable.write(contents);
-    await writable.close();
-  }
 
   /**
    * Visits all notes and sub notes, applying the given function to them.
