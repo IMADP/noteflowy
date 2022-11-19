@@ -23,7 +23,6 @@ function App() {
 
   const onAdd = (note) => {
     note.id = uuidv4();
-    note.level = 1;
     note.children = [];
     const newNotes = [...notes, note];
     setNotes(newNotes);
@@ -31,44 +30,77 @@ function App() {
   };
 
   const onAddSubNote = (note) => {
-    const id = uuidv4(); 
-    const subNote = {id, children: [], level: note.level + 1, text: 'Sub Note'};
+    const id = uuidv4();
+    const subNote = { id, children: [], text: 'Sub Note' };
     note.children.push(subNote);
-    const newNotes = notes.map((n) => n.id !== note.id ? n : note );
+    const newNotes = notes.map((n) => n.id !== note.id ? n : note);
     setNotes(newNotes);
     onWrite(JSON.stringify(newNotes));
   };
 
-  // TODO: Duplicate has to also update the parent note and add itself to parent.children
+  // TODO: Duplicate needs to clone the children and create new ids for them
 
-  const onDuplicate = (note) => {
-    const id = uuidv4(); 
-    const newNote = {...note, id};
+  const onDuplicate = (parent, note) => {
+    const id = uuidv4();
+    const newNote = { ...note, id };
+    parent.children.push(newNote);
     const newNotes = [...notes, newNote];
     setNotes(newNotes);
     onWrite(JSON.stringify(newNotes));
   };
 
-  // TODO: These methods don't properly handle sub note searching yet
+  const visit = (note, apply) => {
+    apply(note, null);
+    note.children.forEach(c => apply(c, note));
+    note.children.forEach(c => visit(c, apply));
+  }
+
+  const findNote = (notes, id) => {
+    if (notes) {
+      for (var i = 0; i < notes.length; i++) {
+        if (notes[i].id === id) {
+          return notes[i];
+        }
+        var found = findNote(notes[i].children, id);
+
+        if (found) {
+          return found;
+        }
+      }
+    }
+  }
 
   const onUpdate = (note) => {
-    const newNotes = notes.map((n) => n.id !== note.id ? n : note );
+    const oldNote = findNote(notes, note.id);
+    oldNote.text = note.text;
+    
+    // is this the right way to do this? clone the list just to update state of an internal note?
+    const newNotes = notes.map(n => n);
     setNotes(newNotes);
     onWrite(JSON.stringify(newNotes));
   };
 
   const onDelete = (id) => {
-    const newNotes = notes.filter((note) => note.id !== id );
+
+    // filter out parent note
+    const newNotes = notes.filter(n => n.id !== id);
+
+    // filter out child note
+    newNotes.forEach(n => {
+      visit(n, (child, parent) => {
+         if(parent !== null && child.id === id) {
+          parent.children = parent.children.filter(childNote => childNote.id !== id);
+        }
+      });
+    });
+
     setNotes(newNotes);
     onWrite(JSON.stringify(newNotes));
   };
 
   async function onWrite(contents) {
-    // Create a FileSystemWritableFileStream to write to.
     const writable = await fileHandle.createWritable();
-    // Write the contents of the file to the stream.
     await writable.write(contents);
-    // Close the file and write the contents to disk.
     await writable.close();
   }
 
@@ -77,10 +109,10 @@ function App() {
       <Sidebar fileHandle={fileHandle} notes={notes} onAdd={onAdd} onLoad={onLoad} />
       <div className="col-2">
         <Header fileHandle={fileHandle} />
-        <Notes notes={notes} onAdd={onAdd} onAddSubNote={onAddSubNote} onDuplicate={onDuplicate} onUpdate={onUpdate} onDelete={onDelete}/>
+        <Notes notes={notes} onAdd={onAdd} onAddSubNote={onAddSubNote} onDuplicate={onDuplicate} onUpdate={onUpdate} onDelete={onDelete} />
       </div>
     </>
   );
-} 
+}
 
 export default App;

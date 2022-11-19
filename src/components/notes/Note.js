@@ -4,7 +4,7 @@ import Editable from '../global/Editable';
 import Details from '../details/Details';
 import './Note.css';
 
-function Note({ note, onAdd, onAddSubNote, onDuplicate, onUpdate, onDelete }) {
+function Note({ note, parent, onAdd, onAddSubNote, onDuplicate, onUpdate, onDelete }) {
     const inputRef = useRef();
     const [showDetailEdit, setShowDetailEdit] = useState(false);
 
@@ -17,6 +17,7 @@ function Note({ note, onAdd, onAddSubNote, onDuplicate, onUpdate, onDelete }) {
         <div className="Note">
             <NoteMenu
                 note={note}
+                parent={parent}
                 onAdd={onAdd}
                 onAddSubNote={onAddSubNote}
                 onDuplicate={onDuplicate}
@@ -50,7 +51,7 @@ function Note({ note, onAdd, onAddSubNote, onDuplicate, onUpdate, onDelete }) {
             <ul>
             {note.children.map((n) => (
                 <li key={n.id}>
-                    <Note note={n} onAdd={onAdd} onAddSubNote={onAddSubNote} onDuplicate={onDuplicate} onUpdate={onUpdate} onDelete={onDelete} />
+                    <Note note={n} parent={note} onAdd={onAdd} onAddSubNote={onAddSubNote} onDuplicate={onDuplicate} onUpdate={onUpdate} onDelete={onDelete} />
                 </li>
             ))}
             </ul>
