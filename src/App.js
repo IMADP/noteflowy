@@ -18,6 +18,11 @@ function App() {
    * 
    */
   useEffect(() => {
+
+    // do nothing if there is no file loaded
+    if (fileHandle == null) {
+      return;
+    }
     
     // create an async function to write to a file
     const writeData = async () => {
@@ -26,11 +31,7 @@ function App() {
       await writable.close();
     }
 
-    // call the function if the file handle was provided
-    if (fileHandle != null) {
-      writeData();
-    }
-
+    writeData();
   }, [fileHandle, notes]);
 
   /**
@@ -60,6 +61,7 @@ function App() {
         id: uuidv4(),
         children: [],
         text: 'New Note',
+        collapsed: false,
         details: null
       });
     })
@@ -78,6 +80,7 @@ function App() {
         id: uuidv4(),
         children: [],
         text: 'New Sub Note',
+        collapsed: false,
         details: ''
       });
     })
@@ -93,6 +96,7 @@ function App() {
       const draftNote = findNote(draftNotes, note.id);
       draftNote.text = note.text;
       draftNote.details = note.details;
+      draftNote.collapsed = note.collapsed;
     })
   };
 
