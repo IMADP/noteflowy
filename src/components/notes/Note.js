@@ -24,13 +24,11 @@ function Note({ note, parent, noteActions }) {
                 handleAddDetails={() => setShowDetailEdit(true)}
             />
 
-            <span class="NoteLink">
             <Link to={note.id}>
                 <button type="button">
                     <FrameIcon />
                 </button>
             </Link>
-            </span>
 
             {note.children.length > 0 &&
                 <button onClick={() => noteActions.onUpdate({ ...note, collapsed: !note.collapsed })} >
