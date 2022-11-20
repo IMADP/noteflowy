@@ -4,9 +4,9 @@ function Sidebar({ fileHandle, notes, onLoad }) {
   return (
     <nav className="col-1">
       <button className='Button' onClick={onLoad}>
-        {fileHandle !== null ? 'Switch File' : 'Load File'}
+        {fileHandle !== null ? fileHandle.name : 'Load File'}
       </button>  
-   
+
       <ul>
         {notes.map((note) => (
           <li key = {note.id}>
