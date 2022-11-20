@@ -40,9 +40,9 @@ header {
   background: var(--color-primary);
   color: var(--color-white);
   font-weight: 900;
-  font-size: 2rem;
   height: 10vh;
 }
+
 header, article, nav {
   padding: 1rem;
 }
