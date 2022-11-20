@@ -4,7 +4,7 @@ import Editable from '../global/Editable';
 import Details from '../details/Details';
 import { Link } from "react-router-dom";
 import './Note.css';
-import { TriangleRightIcon, TriangleDownIcon, FrameIcon, CaretRightIcon } from '@radix-ui/react-icons';
+import { TriangleRightIcon, TriangleDownIcon, FrameIcon } from '@radix-ui/react-icons';
 
 function Note({ note, parent, noteActions }) {
     const inputRef = useRef();

@@ -1,6 +1,6 @@
 import SidebarNote from './SidebarNote';
 
-function Sidebar({ fileHandle, notes, onAdd, onLoad }) {
+function Sidebar({ fileHandle, notes, onLoad }) {
   return (
     <nav className="col-1">
       <button className='Button' onClick={onLoad}>
@@ -15,7 +15,6 @@ function Sidebar({ fileHandle, notes, onAdd, onLoad }) {
         ))}
       </ul>
 
-      {fileHandle !== null && <button className='Button' onClick={onAdd}>Add Note</button>}
     </nav>
   );
 }

@@ -167,7 +167,7 @@ function App() {
 
   return (
     <Router>
-      <Sidebar fileHandle={fileHandle} notes={notes} onAdd={noteActions.onAdd} onLoad={onLoad} />
+      <Sidebar fileHandle={fileHandle} notes={notes} onLoad={onLoad} />
       <div className="col-2">
         <Header fileHandle={fileHandle} />
         <Notes notes={notes} noteActions={noteActions} />

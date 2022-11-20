@@ -1,8 +1,6 @@
 import React from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import {
-  DotIcon
-} from '@radix-ui/react-icons';
+import { DiscIcon } from '@radix-ui/react-icons';
 import './NoteMenu.css';
 import NoteDeleteDialog from './NoteDeleteDialog';
 
@@ -14,13 +12,13 @@ const DropdownMenuDemo = ({ note, parent, noteActions, handleAddDetails }) => {
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <button className="IconButton" aria-label="Customise options">
-            <DotIcon />
+            <DiscIcon />
           </button>
         </DropdownMenu.Trigger>
 
         <DropdownMenu.Portal>
           <DropdownMenu.Content className="DropdownMenuContent" sideOffset={5}>
-          <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onAddSubNote(note)}>
+            <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onAddSubNote(note)}>
               Add Sub Note <div className="RightSlot"></div>
             </DropdownMenu.Item>
             <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onDuplicate(parent, note)}>

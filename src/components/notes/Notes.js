@@ -2,6 +2,7 @@ import Note from './Note';
 import './Notes.css';
 import { useLocation } from 'react-router-dom'
 import { findNote } from './notesUtil'; 
+import { PlusIcon } from '@radix-ui/react-icons';
 
 function Notes({notes, noteActions}) {
   const path = useLocation().pathname;
@@ -24,6 +25,13 @@ function Notes({notes, noteActions}) {
               <Note note={note} noteActions={noteActions} />
             </li>
           ))}
+          
+          <li>
+            <button onClick={noteActions.onAdd}>
+              <PlusIcon />
+            </button>
+          </li>
+
         </ul>
       </article>
     </main>
