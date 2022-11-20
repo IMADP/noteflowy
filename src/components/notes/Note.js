@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import NoteMenu from './NoteMenu';
 import Editable from '../global/Editable';
 import Details from '../details/Details';
+import { Link } from "react-router-dom";
 import './Note.css';
 
 function Note({ note, parent, noteActions}) {
@@ -21,6 +22,7 @@ function Note({ note, parent, noteActions}) {
                 noteActions={noteActions}
                 handleAddDetails={() => setShowDetailEdit(true)}
             />
+            <Link to={note.id}>#</Link>
             <Editable
                 text={note.text}
                 childRef={inputRef}

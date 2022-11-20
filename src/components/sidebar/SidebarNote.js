@@ -1,8 +1,9 @@
+import { Link  } from "react-router-dom";
 
 function SidebarNote({note}) {
     return (
         <>
-            <div>{note.text}</div>
+            <Link to={note.id}>{note.text}</Link>
         </>
     );
   } 

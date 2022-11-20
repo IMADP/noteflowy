@@ -1,4 +1,5 @@
 import './App.css';
+import { BrowserRouter as Router } from "react-router-dom";
 import Sidebar from './components/sidebar/Sidebar';
 import Header from './components/header/Header';
 import Notes from './components/notes/Notes';
@@ -194,13 +195,13 @@ function App() {
   }
 
   return (
-    <>
+    <Router>
       <Sidebar fileHandle={fileHandle} notes={notes} onAdd={noteActions.onAdd} onLoad={onLoad} />
       <div className="col-2">
         <Header fileHandle={fileHandle} />
         <Notes notes={notes} noteActions={noteActions} />
       </div>
-    </>
+    </Router>
   );
 }
 

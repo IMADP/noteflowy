@@ -1,10 +1,12 @@
 
-function Header({ fileHandle, onLoad }) {
+import { Link } from "react-router-dom";
+
+function Header({ fileHandle }) {
   const headerText = fileHandle !== null ? fileHandle.name : 'No file loaded';
 
   return (
     <header>
-      {headerText}
+      <Link to='/'>{headerText}</Link> 
     </header>
   );
 } 
