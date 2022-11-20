@@ -1,31 +1,52 @@
 import Note from './Note';
 import './Notes.css';
 import { useLocation } from 'react-router-dom'
-import { findNote } from './notesUtil'; 
-import { PlusIcon } from '@radix-ui/react-icons';
+import { findNote } from './notesUtil';
+import { DoubleArrowUpIcon, PlusIcon } from '@radix-ui/react-icons';
+import { Link } from "react-router-dom";
 
-function Notes({notes, noteActions}) {
+function Notes({ notes, noteActions }) {
   const path = useLocation().pathname;
+  const isRootPath = path === '/';
+  let parent;
 
   // filter note by path
-  if(path !== '/') {
-    const note = findNote(notes, path.substring(1));
-    
-    if(note) {
-      notes = [note];
+  if (!isRootPath) {
+    const result = findNote(notes, path.substring(1));
+    parent = result.parent;
+
+    if (result.note) {
+      notes = [result.note];
     }
   }
-  
+
   return (
     <main className="Notes content">
       <article>
-      <ul className='NotesList'>
+        <ul className='NotesList'>
+
+          {isRootPath && <li>
+            <button >
+                <DoubleArrowUpIcon color='lightGray' />
+              </button>
+          </li>}
+
+          {!isRootPath &&
+            <Link to={'/' + (parent === undefined ? '' : parent.id)}>
+              <li>
+                <button>
+                  <DoubleArrowUpIcon />
+                </button>
+              </li>
+            </Link>
+          }
+
           {notes.map((note) => (
             <li key={note.id}>
               <Note note={note} noteActions={noteActions} />
             </li>
           ))}
-          
+
           <li>
             <button onClick={noteActions.onAdd}>
               <PlusIcon />
@@ -36,6 +57,6 @@ function Notes({notes, noteActions}) {
       </article>
     </main>
   );
-} 
+}
 
 export default Notes;

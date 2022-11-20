@@ -74,7 +74,7 @@ function App() {
    */
   const onAddSubNote = (parent) => {
     setNotes((draftNotes) => {
-      const note = findNote(draftNotes, parent.id);
+      const note = findNote(draftNotes, parent.id).note;
 
       note.children.push({
         id: uuidv4(),
@@ -93,7 +93,7 @@ function App() {
    */
   const onUpdate = (note) => {
     setNotes((draftNotes) => {
-      const draftNote = findNote(draftNotes, note.id);
+      const draftNote = findNote(draftNotes, note.id).note;
       draftNote.text = note.text;
       draftNote.details = note.details;
       draftNote.collapsed = note.collapsed;
@@ -125,7 +125,7 @@ function App() {
       }
 
       // otherwise find the parent and add to the list of children
-      const parentNote = findNote(draftNotes, parent.id);
+      const parentNote = findNote(draftNotes, parent.id).note;
       parentNote.children.push(duplicateNote);
     })
   };

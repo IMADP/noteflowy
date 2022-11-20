@@ -15,21 +15,20 @@
    * 
    * @param {*} notes 
    * @param {*} id 
+   * @param {*} parent 
    * @returns note
    */
-  export function findNote(notes, id) {
+   export function findNote(notes, id, parent) {
     if (notes) {
       for (var i = 0; i < notes.length; i++) {
         if (notes[i].id === id) {
-          return notes[i];
+          return { note: notes[i], parent }
         }
-        var found = findNote(notes[i].children, id);
-
+        var found = findNote(notes[i].children, id, notes[i]);
+        
         if (found) {
           return found;
         }
       }
     }
   }
-
-  
