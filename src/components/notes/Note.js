@@ -60,7 +60,7 @@ function Note({ note, parent, noteActions }) {
                 />
             }
 
-            <ul>
+            <ul className='NotesList'>
                 {!note.collapsed && note.children.map((n) => (
                     <li key={n.id}>
                         <Note note={n} parent={note} noteActions={noteActions} />

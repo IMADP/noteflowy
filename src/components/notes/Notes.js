@@ -18,7 +18,7 @@ function Notes({notes, noteActions}) {
   return (
     <main className="Notes content">
       <article>
-        <ul>
+      <ul className='NotesList'>
           {notes.map((note) => (
             <li key={note.id}>
               <Note note={note} noteActions={noteActions} />

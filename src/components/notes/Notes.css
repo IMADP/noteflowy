@@ -8,3 +8,12 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+.NotesList {
+  list-style: none;
+}
+            
+.NotesList li {
+  padding: .5rem;
+}
+            
