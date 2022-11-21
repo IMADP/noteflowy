@@ -9,14 +9,6 @@ import NotesAdd from './NotesAdd';
 
 function Notes({ notes, noteActions }) {
   const paths = useLocation().pathname.split('/');
-
-  if (notes.length === 0) {
-    // TODO: Should have an instructions page
-    return <></>;
-  }
-
-
-
   const isRootPath = paths.length === 2;
   const isNotePath = paths[1] === 'note';
   const isSearchPath = paths[1] === 'search';

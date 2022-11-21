@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Sidebar from './components/sidebar/Sidebar';
 import Header from './components/header/Header';
 import Notes from './components/notes/Notes';
+import NotesInstructions from './components/notes/NotesInstructions';
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
 import _ from "lodash";
@@ -188,7 +189,8 @@ function App() {
       <Sidebar fileHandle={fileHandle} notes={notes} onLoad={onLoad} />
       <div className="col-2">
         <Header/>
-        <Notes notes={notes} noteActions={noteActions} />
+        {notes.length === 0 && <NotesInstructions />}
+        {notes.length > 0 && <Notes notes={notes} noteActions={noteActions} />}
       </div>
     </Router>
   );
