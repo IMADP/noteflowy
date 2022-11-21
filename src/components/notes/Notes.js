@@ -26,7 +26,8 @@ function Notes({ notes, noteActions }) {
   // filter notes by search
   if (isSearchPath) {
     // TODO
-    console.log('Filter by ' + paths[2]);
+    const term =  decodeURI(paths[2]);
+    console.log('Filter by ' + term);
   }
 
   return (
