@@ -102,18 +102,18 @@ function App() {
   };
 
   /**
-   * Sets the collapsed state of all given notes.
+   * Updates all notes and sub notes.
    * 
    * @param {*} notes 
    * @param {*} collapsed 
    */
-  const onToggleCollapseAll = (notes, collapsed) => {
+   const onUpdateAll = (notes, updateAction) => {
     setNotes((draftNotes) => {
       notes.forEach((note) => {
         const draftNote = findNote(draftNotes, note.id).note
 
         visitNote(draftNote, (n) => {
-          n.collapsed = collapsed;
+          updateAction(n);
         })
       })
     })
@@ -179,7 +179,7 @@ function App() {
     onAddSubNote,
     onDuplicate,
     onUpdate,
-    onToggleCollapseAll,
+    onUpdateAll,
     onDelete
   };
 

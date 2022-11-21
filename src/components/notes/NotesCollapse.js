@@ -15,13 +15,13 @@ function NotesCollapse({ notes, noteActions }) {
     <>
 
       {!allUncollapsed &&
-        <button onClick={() => noteActions.onToggleCollapseAll(notes, false)} >
+        <button onClick={() => noteActions.onUpdateAll(notes, (note) => { note.collapsed = false })} >
           <TriangleRightIcon />
         </button>
       }
 
       {allUncollapsed &&
-        <button onClick={() => noteActions.onToggleCollapseAll(notes, true)} >
+        <button onClick={() => noteActions.onUpdateAll(notes, (note) => { note.collapsed = true })} >
           <TriangleDownIcon />
         </button>
       }
