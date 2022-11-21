@@ -23,6 +23,12 @@ function Notes({ notes, noteActions }) {
     }
   }
 
+  // filter notes by search
+  if (isSearchPath) {
+    // TODO
+    console.log('Filter by ' + paths[2]);
+  }
+
   return (
     <main className="Notes content">
       <article>
