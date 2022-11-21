@@ -68,7 +68,3 @@ header, article, nav {
   font-weight: 600;
   text-align: center;
 }
-
-.completed {
-  text-decoration: line-through;
-}
