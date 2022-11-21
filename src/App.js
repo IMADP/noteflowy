@@ -169,7 +169,7 @@ function App() {
     <Router>
       <Sidebar fileHandle={fileHandle} notes={notes} onLoad={onLoad} />
       <div className="col-2">
-        <Header fileHandle={fileHandle} />
+        <Header/>
         <Notes notes={notes} noteActions={noteActions} />
       </div>
     </Router>
