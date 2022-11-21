@@ -17,3 +17,5 @@ Poor Mans Jira.
 - Add hyperlink support
 
 - Add a copy to clipboard button next to details?
+
+- Global collapse/uncollapse next to global up button
