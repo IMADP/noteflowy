@@ -64,14 +64,15 @@ function Note({ note, parent, noteActions }) {
                 />
             }
 
-            <ul className='NotesList'>
-                {!note.collapsed && note.children.map((n) => (
+            {!note.collapsed && <ul className='NotesList'>
+                {note.children.map((n) => (
                     <li key={n.id}>
                         <Note note={n} parent={note} noteActions={noteActions} />
                     </li>
                 ))}
             </ul>
-
+            }
+            
         </div>
     );
 }

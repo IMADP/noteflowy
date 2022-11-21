@@ -4,9 +4,18 @@ import { useLocation } from 'react-router-dom'
 import { findNote } from './notesUtil';
 import { DoubleArrowUpIcon, PlusIcon } from '@radix-ui/react-icons';
 import { Link } from "react-router-dom";
+import NotesToggleCollapse from './NotesToggleCollapse';
 
 function Notes({ notes, noteActions }) {
   const paths = useLocation().pathname.split('/');
+
+  if(notes.length === 0) {
+    // TODO: Should have an instructions page
+    return <></>;
+  }
+  
+  
+
   const isRootPath = paths.length === 2;
   const isNotePath = paths[1] === 'note';
   const isSearchPath = paths[1] === 'search';
@@ -26,7 +35,7 @@ function Notes({ notes, noteActions }) {
   // filter notes by search
   if (isSearchPath) {
     // TODO
-    const term =  decodeURI(paths[2]);
+    const term = decodeURI(paths[2]);
     console.log('Filter by ' + term);
   }
 
@@ -35,21 +44,24 @@ function Notes({ notes, noteActions }) {
       <article>
         <ul className='NotesList'>
 
-          {(isRootPath || isSearchPath) && <li>
-            <button >
+          <li>
+            {(isRootPath || isSearchPath) &&
+              <button >
                 <DoubleArrowUpIcon color='lightGray' />
               </button>
-          </li>}
+            }
 
-          {isNotePath &&
-            <Link to={parent === undefined ? '/' : `/note/${parent.id}`}>
-              <li>
+            {isNotePath &&
+              <Link to={parent === undefined ? '/' : `/note/${parent.id}`}>
                 <button>
                   <DoubleArrowUpIcon />
                 </button>
-              </li>
-            </Link>
-          }
+              </Link>
+            }
+
+            <NotesToggleCollapse notes={notes} noteActions={noteActions} />
+
+          </li>
 
           {notes.map((note) => (
             <li key={note.id}>

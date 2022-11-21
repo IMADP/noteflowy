@@ -7,7 +7,7 @@ import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
 import _ from "lodash";
 import React, { useEffect } from 'react';
-import { findNote, visitNotes } from './components/notes/notesUtil'; 
+import { findNote, visitNote, visitNotes } from './components/notes/notesUtil'; 
 
 function App() {
   const [fileHandle, setFileHandle] = useImmer(null);
@@ -102,6 +102,24 @@ function App() {
   };
 
   /**
+   * Sets the collapsed state of all given notes.
+   * 
+   * @param {*} notes 
+   * @param {*} collapsed 
+   */
+  const onToggleCollapseAll = (notes, collapsed) => {
+    setNotes((draftNotes) => {
+      notes.forEach((note) => {
+        const draftNote = findNote(draftNotes, note.id).note
+
+        visitNote(draftNote, (n) => {
+          n.collapsed = collapsed;
+        })
+      })
+    })
+  }
+
+  /**
    * Duplicates a note and all sub notes.
    * 
    * @param {*} parent 
@@ -112,8 +130,8 @@ function App() {
     // deep clone the note and all sub notes
     const duplicateNote = _.cloneDeep(note);
 
-    // update all notes and sub notes with new ids
-    visitNotes(duplicateNote, (child) => {
+    // update note and sub notes with new ids
+    visitNote(duplicateNote, (child) => {
       child.id = uuidv4();
     })
 
@@ -147,12 +165,10 @@ function App() {
       }
 
       // otherwise look for a child note and remove it from its parent
-      draftNotes.forEach(n => {
-        visitNotes(n, (child, parent) => {
-          if (child.id === id) {
-            parent.children = parent.children.filter(childNote => childNote.id !== id);
-          }
-        });
+      visitNotes(draftNotes, (child, parent) => {
+        if (child.id === id) {
+          parent.children = parent.children.filter(childNote => childNote.id !== id);
+        }
       });
 
     })
@@ -163,6 +179,7 @@ function App() {
     onAddSubNote,
     onDuplicate,
     onUpdate,
+    onToggleCollapseAll,
     onDelete
   };
 

@@ -16,4 +16,6 @@ Poor Mans Jira.
 
 - Add a copy to clipboard button next to details?
 
-- Global collapse/uncollapse next to global up button
+- useImmer instead of useState everywhere for consistency
+
+- If no file is loaded, should default to an instructional content page
