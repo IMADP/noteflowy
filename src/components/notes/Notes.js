@@ -6,13 +6,16 @@ import { DoubleArrowUpIcon, PlusIcon } from '@radix-ui/react-icons';
 import { Link } from "react-router-dom";
 
 function Notes({ notes, noteActions }) {
-  const path = useLocation().pathname;
-  const isRootPath = path === '/';
+  const paths = useLocation().pathname.split('/');
+  const isRootPath = paths.length === 2;
+  const isNotePath = paths[1] === 'note';
+  const isSearchPath = paths[1] === 'search';
+
   let parent;
 
   // filter note by path
-  if (!isRootPath) {
-    const result = findNote(notes, path.substring(1));
+  if (isNotePath) {
+    const result = findNote(notes, paths[2]);
     parent = result.parent;
 
     if (result.note) {
@@ -31,8 +34,8 @@ function Notes({ notes, noteActions }) {
               </button>
           </li>}
 
-          {!isRootPath &&
-            <Link to={'/' + (parent === undefined ? '' : parent.id)}>
+          {isNotePath &&
+            <Link to={parent === undefined ? '/' : `/note/${parent.id}`}>
               <li>
                 <button>
                   <DoubleArrowUpIcon />

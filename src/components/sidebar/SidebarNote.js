@@ -1,12 +1,11 @@
-import { Link  } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function SidebarNote({note}) {
+function SidebarNote({ note }) {
     return (
         <>
-            <Link to={note.id}>{note.text}</Link>
+            <Link to={`/note/${note.id}`}>{note.text}</Link>
         </>
     );
-  } 
-  
-  export default SidebarNote;
-  
+}
+
+export default SidebarNote;

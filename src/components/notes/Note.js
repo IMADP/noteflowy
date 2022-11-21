@@ -24,7 +24,7 @@ function Note({ note, parent, noteActions }) {
                 handleAddDetails={() => setShowDetailEdit(true)}
             />
 
-            <Link to={note.id}>
+            <Link to={`/note/${note.id}`}>
                 <button type="button">
                     <FrameIcon />
                 </button>
