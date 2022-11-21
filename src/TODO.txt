@@ -1,0 +1,16 @@
+Poor Mans Jira.
+
+- Fix Search algorithm (filter by matches, but keep parent structure intact)
+
+- Animations for link clicking, collapsing notes
+
+- Maybe two main shell components (Navigation/Content)
+
+- Lock/Unlock feature? Turns a note into read only from the menu
+
+- Complete option in menu (adds strikethrough)
+
+- Use true contenteditable attribute instead of inputs for note/details like Workflowy
+- Keyboard commands (enter new note, shift and ctrl+shift to change parent)
+- Bold/Italic support
+
