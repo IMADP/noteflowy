@@ -8,8 +8,6 @@ Poor Mans Jira.
 
 - Lock/Unlock feature? Turns a note into read only from the menu
 
-- Complete option in menu (adds strikethrough)
-
 - Use true contenteditable attribute instead of inputs for note/details like Workflowy
 - Keyboard commands (enter new note, shift and ctrl+shift to change parent)
 - Bold/Italic support

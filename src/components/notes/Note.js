@@ -41,6 +41,7 @@ function Note({ note, parent, noteActions }) {
             }
 
             <Editable
+                className={note.completed ? 'completed' : 'uncompleted'}
                 text={note.text}
                 childRef={inputRef}
                 type="input"

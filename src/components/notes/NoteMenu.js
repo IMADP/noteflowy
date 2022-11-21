@@ -22,7 +22,10 @@ const DropdownMenuDemo = ({ note, parent, noteActions, handleAddDetails }) => {
               Add Sub Note <div className="RightSlot"></div>
             </DropdownMenu.Item>
             <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onDuplicate(parent, note)}>
-              Duplicate Note <div className="RightSlot"></div>
+              Clone Note <div className="RightSlot"></div>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onUpdate({...note, completed: !note.completed})}>
+              {note.completed ? 'Uncomplete Note' : 'Complete Note'} <div className="RightSlot"></div>
             </DropdownMenu.Item>
             <NoteDeleteDialog note={note} onDelete={noteActions.onDelete}>
               <DropdownMenu.Item className="DropdownMenuItem" onSelect={(event) => event.preventDefault()}>

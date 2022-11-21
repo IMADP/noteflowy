@@ -97,6 +97,7 @@ function App() {
       draftNote.text = note.text;
       draftNote.details = note.details;
       draftNote.collapsed = note.collapsed;
+      draftNote.completed = note.completed;
     })
   };
 

@@ -35,7 +35,7 @@ function Notes({ notes, noteActions }) {
       <article>
         <ul className='NotesList'>
 
-          {isRootPath && <li>
+          {(isRootPath || isSearchPath) && <li>
             <button >
                 <DoubleArrowUpIcon color='lightGray' />
               </button>
