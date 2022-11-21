@@ -2,19 +2,20 @@ import Note from './Note';
 import './Notes.css';
 import { useLocation } from 'react-router-dom'
 import { findNote } from './notesUtil';
-import { DoubleArrowUpIcon, PlusIcon } from '@radix-ui/react-icons';
+import { DoubleArrowUpIcon } from '@radix-ui/react-icons';
 import { Link } from "react-router-dom";
 import NotesCollapse from './NotesCollapse';
+import NotesAdd from './NotesAdd';
 
 function Notes({ notes, noteActions }) {
   const paths = useLocation().pathname.split('/');
 
-  if(notes.length === 0) {
+  if (notes.length === 0) {
     // TODO: Should have an instructions page
     return <></>;
   }
-  
-  
+
+
 
   const isRootPath = paths.length === 2;
   const isNotePath = paths[1] === 'note';
@@ -70,9 +71,7 @@ function Notes({ notes, noteActions }) {
           ))}
 
           <li>
-            <button onClick={noteActions.onAdd}>
-              <PlusIcon />
-            </button>
+            <NotesAdd noteActions={noteActions} />
           </li>
 
         </ul>
