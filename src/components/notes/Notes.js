@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { findNote } from './notesUtil';
 import { DoubleArrowUpIcon, PlusIcon } from '@radix-ui/react-icons';
 import { Link } from "react-router-dom";
-import NotesToggleCollapse from './NotesToggleCollapse';
+import NotesCollapse from './NotesCollapse';
 
 function Notes({ notes, noteActions }) {
   const paths = useLocation().pathname.split('/');
@@ -59,7 +59,7 @@ function Notes({ notes, noteActions }) {
               </Link>
             }
 
-            <NotesToggleCollapse notes={notes} noteActions={noteActions} />
+            <NotesCollapse notes={notes} noteActions={noteActions} />
 
           </li>
 
