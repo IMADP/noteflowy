@@ -14,3 +14,6 @@ Poor Mans Jira.
 - Keyboard commands (enter new note, shift and ctrl+shift to change parent)
 - Bold/Italic support
 
+- Add hyperlink support
+
+- Add a copy to clipboard button next to details?
