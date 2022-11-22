@@ -4,7 +4,7 @@ import Note from './Note';
 import './Notes.css';
 import NotesAdd from './NotesAdd';
 import NotesCollapse from './NotesCollapse';
-import { clone, findNote, visitNote, visitNotes } from './notesUtil';
+import { clone, findNote, visitNoteTree } from './notesUtil';
 
 function Notes({ notes, noteActions }) {
   const paths = useLocation().pathname.split('/');
@@ -40,7 +40,7 @@ function Notes({ notes, noteActions }) {
       let childFound = false;
 
       note.children.forEach(child => {
-        visitNote(child, (currentChildNote) => {
+        visitNoteTree(child, (currentChildNote) => {
           const textFound = currentChildNote.text != null && currentChildNote.text.toUpperCase().includes(term);
           const detailsFound = currentChildNote.details != null && currentChildNote.details.toUpperCase().includes(term);
          
@@ -58,7 +58,7 @@ function Notes({ notes, noteActions }) {
     });
 
     // in the second part, we prune out any note who doesn't match and children doesn't match
-    visitNotes(clonedNotes, (note, parent) => {
+    visitNoteTree(clonedNotes, (note, parent) => {
 
       if(parent === undefined) {
         return;
@@ -69,7 +69,7 @@ function Notes({ notes, noteActions }) {
       let childFound = false;
 
       note.children.forEach(child => {
-        visitNote(child, (currentChildNote) => {
+        visitNoteTree(child, (currentChildNote) => {
           const textFound = currentChildNote.text != null && currentChildNote.text.toUpperCase().includes(term);
           const detailsFound = currentChildNote.details != null && currentChildNote.details.toUpperCase().includes(term);
          

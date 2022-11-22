@@ -7,7 +7,7 @@ import NotesInstructions from './components/notes/NotesInstructions';
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
 import React, { useEffect } from 'react';
-import { clone, findNote, visitNote, visitNotes } from './components/notes/notesUtil'; 
+import { clone, findNote, visitNoteTree } from './components/notes/notesUtil'; 
 
 function App() {
   const [fileHandle, setFileHandle] = useImmer(null);
@@ -112,7 +112,7 @@ function App() {
       notes.forEach((note) => {
         const draftNote = findNote(draftNotes, note.id).note
 
-        visitNote(draftNote, (n) => {
+        visitNoteTree(draftNote, (n) => {
           updateAction(n);
         })
       })
@@ -131,7 +131,7 @@ function App() {
     const duplicateNote = clone(note);
 
     // update note and sub notes with new ids
-    visitNote(duplicateNote, (child) => {
+    visitNoteTree(duplicateNote, (child) => {
       child.id = uuidv4();
     })
 
@@ -165,7 +165,7 @@ function App() {
       }
 
       // otherwise look for a child note and remove it from its parent
-      visitNotes(draftNotes, (child, parent) => {
+      visitNoteTree(draftNotes, (child, parent) => {
         if (child.id === id) {
           parent.children = parent.children.filter(childNote => childNote.id !== id);
         }

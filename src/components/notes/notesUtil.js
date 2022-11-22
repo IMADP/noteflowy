@@ -10,24 +10,33 @@ import _ from "lodash";
 }
 
 /**
-   * Visits the note and all sub notes, applying the given function to them.
+   * Visits the note and all sub notes, applying the given function to the note first and then child notes.
    * 
-   * @param {*} note 
+   * @param {*} noteOrNotes 
    * @param {*} apply(note, parent) 
    */
- export function visitNote(note, apply, parent) {
-  apply(note, parent);
-  note.children.forEach(c => visitNote(c, apply, note));
+ export function visitNoteTree(noteOrNotes, apply, parent) {
+  const notes = Array.isArray(noteOrNotes) ? noteOrNotes : [noteOrNotes];
+
+  notes.forEach(note => {
+    apply(note, parent);
+    note.children.forEach(c => visitNoteTree(c, apply, note));
+  });
 }
 
 /**
-   * Visits a list of notes and all sub notes, applying the given function to them.
+   * Visits the note and all sub notes, applying the given function to the children first and then parent note.
    * 
-   * @param {*} notes 
+   * @param {*} noteOrNotes 
    * @param {*} apply(note, parent) 
    */
-export function visitNotes(notes, apply) {
-  notes.forEach(note => {visitNote(note, apply)});
+ export function visitNoteTreeReverse(noteOrNotes, apply, parent) {
+  const notes = Array.isArray(noteOrNotes) ? noteOrNotes : [noteOrNotes];
+
+  notes.forEach(note => {
+    note.children.forEach(c => visitNoteTreeReverse(c, apply, note));
+    apply(note, parent);
+  });
 }
 
 /**

@@ -1,11 +1,11 @@
 import { TriangleRightIcon, TriangleDownIcon } from '@radix-ui/react-icons';
-import { visitNotes } from './notesUtil';
+import { visitNoteTree } from './notesUtil';
 
 function NotesCollapse({ notes, noteActions }) {
   let allUncollapsed = true;
 
   // look through each note to see if any are collapsed
-  visitNotes(notes, (note) => {
+  visitNoteTree(notes, (note) => {
     if (note.collapsed) {
       allUncollapsed = false;
     }
