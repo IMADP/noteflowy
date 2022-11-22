@@ -1,6 +1,6 @@
 Poor Mans Jira.
 
-- Clear search input on location href change
+- The search function is pretty inefficient. Maybe a child first tree traversal would improve, trimming out leaf nodes. I just don't know what happens if you remove an object from an array in the middle of a forEach iteration.
 
 - Animations for link clicking, collapsing notes
 
