@@ -4,7 +4,7 @@ import Note from './Note';
 import './Notes.css';
 import NotesAdd from './NotesAdd';
 import NotesCollapse from './NotesCollapse';
-import { clone, findNote, visitNoteTree } from './notesUtil';
+import { clone, findNote,  visitNoteTreeReverse } from './notesUtil';
 
 function Notes({ notes, noteActions }) {
   const paths = useLocation().pathname.split('/');
@@ -29,64 +29,48 @@ function Notes({ notes, noteActions }) {
   // filter notes by search
   if (isSearchPath) {
     const term = decodeURI(paths[2]).toUpperCase();
-    const foundNotes = [];
     const clonedNotes = clone(notes);
 
-    // in the first step, find any root nodes that need to be added via match or a child match
-    clonedNotes.forEach(note => {
+    // start at the child nodes to filter non-matches and mark to keep parents to preserve the path
+    visitNoteTreeReverse(clonedNotes, (currentNote) => {
 
-      const textFound = note.text != null && note.text.toUpperCase().includes(term);
-      const detailsFound = note.details != null && note.details.toUpperCase().includes(term);
-      let childFound = false;
-
-      note.children.forEach(child => {
-        visitNoteTree(child, (currentChildNote) => {
-          const textFound = currentChildNote.text != null && currentChildNote.text.toUpperCase().includes(term);
-          const detailsFound = currentChildNote.details != null && currentChildNote.details.toUpperCase().includes(term);
-         
-          if(textFound || detailsFound) {
-            childFound = true;
-          }
-    
-        });
-      });
-
-      if (childFound || textFound || detailsFound) {
-        foundNotes.push(note);
+      // search for a match on the note itself and mark it as keep
+      const textFound = currentNote.text != null && currentNote.text.toUpperCase().includes(term);
+      const detailsFound = currentNote.details != null && currentNote.details.toUpperCase().includes(term);
+      
+      if(textFound || detailsFound) {
+        currentNote.keep = true;
+        currentNote.collapsed = false;
       }
+
+      // filter any children who are not matches or parents of matches
+      currentNote.children = currentNote.children.filter((c) => {
+
+        // keep notes marked by child matches
+        if(c.keep) {
+          currentNote.keep = true;
+          currentNote.collapsed = false;
+          return true;
+        }
+
+        // search for text matches
+        const textFound = c.text != null && c.text.toUpperCase().includes(term);
+        const detailsFound = c.details != null && c.details.toUpperCase().includes(term);
+      
+        // keep matches and mark parent to be kept
+        if(textFound || detailsFound) {
+          currentNote.keep = true;
+          currentNote.collapsed = false;
+          return true;
+        }
+
+        return false;
+      });
 
     });
 
-    // in the second part, we prune out any note who doesn't match and children doesn't match
-    visitNoteTree(clonedNotes, (note, parent) => {
-
-      if(parent === undefined) {
-        return;
-      }
-
-      const textFound = note.text != null && note.text.toUpperCase().includes(term);
-      const detailsFound = note.details != null && note.details.toUpperCase().includes(term);
-      let childFound = false;
-
-      note.children.forEach(child => {
-        visitNoteTree(child, (currentChildNote) => {
-          const textFound = currentChildNote.text != null && currentChildNote.text.toUpperCase().includes(term);
-          const detailsFound = currentChildNote.details != null && currentChildNote.details.toUpperCase().includes(term);
-         
-          if(textFound || detailsFound) {
-            childFound = true;
-          }
-    
-        });
-      });
-
-      if (!childFound && !textFound && !detailsFound) {
-        parent.children = parent.children.filter((c) => c.id !== note.id);
-      }
-
-    });
-
-    notes = foundNotes;
+    // finally trim out any parent nodes that weren't marked to keep
+    notes = clonedNotes.filter((n) => n.keep);
   }
 
   return (
