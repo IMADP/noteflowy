@@ -6,9 +6,8 @@ import Notes from './components/notes/Notes';
 import NotesInstructions from './components/notes/NotesInstructions';
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
-import _ from "lodash";
 import React, { useEffect } from 'react';
-import { findNote, visitNote, visitNotes } from './components/notes/notesUtil'; 
+import { clone, findNote, visitNote, visitNotes } from './components/notes/notesUtil'; 
 
 function App() {
   const [fileHandle, setFileHandle] = useImmer(null);
@@ -129,7 +128,7 @@ function App() {
   const onDuplicate = (parent, note) => {
 
     // deep clone the note and all sub notes
-    const duplicateNote = _.cloneDeep(note);
+    const duplicateNote = clone(note);
 
     // update note and sub notes with new ids
     visitNote(duplicateNote, (child) => {

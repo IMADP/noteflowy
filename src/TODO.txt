@@ -1,6 +1,6 @@
 Poor Mans Jira.
 
-- Fix Search algorithm (filter by matches, but keep parent structure intact)
+- Clear search input on location href change
 
 - Animations for link clicking, collapsing notes
 

@@ -1,11 +1,10 @@
+import { DoubleArrowUpIcon } from '@radix-ui/react-icons';
+import { Link, useLocation } from 'react-router-dom';
 import Note from './Note';
 import './Notes.css';
-import { useLocation } from 'react-router-dom'
-import { findNote } from './notesUtil';
-import { DoubleArrowUpIcon } from '@radix-ui/react-icons';
-import { Link } from "react-router-dom";
-import NotesCollapse from './NotesCollapse';
 import NotesAdd from './NotesAdd';
+import NotesCollapse from './NotesCollapse';
+import { clone, findNote, visitNote, visitNotes } from './notesUtil';
 
 function Notes({ notes, noteActions }) {
   const paths = useLocation().pathname.split('/');
@@ -14,6 +13,8 @@ function Notes({ notes, noteActions }) {
   const isSearchPath = paths[1] === 'search';
 
   let parent;
+
+  // TODO: This component needs to be broken up into several smaller ones
 
   // filter note by path
   if (isNotePath) {
@@ -27,9 +28,65 @@ function Notes({ notes, noteActions }) {
 
   // filter notes by search
   if (isSearchPath) {
-    // TODO
-    const term = decodeURI(paths[2]);
-    console.log('Filter by ' + term);
+    const term = decodeURI(paths[2]).toUpperCase();
+    const foundNotes = [];
+    const clonedNotes = clone(notes);
+
+    // in the first step, find any root nodes that need to be added via match or a child match
+    clonedNotes.forEach(note => {
+
+      const textFound = note.text != null && note.text.toUpperCase().includes(term);
+      const detailsFound = note.details != null && note.details.toUpperCase().includes(term);
+      let childFound = false;
+
+      note.children.forEach(child => {
+        visitNote(child, (currentChildNote) => {
+          const textFound = currentChildNote.text != null && currentChildNote.text.toUpperCase().includes(term);
+          const detailsFound = currentChildNote.details != null && currentChildNote.details.toUpperCase().includes(term);
+         
+          if(textFound || detailsFound) {
+            childFound = true;
+          }
+    
+        });
+      });
+
+      if (childFound || textFound || detailsFound) {
+        foundNotes.push(note);
+      }
+
+    });
+
+    // in the second part, we prune out any note who doesn't match and children doesn't match
+    visitNotes(clonedNotes, (note, parent) => {
+
+      if(parent === undefined) {
+        return;
+      }
+
+      const textFound = note.text != null && note.text.toUpperCase().includes(term);
+      const detailsFound = note.details != null && note.details.toUpperCase().includes(term);
+      let childFound = false;
+
+      note.children.forEach(child => {
+        visitNote(child, (currentChildNote) => {
+          const textFound = currentChildNote.text != null && currentChildNote.text.toUpperCase().includes(term);
+          const detailsFound = currentChildNote.details != null && currentChildNote.details.toUpperCase().includes(term);
+         
+          if(textFound || detailsFound) {
+            childFound = true;
+          }
+    
+        });
+      });
+
+      if (!childFound && !textFound && !detailsFound) {
+        parent.children = parent.children.filter((c) => c.id !== note.id);
+      }
+
+    });
+
+    notes = foundNotes;
   }
 
   return (
@@ -38,13 +95,13 @@ function Notes({ notes, noteActions }) {
         <ul className='NotesList'>
 
           <li>
-            {(isRootPath || isSearchPath) &&
+            {(isRootPath) &&
               <button >
                 <DoubleArrowUpIcon color='lightGray' />
               </button>
             }
 
-            {isNotePath &&
+            {!isRootPath &&
               <Link to={parent === undefined ? '/' : `/note/${parent.id}`}>
                 <button>
                   <DoubleArrowUpIcon />

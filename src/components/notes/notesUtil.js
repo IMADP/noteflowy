@@ -1,13 +1,23 @@
+import _ from "lodash";
+
+/**
+   * Visits the note and all sub notes, applying the given function to them.
+   * 
+   * @param {*} object
+   */
+ export function clone(object) {
+  return _.cloneDeep(object);
+}
+
 /**
    * Visits the note and all sub notes, applying the given function to them.
    * 
    * @param {*} note 
    * @param {*} apply(note, parent) 
    */
- export function visitNote(note, apply) {
-  apply(note, null);
-  note.children.forEach(c => apply(c, note));
-  note.children.forEach(c => visitNote(c, apply));
+ export function visitNote(note, apply, parent) {
+  apply(note, parent);
+  note.children.forEach(c => visitNote(c, apply, note));
 }
 
 /**
