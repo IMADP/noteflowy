@@ -1,18 +1,18 @@
-import './App.css';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
-import Sidebar from './components/sidebar/Sidebar';
-import Header from './components/header/Header';
-import Notes from './components/notes/Notes';
-import NotesInstructions from './components/notes/NotesInstructions';
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
-import React, { useEffect } from 'react';
-import { clone, findNote, visitNoteTree } from './components/notes/notesUtil'; 
+import './App.css';
+import Header from './components/header/Header';
+import Notes from './components/notes/Notes';
+import { clone, findNote, visitNoteTree } from './components/notes/notesUtil';
+import Sidebar from './components/sidebar/Sidebar';
+import instructionNotes from './instructions';
 
 function App() {
   const [fileHandle, setFileHandle] = useImmer(null);
-  const [notes, setNotes] = useImmer([]);
-
+  const [notes, setNotes] = useImmer(instructionNotes);
+  
   /**
    * This effect will save the notes state to a file on change.
    * 
@@ -23,7 +23,7 @@ function App() {
     if (fileHandle == null) {
       return;
     }
-    
+
     // create an async function to write to a file
     const writeData = async () => {
       const writable = await fileHandle.createWritable();
@@ -107,7 +107,7 @@ function App() {
    * @param {*} notes 
    * @param {*} collapsed 
    */
-   const onUpdateAll = (notes, updateAction) => {
+  const onUpdateAll = (notes, updateAction) => {
     setNotes((draftNotes) => {
       notes.forEach((note) => {
         const draftNote = findNote(draftNotes, note.id).note
@@ -187,9 +187,8 @@ function App() {
     <Router>
       <Sidebar fileHandle={fileHandle} notes={notes} onLoad={onLoad} />
       <div className="col-2">
-        <Header/>
-        {notes.length === 0 && <NotesInstructions />}
-        {notes.length > 0 && <Notes notes={notes} noteActions={noteActions} />}
+        <Header />
+        <Notes notes={notes} noteActions={noteActions} />
       </div>
     </Router>
   );

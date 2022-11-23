@@ -17,5 +17,3 @@ Poor Mans Jira.
 - Add a copy to clipboard button next to details?
 
 - useImmer instead of useState everywhere for consistency
-
-- If no file is loaded, should default to an instructional content page
