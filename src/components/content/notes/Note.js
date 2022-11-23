@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import NoteMenu from './NoteMenu';
-import Editable from '../global/Editable';
-import Details from '../details/Details';
+import Editable from '../../ui/Editable';
+import Details from './Details';
 import { Link } from "react-router-dom";
 import './Note.css';
 import { TriangleRightIcon, TriangleDownIcon, FrameIcon } from '@radix-ui/react-icons';

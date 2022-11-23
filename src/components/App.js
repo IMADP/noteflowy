@@ -3,11 +3,10 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
-import Header from './components/header/Header';
-import Notes from './components/notes/Notes';
-import { clone, findNote, visitNoteTree } from './components/notes/notesUtil';
-import Sidebar from './components/sidebar/Sidebar';
-import instructionNotes from './instructions';
+import { clone, findNote, visitNoteTree } from './content/notes/notesUtil';
+import Navigation from './navigation/Navigation';
+import instructionNotes from '../instructions';
+import Content from './content/Content';
 
 function App() {
   const [fileHandle, setFileHandle] = useImmer(null);
@@ -185,10 +184,9 @@ function App() {
 
   return (
     <Router>
-      <Sidebar fileHandle={fileHandle} notes={notes} onLoad={onLoad} />
+      <Navigation fileHandle={fileHandle} notes={notes} onLoad={onLoad} />
       <div className="col-2">
-        <Header />
-        <Notes notes={notes} noteActions={noteActions} />
+        <Content notes={notes} noteActions={noteActions} />
       </div>
     </Router>
   );

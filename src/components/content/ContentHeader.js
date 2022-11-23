@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-function Header() {
+function ContentHeader() {
   const navigate = useNavigate();
   const location = useLocation();
   const [query, setQuery] = useState('');
@@ -37,4 +37,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default ContentHeader;

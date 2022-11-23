@@ -1,6 +1,6 @@
 import { useRef } from 'react';
-import Editable from '../global/Editable';
-import "./Details.css";
+import Editable from '../../ui/Editable';
+import './Details.css';
 
 function Details({ details, initialEditing = false, onChange, onClickOutside }) {
   const textareaRef = useRef(null);
