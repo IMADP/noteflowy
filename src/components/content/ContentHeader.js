@@ -1,21 +1,18 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 function ContentHeader() {
-  const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState('');
 
   // this effect will reset the search bar when navigating away
   useEffect(() => {
-    const paths = location.pathname.split('/');
-    const isSearchPath = paths[1] === 'search';
-
-    if(!isSearchPath) {
+    if(searchParams.get('search') == null) {
       setQuery('');
     }
     
-  }, [location]);
+  }, [location, searchParams]);
 
   /**
    * Sets the query from the input and navigates to a search url.
@@ -24,7 +21,7 @@ function ContentHeader() {
    */
   const onChange = (q) => {
     setQuery(q);
-    navigate(`/search/${q}`);
+    setSearchParams({search: q});
   };
 
   return (

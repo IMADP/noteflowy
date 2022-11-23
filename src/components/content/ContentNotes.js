@@ -1,5 +1,5 @@
 import { DoubleArrowUpIcon } from '@radix-ui/react-icons';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import Note from './notes/Note';
 import './ContentNotes.css';
 import NotesAdd from './notes/NotesAdd';
@@ -7,10 +7,12 @@ import NotesCollapse from './notes/NotesCollapse';
 import { clone, findNote,  visitNoteTreeReverse } from './notes/notesUtil';
 
 function Notes({ notes, noteActions }) {
+  const [searchParams] = useSearchParams();
+ 
   const paths = useLocation().pathname.split('/');
   const isRootPath = paths.length === 2;
   const isNotePath = paths[1] === 'note';
-  const isSearchPath = paths[1] === 'search';
+  const search = searchParams.get('search');
 
   let parent;
 
@@ -27,8 +29,8 @@ function Notes({ notes, noteActions }) {
   }
 
   // filter notes by search
-  if (isSearchPath) {
-    const term = decodeURI(paths[2]).toUpperCase();
+  if (search != null) {
+    const term = decodeURI(search).toUpperCase();
     const clonedNotes = clone(notes);
 
     // start at the child nodes to filter non-matches and mark to keep parents to preserve the path
