@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
-import { clone, findNote, visitNoteTree } from './content/notes/notesUtil';
+import { clone, findNote, visitNoteTree } from './appUtil';
 import Navigation from './navigation/Navigation';
 import instructionNotes from '../instructions';
 import Content from './content/Content';

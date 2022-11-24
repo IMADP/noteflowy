@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import Editable from '../../ui/Editable';
+import Editable from '../ui/Editable';
 import './Details.css';
 
 function Details({ details, initialEditing = false, onChange, onClickOutside }) {

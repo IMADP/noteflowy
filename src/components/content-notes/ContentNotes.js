@@ -1,10 +1,10 @@
 import { DoubleArrowUpIcon } from '@radix-ui/react-icons';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
-import Note from './notes/Note';
+import Note from './Note';
 import './ContentNotes.css';
-import NotesAdd from './notes/NotesAdd';
-import NotesCollapse from './notes/NotesCollapse';
-import { clone, findNote,  visitNoteTreeReverse } from './notes/notesUtil';
+import NotesAdd from './NotesAdd';
+import NotesCollapse from './NotesCollapse';
+import { clone, findNote,  visitNoteTreeReverse } from '../appUtil';
 
 function Notes({ notes, noteActions }) {
   const [searchParams] = useSearchParams();

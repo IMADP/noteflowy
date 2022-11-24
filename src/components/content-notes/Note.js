@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import NoteMenu from './NoteMenu';
-import Editable from '../../ui/Editable';
+import Editable from '../ui/Editable';
 import Details from './Details';
 import { Link } from "react-router-dom";
 import './Note.css';

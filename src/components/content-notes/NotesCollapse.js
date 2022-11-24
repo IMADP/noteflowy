@@ -1,5 +1,5 @@
 import { TriangleRightIcon, TriangleDownIcon } from '@radix-ui/react-icons';
-import { visitNoteTree } from './notesUtil';
+import { visitNoteTree } from '../appUtil';
 
 function NotesCollapse({ notes, noteActions }) {
   let allUncollapsed = true;
