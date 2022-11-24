@@ -113,7 +113,7 @@ function Content({ notes, noteActions }) {
           <ul className='NotesList'>
 
             <li>
-              <Toolbar notes={notes} parentUrl={parentUrl} />
+              <Toolbar notes={notes} parentUrl={parentUrl} noteActions={noteActions} />
             </li>
 
             {notes.map((note) => (
