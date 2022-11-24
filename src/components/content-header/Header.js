@@ -1,7 +1,7 @@
 import { useSearchParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-function ContentHeader() {
+function Header() {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState('');
@@ -34,4 +34,4 @@ function ContentHeader() {
   );
 }
 
-export default ContentHeader;
+export default Header;

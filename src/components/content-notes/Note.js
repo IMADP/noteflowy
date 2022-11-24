@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import NoteMenu from './NoteMenu';
 import Editable from '../ui/Editable';
-import Details from './Details';
+import NoteDetails from './NoteDetails';
 import { Link } from "react-router-dom";
 import './Note.css';
 import { TriangleRightIcon, TriangleDownIcon, FrameIcon } from '@radix-ui/react-icons';
@@ -56,7 +56,7 @@ function Note({ note, parent, noteActions }) {
             </Editable>
 
             {(showDetailEdit || note.details) &&
-                <Details
+                <NoteDetails
                     details={note.details}
                     initialEditing={showDetailEdit}
                     onChange={handleDetailUpdate}

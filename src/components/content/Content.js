@@ -1,11 +1,11 @@
-import ContentHeader from "../content-header/ContentHeader";
-import ContentNotes from "../content-notes/ContentNotes";
+import Header from "../content-header/Header";
+import Notes from "../content-notes/Notes";
 
 function Content({ notes, noteActions }) {
   return (
     <>
-      <ContentHeader />
-      <ContentNotes notes={notes} noteActions={noteActions} />
+      <Header />
+      <Notes notes={notes} noteActions={noteActions} />
     </>
   );
 }

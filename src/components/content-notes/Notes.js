@@ -1,7 +1,7 @@
 import { DoubleArrowUpIcon } from '@radix-ui/react-icons';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import Note from './Note';
-import './ContentNotes.css';
+import './Notes.css';
 import NotesAdd from './NotesAdd';
 import NotesCollapse from './NotesCollapse';
 import { clone, findNote,  visitNoteTreeReverse } from '../appUtil';
