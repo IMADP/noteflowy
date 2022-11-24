@@ -4,8 +4,6 @@ Poor Mans Jira.
 
 - Animations for link clicking, collapsing notes
 
-- Maybe two main shell components (Navigation/Content)
-
 - Lock/Unlock feature? Turns a note into read only from the menu
 
 - Use true contenteditable attribute instead of inputs for note/details like Workflowy
