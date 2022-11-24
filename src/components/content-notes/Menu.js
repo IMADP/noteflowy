@@ -1,8 +1,8 @@
 import React from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { DiscIcon } from '@radix-ui/react-icons';
-import './NoteMenu.css';
-import NoteDeleteDialog from './NoteDeleteDialog';
+import './Menu.css';
+import DeleteDialog from './DeleteDialog';
 
 
 const DropdownMenuDemo = ({ note, parent, noteActions, handleAddDetails }) => {
@@ -27,11 +27,11 @@ const DropdownMenuDemo = ({ note, parent, noteActions, handleAddDetails }) => {
             <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onUpdate({...note, completed: !note.completed})}>
               {note.completed ? 'Uncomplete Note' : 'Complete Note'} <div className="RightSlot"></div>
             </DropdownMenu.Item>
-            <NoteDeleteDialog note={note} onDelete={noteActions.onDelete}>
+            <DeleteDialog note={note} onDelete={noteActions.onDelete}>
               <DropdownMenu.Item className="DropdownMenuItem" onSelect={(event) => event.preventDefault()}>
                 Delete Note <div className="RightSlot"></div>
               </DropdownMenu.Item>
-            </NoteDeleteDialog>
+            </DeleteDialog>
             {!note.details &&
               <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => handleAddDetails()}>
                 Add Details

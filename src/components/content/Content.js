@@ -1,7 +1,10 @@
+import { PlusIcon } from '@radix-ui/react-icons';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { clone, findNote, visitNoteTreeReverse } from '../appUtil';
 import Header from "../content-header/Header";
-import Notes from "../content-notes/Notes";
+import Toolbar from '../content-notes-toolbar/Toolbar';
+import Note from '../content-notes/Note';
+import './Content.css';
 
 /**
  * Content
@@ -78,10 +81,56 @@ function Content({ notes, noteActions }) {
     notes = clonedNotes.filter((n) => n.keep);
   }
 
+  /**
+   * Returns the parent url for the up button navigation.
+   * 
+   * @returns url
+   */
+  const findParentUrl = () => {
+
+    // if its a note path, return the parent
+    if (isNotePath) {
+      return parent === undefined ? '/' : `/note/${parent.id}`;
+    }
+
+    // if its a root search, return the root
+    if (search != null) {
+      return '/';
+    }
+
+    // otherwise return null
+    return null;
+  }
+
+  // if search term, remove search param
+  const parentUrl = findParentUrl();
+
   return (
     <>
       <Header />
-      <Notes notes={notes} parent={parent} noteActions={noteActions} />
+      <main className="Notes content">
+        <article>
+          <ul className='NotesList'>
+
+            <li>
+              <Toolbar notes={notes} parentUrl={parentUrl} />
+            </li>
+
+            {notes.map((note) => (
+              <li key={note.id}>
+                <Note note={note} noteActions={noteActions} />
+              </li>
+            ))}
+
+            <li>
+              <button onClick={noteActions.onAdd}>
+                <PlusIcon />
+              </button>
+            </li>
+
+          </ul>
+        </article>
+      </main>
     </>
   );
 }

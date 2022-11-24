@@ -1,8 +1,8 @@
 import React from 'react';
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
-import './NoteDeleteDialog.css';
+import './DeleteDialog.css';
 
-const NoteDeleteDialog = ({ children, note, onDelete }) => (
+const DeleteDialog = ({ children, note, onDelete }) => (
   <AlertDialog.Root>
     <AlertDialog.Trigger asChild>
       {children}
@@ -27,4 +27,4 @@ const NoteDeleteDialog = ({ children, note, onDelete }) => (
   </AlertDialog.Root>
 );
 
-export default NoteDeleteDialog;
+export default DeleteDialog;

@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import Editable from '../ui/Editable';
-import './NoteDetails.css';
+import './Details.css';
 
-function NoteDetails({ details, initialEditing = false, onChange, onClickOutside }) {
+function Details({ details, initialEditing = false, onChange, onClickOutside }) {
   const textareaRef = useRef(null);
 
   return (
@@ -25,4 +25,4 @@ function NoteDetails({ details, initialEditing = false, onChange, onClickOutside
   )
 }
 
-export default NoteDetails;
+export default Details;
