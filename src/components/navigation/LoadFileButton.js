@@ -1,5 +1,5 @@
 
-function NavigationLoadButton({ fileHandle, onLoad }) {
+function LoadFileButton({ fileHandle, onLoad }) {
     return (
         <button className='Button' onClick={onLoad}>
             {fileHandle !== null ? fileHandle.name : 'Load File'}
@@ -7,4 +7,4 @@ function NavigationLoadButton({ fileHandle, onLoad }) {
     );
 }
 
-export default NavigationLoadButton;
+export default LoadFileButton;
