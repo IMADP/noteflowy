@@ -4,8 +4,6 @@ Poor Mans Jira.
 
 - Animations for link clicking, collapsing notes
 
-- Lock/Unlock feature? Turns a note into read only from the menu
-
 - Keyboard commands (enter new note, shift and ctrl+shift to change parent)
 
 - Add hyperlink support

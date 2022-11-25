@@ -2,7 +2,11 @@
   text-decoration: line-through;
 }
 
-.Details {
+.locked {
+  color: #666;
+}
+
+.details {
   color: #666;
   font-size: 0.75rem;
   margin-left: 3rem;

@@ -62,6 +62,7 @@ function App() {
         text: 'New Note',
         details: 'Details',
         collapsed: false,
+        locked: false,
         showDetails: false
       };
 
@@ -88,6 +89,7 @@ function App() {
         children: [],
         text: 'New Sub Note',
         collapsed: false,
+        locked: false,
         showDetails: false,
         details: ''
       });
@@ -106,6 +108,7 @@ function App() {
       draftNote.details = note.details;
       draftNote.collapsed = note.collapsed;
       draftNote.completed = note.completed;
+      draftNote.locked = note.locked;
       draftNote.showDetails = note.showDetails;
     })
   };

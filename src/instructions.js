@@ -69,6 +69,15 @@ const instructionNotes = [
           completed: true
         },
         {
+          id: "232aea1f-dfc1-40ac-9485-64990469207d",
+          children: [],
+          text: "Notes can be locked and read-only.",
+          details: "Details",
+          collapsed: false,
+          locked: true,
+          completed: false
+        },
+        {
           id: "222ba1f-dfc1-40ac-9485-64990469207d",
           children: [],
           text: "<b>Bold</B> with Ctrl+B, <i>Italicize</i> with Ctrl+I, <u>Underline</u> with Ctrl+U",

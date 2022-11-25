@@ -24,8 +24,11 @@ const DropdownMenuDemo = ({ note, parent, noteActions }) => {
             <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onDuplicate(parent, note)}>
               Clone Note <div className="RightSlot"></div>
             </DropdownMenu.Item>
+            <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onUpdate({ ...note, locked: !note.locked })}>
+              {note.locked ? 'Unlock' : 'Lock'} <div className="RightSlot"></div>
+            </DropdownMenu.Item>
             <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onUpdate({ ...note, completed: !note.completed })}>
-              {note.completed ? 'Uncomplete Note' : 'Complete Note'} <div className="RightSlot"></div>
+              {note.completed ? 'Uncomplete' : 'Complete'} <div className="RightSlot"></div>
             </DropdownMenu.Item>
             <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onUpdate({ ...note, showDetails: !note.showDetails})}>
               {note.showDetails ? 'Hide Details' : 'Show Details'} <div className="RightSlot"></div>

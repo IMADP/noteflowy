@@ -4,6 +4,7 @@ import ContentEditable from "react-contenteditable";
 import { Link } from "react-router-dom";
 import Menu from './Menu';
 import './Note.css';
+import classNames from 'classnames';
 
 function Note({ note, parent, noteActions }) {
    
@@ -34,17 +35,23 @@ function Note({ note, parent, noteActions }) {
 
             <ContentEditable
                 style={{ display: 'inline' }}
-                className={note.completed ? 'completed' : 'uncompleted'}
+                className={classNames({
+                    completed: note.completed,
+                    locked: note.locked
+                  })}
                 html={note.text}
-                disabled={false}
+                disabled={note.locked}
                 onChange={(e) => noteActions.onUpdate({ ...note, text: e.target.value })}
             />
 
             {note.showDetails &&
                 <ContentEditable
-                    className="Details"
+                    className={classNames({
+                        details: true,
+                        locked: note.locked
+                    })}
                     html={note.details}
-                    disabled={false}
+                    disabled={note.locked}
                     onChange={(e) => noteActions.onUpdate({ ...note, details: e.target.value })}
                 />
             }
