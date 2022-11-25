@@ -1,5 +1,9 @@
 Poor Mans Jira.
 
+- Change notes data to start with a single root node instead of an array, and simplify all logic around this
+
+- Add global lock/unlock button
+
 - Adding a new note while searching will immediately hide it if it doesn't match, which makes sense but is confusing
 
 - Animations for link clicking, collapsing notes
