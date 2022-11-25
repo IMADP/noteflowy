@@ -69,6 +69,14 @@ const instructionNotes = [
           completed: true
         },
         {
+          id: "222ba1f-dfc1-40ac-9485-64990469207d",
+          children: [],
+          text: "<b>Bold</B> with Ctrl+B, <i>Italicize</i> with Ctrl+I, <u>Underline</u> with Ctrl+U",
+          details: "Details",
+          collapsed: false,
+          completed: false
+        },
+        {
           id: "20c8ecd8-c21b-4c1f-9366-71df140ae731",
           children: [],
           text: "Notes can store details for large data.",
