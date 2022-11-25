@@ -35,6 +35,7 @@ function Note({ note, parent, noteActions }) {
 
             <ContentEditable
                 style={{ display: 'inline' }}
+                spellcheck="false"
                 className={classNames({
                     completed: note.completed,
                     locked: note.locked
@@ -50,6 +51,7 @@ function Note({ note, parent, noteActions }) {
                         details: true,
                         locked: note.locked
                     })}
+                    spellcheck="false"
                     html={note.details}
                     disabled={note.locked}
                     onChange={(e) => noteActions.onUpdate({ ...note, details: e.target.value })}
