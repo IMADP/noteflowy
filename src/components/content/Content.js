@@ -18,6 +18,7 @@ import './Content.css';
 function Content({ notes, noteActions }) {
   const paths = useLocation().pathname.split('/');
   const isNotePath = paths[1] === 'note';
+  let note = null;
   let parent = null;
 
   // if this is not the root path, find the matching note from the url
@@ -26,6 +27,7 @@ function Content({ notes, noteActions }) {
     parent = result.parent;
 
     if (result.note) {
+      note = result.note;
       notes = [result.note];
     }
   }
@@ -123,7 +125,7 @@ function Content({ notes, noteActions }) {
             ))}
 
             <li>
-              <button onClick={noteActions.onAdd}>
+              <button onClick={() => noteActions.onAdd(note)}>
                 <PlusIcon />
               </button>
             </li>

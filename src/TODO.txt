@@ -10,8 +10,6 @@ Poor Mans Jira.
 
 - Add hyperlink support
 
-- Add new note should be relative to the current note
-
 - Add a copy to clipboard button next to details?
 
 - useImmer instead of useState everywhere for consistency

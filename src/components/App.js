@@ -54,16 +54,23 @@ function App() {
    * 
    * @param {*} note 
    */
-  const onAdd = () => {
+  const onAdd = (parent) => {
     setNotes((draftNotes) => {
-      draftNotes.push({
+      const note = {
         id: uuidv4(),
         children: [],
         text: 'New Note',
         details: 'Details',
         collapsed: false,
         showDetails: false
-      });
+      };
+
+      if(!parent) {
+        draftNotes.push(note);
+      } else {
+        const draftNote = findNote(draftNotes, parent.id).note;
+        draftNote.children.push(note);
+      }
     })
   };
 
