@@ -60,8 +60,9 @@ function App() {
         id: uuidv4(),
         children: [],
         text: 'New Note',
+        details: 'Details',
         collapsed: false,
-        details: null
+        showDetails: false
       });
     })
   };
@@ -80,6 +81,7 @@ function App() {
         children: [],
         text: 'New Sub Note',
         collapsed: false,
+        showDetails: false,
         details: ''
       });
     })
@@ -97,6 +99,7 @@ function App() {
       draftNote.details = note.details;
       draftNote.collapsed = note.collapsed;
       draftNote.completed = note.completed;
+      draftNote.showDetails = note.showDetails;
     })
   };
 

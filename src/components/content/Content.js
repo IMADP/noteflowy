@@ -2,8 +2,8 @@ import { PlusIcon } from '@radix-ui/react-icons';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { clone, findNote, visitNoteTreeReverse } from '../appUtil';
 import Header from "../content-header/Header";
-import Toolbar from '../content-notes-toolbar/Toolbar';
-import Note from '../content-notes/Note';
+import Toolbar from '../content-toolbar/Toolbar';
+import Note from '../content-note/Note';
 import './Content.css';
 
 /**

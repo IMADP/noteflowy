@@ -1,27 +1,18 @@
-import React, { useRef, useState } from 'react';
-import Menu from './Menu';
-import Editable from '../ui/Editable';
-import Details from './Details';
+import { FrameIcon, TriangleDownIcon, TriangleRightIcon } from '@radix-ui/react-icons';
+import React from 'react';
+import ContentEditable from "react-contenteditable";
 import { Link } from "react-router-dom";
+import Menu from './Menu';
 import './Note.css';
-import { TriangleRightIcon, TriangleDownIcon, FrameIcon } from '@radix-ui/react-icons';
 
 function Note({ note, parent, noteActions }) {
-    const inputRef = useRef();
-    const [showDetailEdit, setShowDetailEdit] = useState(false);
-
-    const handleDetailUpdate = (e) => {
-        noteActions.onUpdate({ ...note, details: e.target.value })
-        setShowDetailEdit(false);
-    }
-
+   
     return (
         <div className="Note">
             <Menu
                 note={note}
                 parent={parent}
                 noteActions={noteActions}
-                handleAddDetails={() => setShowDetailEdit(true)}
             />
 
             <Link to={`/note/${note.id}`}>
@@ -40,27 +31,21 @@ function Note({ note, parent, noteActions }) {
                 </button>
             }
 
-            <Editable
-                className={note.completed ? 'completed' : 'uncompleted'}
-                text={note.text}
-                childRef={inputRef}
-                type="input"
-            >
-                <input
-                    ref={inputRef}
-                    type="text"
-                    name="task"
-                    value={note.text}
-                    onChange={(e) => noteActions.onUpdate({ ...note, text: e.target.value })}
-                />
-            </Editable>
 
-            {(showDetailEdit || note.details) &&
-                <Details
-                    details={note.details}
-                    initialEditing={showDetailEdit}
-                    onChange={handleDetailUpdate}
-                    onClickOutside={() => setShowDetailEdit(false)}
+            <ContentEditable
+                style={{ display: 'inline' }}
+                className={note.completed ? 'completed' : 'uncompleted'}
+                html={note.text}
+                disabled={false}
+                onChange={(e) => noteActions.onUpdate({ ...note, text: e.target.value })}
+            />
+
+            {note.showDetails &&
+                <ContentEditable
+                    className="Details"
+                    html={note.details}
+                    disabled={false}
+                    onChange={(e) => noteActions.onUpdate({ ...note, details: e.target.value })}
                 />
             }
 
@@ -72,7 +57,7 @@ function Note({ note, parent, noteActions }) {
                 ))}
             </ul>
             }
-            
+
         </div>
     );
 }
