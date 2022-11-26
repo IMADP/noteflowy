@@ -41,7 +41,6 @@ function Note({ note, parent, noteActions }) {
                     locked: note.locked
                   })}
                 html={note.text}
-                onKeyDown={(e) => console.log(e)}
                 disabled={note.locked}
                 onChange={(e) => noteActions.onUpdate({ ...note, text: e.target.value })}
             />
