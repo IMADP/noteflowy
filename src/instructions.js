@@ -83,6 +83,19 @@ const instructionNotes = [
            "showDetails":false,
            "details":"",
            "completed":true
+        },
+        {
+           "id":"3b60be00-9167-4dd4-a4af-a2ee2ba0101c",
+           "children":[
+              
+           ],
+           "text":"Notes can be links",
+           "collapsed":false,
+           "locked":false,
+           "showDetails":false,
+           "details":"",
+           "completed":false,
+           "link": "https://github.com/IMADP/noteflowy"
         }
      ],
      "text":"Features",

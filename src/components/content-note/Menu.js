@@ -33,12 +33,12 @@ const DropdownMenuDemo = ({ note, parent, noteActions }) => {
             <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onUpdate({ ...note, showDetails: !note.showDetails })}>
               {note.showDetails ? 'Hide Details' : 'Show Details'} <div className="RightSlot"></div>
             </DropdownMenu.Item>
-            {note.link !== null &&
+            {note.link &&
               <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onUpdate({ ...note, link: null })}>
                 Remove Link <div className="RightSlot"></div>
               </DropdownMenu.Item>
             }
-            {note.link === null &&
+            {!note.link &&
               <LinkDialog note={note} onUpdate={noteActions.onUpdate}>
                 <DropdownMenu.Item className="DropdownMenuItem" onSelect={(event) => event.preventDefault()}>
                   Add Link <div className="RightSlot"></div>
