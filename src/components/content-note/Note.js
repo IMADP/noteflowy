@@ -7,7 +7,7 @@ import './Note.css';
 import classNames from 'classnames';
 
 function Note({ note, parent, noteActions }) {
-   
+
     return (
         <div className="Note">
             <Menu
@@ -32,21 +32,41 @@ function Note({ note, parent, noteActions }) {
                 </button>
             }
 
+            {note.link !== null &&
+                <a href={note.link} target="#blank">
+                    <ContentEditable
+                        style={{ display: 'inline' }}
+                        tagName='span'
+                        spellCheck="false"
+                        className={classNames({
+                            completed: note.completed,
+                            locked: note.locked
+                        })}
+                        html={note.text}
+                        disabled={note.locked}
+                        onChange={(e) => noteActions.onUpdate({ ...note, text: e.target.value })}
+                    />
+                </a>
+            }
 
-            <ContentEditable
-                style={{ display: 'inline' }}
-                spellCheck="false"
-                className={classNames({
-                    completed: note.completed,
-                    locked: note.locked
-                  })}
-                html={note.text}
-                disabled={note.locked}
-                onChange={(e) => noteActions.onUpdate({ ...note, text: e.target.value })}
-            />
+            {note.link === null &&
+                <ContentEditable
+                    style={{ display: 'inline' }}
+                    tagName='span'
+                    spellCheck="false"
+                    className={classNames({
+                        completed: note.completed,
+                        locked: note.locked
+                    })}
+                    html={note.text}
+                    disabled={note.locked}
+                    onChange={(e) => noteActions.onUpdate({ ...note, text: e.target.value })}
+                />
+            }
 
             {note.showDetails &&
                 <ContentEditable
+                    tagName='div'
                     className={classNames({
                         details: true,
                         locked: note.locked

@@ -1,9 +1,9 @@
-import React from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { DiscIcon } from '@radix-ui/react-icons';
-import './Menu.css';
+import React from 'react';
 import DeleteDialog from './DeleteDialog';
-
+import LinkDialog from './LinkDialog';
+import './Menu.css';
 
 const DropdownMenuDemo = ({ note, parent, noteActions }) => {
 
@@ -30,9 +30,21 @@ const DropdownMenuDemo = ({ note, parent, noteActions }) => {
             <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onUpdate({ ...note, completed: !note.completed })}>
               {note.completed ? 'Uncomplete' : 'Complete'} <div className="RightSlot"></div>
             </DropdownMenu.Item>
-            <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onUpdate({ ...note, showDetails: !note.showDetails})}>
+            <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onUpdate({ ...note, showDetails: !note.showDetails })}>
               {note.showDetails ? 'Hide Details' : 'Show Details'} <div className="RightSlot"></div>
             </DropdownMenu.Item>
+            {note.link !== null &&
+              <DropdownMenu.Item className="DropdownMenuItem" onSelect={() => noteActions.onUpdate({ ...note, link: null })}>
+                Remove Link <div className="RightSlot"></div>
+              </DropdownMenu.Item>
+            }
+            {note.link === null &&
+              <LinkDialog note={note} onUpdate={noteActions.onUpdate}>
+                <DropdownMenu.Item className="DropdownMenuItem" onSelect={(event) => event.preventDefault()}>
+                  Add Link <div className="RightSlot"></div>
+                </DropdownMenu.Item>
+              </LinkDialog>
+            }
             <DeleteDialog note={note} onDelete={noteActions.onDelete}>
               <DropdownMenu.Item className="DropdownMenuItem" onSelect={(event) => event.preventDefault()}>
                 Delete Note <div className="RightSlot"></div>

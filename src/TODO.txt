@@ -8,8 +8,10 @@ Poor Mans Jira.
 
 - Keyboard commands (enter new note, shift and ctrl+shift to change parent)
 
-- Add hyperlink support
+- Add partial hyperlink support? (onselectionchange event needed to popover highlighted text)
 
 - Add a copy to clipboard button next to details?
 
 - useImmer instead of useState everywhere for consistency
+
+- Menu stays open after deleting/add url

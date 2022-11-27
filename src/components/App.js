@@ -91,6 +91,7 @@ function App() {
         collapsed: false,
         locked: false,
         showDetails: false,
+        link: null,
         details: ''
       });
     })
@@ -110,6 +111,7 @@ function App() {
       draftNote.completed = note.completed;
       draftNote.locked = note.locked;
       draftNote.showDetails = note.showDetails;
+      draftNote.link = note.link;
     })
   };
 
