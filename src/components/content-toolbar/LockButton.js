@@ -1,12 +1,12 @@
 import { LockClosedIcon, LockOpen1Icon } from '@radix-ui/react-icons';
 import { visitNoteTree } from '../appUtil';
 
-function LockButton({ rootNote, noteActions }) {
+function LockButton({ note, noteActions }) {
   let allLocked = true;
  
   // look through each note to see if any are locked
-  visitNoteTree(rootNote, (note) => {
-    if (!note.locked) {
+  visitNoteTree(note, (n) => {
+    if (!n.locked) {
       allLocked = false;
     }
   });
@@ -15,13 +15,13 @@ function LockButton({ rootNote, noteActions }) {
     <>
 
       {allLocked &&
-        <button onClick={() => noteActions.onUpdateAll(rootNote, (note) => { note.locked = false })} >
+        <button onClick={() => noteActions.onUpdateAll(note, (n) => { n.locked = false })} >
           <LockClosedIcon />
         </button>
       }
 
       {!allLocked &&
-        <button onClick={() => noteActions.onUpdateAll(rootNote, (note) => { note.locked = true })} >
+        <button onClick={() => noteActions.onUpdateAll(note, (n) => { n.locked = true })} >
           <LockOpen1Icon />
         </button>
       }

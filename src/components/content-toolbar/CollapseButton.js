@@ -1,12 +1,12 @@
 import { TriangleRightIcon, TriangleDownIcon } from '@radix-ui/react-icons';
 import { visitNoteTree } from '../appUtil';
 
-function CollapseButton({ rootNote, noteActions }) {
+function CollapseButton({ note, noteActions }) {
   let allUncollapsed = true;
 
   // look through each note to see if any are collapsed
-  visitNoteTree(rootNote, (note) => {
-    if (note.collapsed) {
+  visitNoteTree(note, (n) => {
+    if (n.collapsed) {
       allUncollapsed = false;
     }
   });
@@ -15,13 +15,13 @@ function CollapseButton({ rootNote, noteActions }) {
     <>
 
       {!allUncollapsed &&
-        <button onClick={() => noteActions.onUpdateAll(rootNote, (note) => { note.collapsed = false })} >
+        <button onClick={() => noteActions.onUpdateAll(note, (n) => { n.collapsed = false })} >
           <TriangleRightIcon />
         </button>
       }
 
       {allUncollapsed &&
-        <button onClick={() => noteActions.onUpdateAll(rootNote, (note) => { note.collapsed = true })} >
+        <button onClick={() => noteActions.onUpdateAll(note, (n) => { n.collapsed = true })} >
           <TriangleDownIcon />
         </button>
       }

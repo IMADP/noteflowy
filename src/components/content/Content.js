@@ -112,7 +112,7 @@ function Content({ rootNote, noteActions }) {
           <ul className='NotesList'>
 
             <li>
-              <Toolbar rootNote={rootNote} parentUrl={parentUrl} noteActions={noteActions} />
+              <Toolbar note={note} parentUrl={parentUrl} noteActions={noteActions} />
             </li>
 
             {/* don't render the root node except for children */}

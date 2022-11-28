@@ -3,12 +3,12 @@ import LockButton from './LockButton';
 import UpButton from './UpButton';
 import './Toolbar.css';
 
-function Toolbar({ rootNote, parentUrl, noteActions }) {
+function Toolbar({ note, parentUrl, noteActions }) {
   return (
     <div className='toolbar'>
       <UpButton parentUrl={parentUrl} />
-      <LockButton rootNote={rootNote} noteActions={noteActions} />
-      <CollapseButton rootNote={rootNote} noteActions={noteActions} />
+      <LockButton note={note} noteActions={noteActions} />
+      <CollapseButton note={note} noteActions={noteActions} />
     </div>
   );
 }
