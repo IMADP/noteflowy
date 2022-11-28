@@ -10,7 +10,7 @@ import Content from './content/Content';
 
 function App() {
   const [fileHandle, setFileHandle] = useImmer(null);
-  const [notes, setNotes] = useImmer(instructionNotes);
+  const [rootNote, setRootNote] = useImmer(instructionNotes);
   
   /**
    * This effect will save the notes state to a file on change.
@@ -26,12 +26,12 @@ function App() {
     // create an async function to write to a file
     const writeData = async () => {
       const writable = await fileHandle.createWritable();
-      await writable.write(JSON.stringify(notes));
+      await writable.write(JSON.stringify(rootNote));
       await writable.close();
     }
 
     writeData();
-  }, [fileHandle, notes]);
+  }, [fileHandle, rootNote]);
 
   /**
    * Loads a file and parses the notes data.
@@ -42,9 +42,9 @@ function App() {
       let [fileHandle] = await window.showOpenFilePicker();
       const file = await fileHandle.getFile();
       const contents = await file.text();
-      var data = Object.keys(contents).length > 0 ? JSON.parse(contents) : [];
+      var data = Object.keys(contents).length > 0 ? JSON.parse(contents) : { root: true, children: []};
       setFileHandle(fileHandle);
-      setNotes(data);
+      setRootNote(data);
     }
     onLoadAsync();
   };
@@ -55,7 +55,7 @@ function App() {
    * @param {*} note 
    */
   const onAdd = (parent) => {
-    setNotes((draftNotes) => {
+    setRootNote((draftRootNote) => {
       const note = {
         id: uuidv4(),
         children: [],
@@ -66,12 +66,8 @@ function App() {
         showDetails: false
       };
 
-      if(!parent) {
-        draftNotes.push(note);
-      } else {
-        const draftNote = findNote(draftNotes, parent.id).note;
-        draftNote.children.push(note);
-      }
+      const draftNote = findNote(draftRootNote, parent.id).note;
+      draftNote.children.push(note);
     })
   };
 
@@ -81,8 +77,8 @@ function App() {
    * @param {*} parent 
    */
   const onAddSubNote = (parent) => {
-    setNotes((draftNotes) => {
-      const note = findNote(draftNotes, parent.id).note;
+    setRootNote((draftRootNote) => {
+      const note = findNote(draftRootNote, parent.id).note;
 
       note.children.push({
         id: uuidv4(),
@@ -103,8 +99,8 @@ function App() {
    * @param {*} note 
    */
   const onUpdate = (note) => {
-    setNotes((draftNotes) => {
-      const draftNote = findNote(draftNotes, note.id).note;
+    setRootNote((draftRootNote) => {
+      const draftNote = findNote(draftRootNote, note.id).note;
       draftNote.text = note.text;
       draftNote.details = note.details;
       draftNote.collapsed = note.collapsed;
@@ -121,14 +117,12 @@ function App() {
    * @param {*} notes 
    * @param {*} collapsed 
    */
-  const onUpdateAll = (notes, updateAction) => {
-    setNotes((draftNotes) => {
-      notes.forEach((note) => {
-        const draftNote = findNote(draftNotes, note.id).note
+  const onUpdateAll = (note, updateAction) => {
+    setRootNote((draftRootNote) => {
+      const draftNote = findNote(draftRootNote, note.id).note
 
-        visitNoteTree(draftNote, (n) => {
-          updateAction(n);
-        })
+      visitNoteTree(draftNote, (n) => {
+        updateAction(n);
       })
     })
   }
@@ -149,16 +143,9 @@ function App() {
       child.id = uuidv4();
     })
 
-    setNotes((draftNotes) => {
-
-      // if the note has no parent, add it to the root notes list
-      if (parent === undefined) {
-        draftNotes.push(duplicateNote);
-        return;
-      }
-
-      // otherwise find the parent and add to the list of children
-      const parentNote = findNote(draftNotes, parent.id).note;
+    setRootNote((draftRootNote) => {
+      // find the parent and add to the list of children
+      const parentNote = findNote(draftRootNote, parent.id).note;
       parentNote.children.push(duplicateNote);
     })
   };
@@ -169,17 +156,9 @@ function App() {
    * @param {*} id 
    */
   const onDelete = (id) => {
-    setNotes((draftNotes) => {
-      const index = draftNotes.findIndex(note => note.id === id);
-
-      // if we found a parent note, remove it from the notes list
-      if (index !== -1) {
-        draftNotes.splice(index, 1)
-        return;
-      }
-
-      // otherwise look for a child note and remove it from its parent
-      visitNoteTree(draftNotes, (child, parent) => {
+    setRootNote((draftRootNote) => {
+      // look for a child note and remove it from its parent
+      visitNoteTree(draftRootNote, (child, parent) => {
         if (child.id === id) {
           parent.children = parent.children.filter(childNote => childNote.id !== id);
         }
@@ -199,9 +178,9 @@ function App() {
 
   return (
     <Router>
-      <Navigation fileHandle={fileHandle} notes={notes} onLoad={onLoad} />
+      <Navigation fileHandle={fileHandle} rootNote={rootNote} onLoad={onLoad} />
       <div className="col-2">
-        <Content notes={notes} noteActions={noteActions} />
+        <Content rootNote={rootNote} noteActions={noteActions} />
       </div>
     </Router>
   );

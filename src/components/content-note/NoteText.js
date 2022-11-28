@@ -6,7 +6,7 @@ function NoteText({ note, noteActions }) {
     
     return (
         <>
-            {note.link &&
+            {!note.root && note.link &&
                 <a href={note.link} target="#blank">
                     <ContentEditable
                         style={{ display: 'inline' }}
@@ -23,7 +23,7 @@ function NoteText({ note, noteActions }) {
                 </a>
             }
 
-            {!note.link &&
+            {!note.root &&!note.link &&
                 <ContentEditable
                     style={{ display: 'inline' }}
                     tagName='span'

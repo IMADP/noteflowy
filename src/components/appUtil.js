@@ -5,38 +5,30 @@ import _ from "lodash";
    * 
    * @param {*} object
    */
- export function clone(object) {
+export function clone(object) {
   return _.cloneDeep(object);
 }
 
 /**
    * Visits the note and all sub notes, applying the given function to the note first and then child notes.
    * 
-   * @param {*} noteOrNotes 
+   * @param {*} rootNote 
    * @param {*} apply(note, parent) 
    */
- export function visitNoteTree(noteOrNotes, apply, parent) {
-  const notes = Array.isArray(noteOrNotes) ? noteOrNotes : [noteOrNotes];
-
-  notes.forEach(note => {
-    apply(note, parent);
-    note.children.forEach(c => visitNoteTree(c, apply, note));
-  });
+export function visitNoteTree(rootNote, apply, parent) {
+  apply(rootNote, parent);
+  rootNote.children.forEach(c => visitNoteTree(c, apply, rootNote));
 }
 
 /**
    * Visits the note and all sub notes, applying the given function to the children first and then parent note.
    * 
-   * @param {*} noteOrNotes 
+   * @param {*} rootNote 
    * @param {*} apply(note, parent) 
    */
- export function visitNoteTreeReverse(noteOrNotes, apply, parent) {
-  const notes = Array.isArray(noteOrNotes) ? noteOrNotes : [noteOrNotes];
-
-  notes.forEach(note => {
-    note.children.forEach(c => visitNoteTreeReverse(c, apply, note));
-    apply(note, parent);
-  });
+export function visitNoteTreeReverse(rootNote, apply, parent) {
+  rootNote.children.forEach(c => visitNoteTreeReverse(c, apply, rootNote));
+  apply(rootNote, parent);
 }
 
 /**
@@ -47,17 +39,25 @@ import _ from "lodash";
  * @param {*} parent 
  * @returns note
  */
-export function findNote(notes, id, parent) {
-  if (notes) {
-    for (var i = 0; i < notes.length; i++) {
-      if (notes[i].id === id) {
-        return { note: notes[i], parent }
-      }
-      var found = findNote(notes[i].children, id, notes[i]);
+export function findNote(rootNote, id, parent) {
 
-      if (found) {
-        return found;
-      }
+  // if no root was provided, return empty
+  if (!rootNote) {
+    return;
+  }
+
+  // if the root note is a match, return it
+  if (rootNote.id === id) {
+    return { note: rootNote, parent }
+  }
+
+  // recursively search each child
+  for (var i = 0; i < rootNote.children.length; i++) {
+    var found = findNote(rootNote.children[i], id, rootNote);
+
+    if (found) {
+      return found;
     }
   }
+
 }
