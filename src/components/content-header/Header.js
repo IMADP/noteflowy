@@ -5,14 +5,14 @@ import { useImmer } from "use-immer";
 function Header() {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [query, setQuery] = useImmer('');
+  const search = searchParams.get('search');
+  const [query, setQuery] = useImmer(search === null ? '' : search);
 
   // this effect will reset the search bar when navigating away
   useEffect(() => {
     if(searchParams.get('search') == null) {
       setQuery('');
     }
-    
   }, [location, searchParams, setQuery]);
 
   /**
