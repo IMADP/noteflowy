@@ -1,11 +1,11 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
-import React, { useState } from 'react';
+import React from 'react';
+import { useImmer } from "use-immer";
 import './LinkDialog.css';
 
-
-const LinkDialog = ({children, note, onUpdate}) => {
-    const [url, setUrl] = useState('https://');
+const LinkDialog = ({ children, note, onUpdate }) => {
+    const [url, setUrl] = useImmer('https://');
 
     return (
         <Dialog.Root>
@@ -24,7 +24,7 @@ const LinkDialog = ({children, note, onUpdate}) => {
                     </fieldset>
                     <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
                         <Dialog.Close asChild>
-                            <button className="Button green" onClick={() => onUpdate({...note, link: url })}>Save changes</button>
+                            <button className="Button green" onClick={() => onUpdate({ ...note, link: url })}>Save changes</button>
                         </Dialog.Close>
                     </div>
                     <Dialog.Close asChild>

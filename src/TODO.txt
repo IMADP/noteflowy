@@ -12,6 +12,4 @@ Poor Mans Jira.
 
 - Add a copy to clipboard button next to details?
 
-- useImmer instead of useState everywhere for consistency
-
 - Menu stays open after deleting/add url

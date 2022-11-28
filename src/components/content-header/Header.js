@@ -1,10 +1,11 @@
 import { useSearchParams, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useImmer } from "use-immer";
 
 function Header() {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useImmer('');
 
   // this effect will reset the search bar when navigating away
   useEffect(() => {
@@ -12,7 +13,7 @@ function Header() {
       setQuery('');
     }
     
-  }, [location, searchParams]);
+  }, [location, searchParams, setQuery]);
 
   /**
    * Sets the query from the input and navigates to a search url.
