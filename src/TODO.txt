@@ -1,14 +1,16 @@
 Poor Mans Jira.
 
-- Change notes data to start with a single root node instead of an array, and simplify all logic around this
-
-- Adding a new note while searching will immediately hide it if it doesn't match, which makes sense but is confusing
+- Drag and drop support/ordering needing
 
 - Animations for link clicking, collapsing notes
 
 - Keyboard commands (enter new note, shift and ctrl+shift to change parent)
 
 - Add partial hyperlink support? (onselectionchange event needed to popover highlighted text)
+
+- (Maybe) Change notes data to start with a single root node instead of an array, and simplify all logic around this
+
+- Adding a new note while searching will immediately hide it if it doesn't match, which makes sense but is confusing
 
 - Add a copy to clipboard button next to details?
 
