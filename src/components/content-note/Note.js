@@ -32,7 +32,7 @@ function Note({ note, parent, noteActions }) {
                 </button>
             }
 
-            <NoteText note={note} noteActions={noteActions} />
+            <NoteText note={note} parent={parent} noteActions={noteActions} />
             <NoteDetails note={note} noteActions={noteActions} />
 
             {!note.collapsed && <ul className='NotesList'>

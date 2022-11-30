@@ -4,7 +4,10 @@ Poor Mans Jira.
 
 - Animations for link clicking, collapsing notes
 
-- Keyboard commands (enter new note, shift and ctrl+shift to change parent)
+- Keyboard commands (shift and ctrl+shift to change parent)
+
+- Pressing enter to create note should give focus
+- Pressing enter to create note should create next to previous (requires ordering)
 
 - Add partial hyperlink support? (onselectionchange event needed to popover highlighted text)
 
