@@ -2,8 +2,6 @@ Poor Mans Jira.
 
 - Note ordering needing, maintain order on update, dragging
 
-- Need a drop target for root note
-
 - Animations for link clicking, collapsing notes
 
 - Keyboard commands (shift and ctrl+shift to change parent)
