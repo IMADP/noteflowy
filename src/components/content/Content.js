@@ -118,13 +118,13 @@ function Content({ rootNote, noteActions }) {
             {/* don't render the root node except for children */}
             {note.root && note.children.map((n) => (
               <li key={n.id}>
-                <Note note={n} parent={rootNote} noteActions={noteActions} />
+                <Note rootNote={rootNote} note={n} parent={rootNote} noteActions={noteActions} />
               </li>
             ))}
 
             {!note.root &&
               <li>
-                <Note note={note} noteActions={noteActions} />
+                <Note rootNote={rootNote} note={note} noteActions={noteActions} />
               </li>
             }
 

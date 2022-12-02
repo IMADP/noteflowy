@@ -5,10 +5,17 @@ import ContentEditable from "react-contenteditable";
 function NoteText({ note, parent, noteActions }) {
 
     const onKeyDown = (e) => {
+        
         // add a new note on key down
         if (e.code === 'Enter') {
             e.preventDefault();
             noteActions.onAdd(parent);
+        }
+
+        // add a new note on key down
+        if (!e.shiftKey && e.code === 'Tab') {
+            e.preventDefault();
+            noteActions.onAdd(note);
         }
     };
 

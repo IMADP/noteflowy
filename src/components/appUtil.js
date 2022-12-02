@@ -61,3 +61,27 @@ export function findNote(rootNote, id, parent) {
   }
 
 }
+
+/**
+ * Returns true if a child id is a descendent of the given parent note.
+ * 
+ * @param {*} parentNote 
+ * @param {*} childId 
+ * @returns boolean
+ */
+ export function isDescendent(parentNote, childId) {
+
+  // if a child is a direct descendent, return true
+  if (parentNote.children.find(n => n.id === childId)) {
+    return true;
+  }
+
+  // recursively search each child
+  for (var i = 0; i < parentNote.children.length; i++) {
+    var found = isDescendent(parentNote.children[i], childId);
+
+    if (found) {
+      return found;
+    }
+  }
+}

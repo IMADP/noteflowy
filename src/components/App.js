@@ -11,7 +11,7 @@ import Content from './content/Content';
 function App() {
   const [fileHandle, setFileHandle] = useImmer(null);
   const [rootNote, setRootNote] = useImmer(instructionNotes);
-  
+
   /**
    * This effect will save the notes state to a file on change.
    * 
@@ -42,7 +42,7 @@ function App() {
       let [fileHandle] = await window.showOpenFilePicker();
       const file = await fileHandle.getFile();
       const contents = await file.text();
-      var data = Object.keys(contents).length > 0 ? JSON.parse(contents) : { root: true, children: []};
+      var data = Object.keys(contents).length > 0 ? JSON.parse(contents) : { root: true, children: [] };
       setFileHandle(fileHandle);
       setRootNote(data);
     }
@@ -128,6 +128,30 @@ function App() {
   }
 
   /**
+   * Moves a note from one parent to another.
+   * 
+   * @param {*} sourceId 
+   * @param {*} parentId 
+   */
+   const onMove = (sourceId, parentId) => {
+    setRootNote((draftRootNote) => {
+
+      // do nothing if source and destination are the same
+      if(sourceId === parentId) {
+        return;
+      }
+
+      // find the source note and target note
+      const {note: sourceNote, parent: sourceParent} = findNote(draftRootNote, sourceId);
+      const {note: targetNote} = findNote(draftRootNote, parentId);
+
+      // remove from original parent and add to new parent
+      sourceParent.children = sourceParent.children.filter(n => n.id !== sourceId);
+      targetNote.children.push(sourceNote);
+    })
+  };
+
+  /**
    * Duplicates a note and all sub notes.
    * 
    * @param {*} parent 
@@ -173,16 +197,17 @@ function App() {
     onDuplicate,
     onUpdate,
     onUpdateAll,
+    onMove,
     onDelete
   };
 
   return (
-    <Router>
-      <Navigation fileHandle={fileHandle} rootNote={rootNote} onLoad={onLoad} />
-      <div className="col-2">
-        <Content rootNote={rootNote} noteActions={noteActions} />
-      </div>
-    </Router>
+      <Router>
+        <Navigation fileHandle={fileHandle} rootNote={rootNote} onLoad={onLoad} />
+        <div className="col-2">
+          <Content rootNote={rootNote} noteActions={noteActions} />
+        </div>
+      </Router>
   );
 }
 
