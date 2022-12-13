@@ -1,20 +1,19 @@
-import { IconButton, List, ListItem } from '@chakra-ui/react';
+import { List, ListItem } from '@chakra-ui/react';
 import { BiPlusCircle } from 'react-icons/bi';
-import { NotesTree } from './notes-tree';
+import { NoteTree } from './note-tree';
 import { Note, useNotes } from './use-notes';
 
-interface NotesTreeProps {
+interface NoteRootProps {
   note: Note;
-  noteParent: Note | undefined;
 }
 
-export const NotesTreeRoot = ({ note, noteParent }: NotesTreeProps) => {
+export const NoteRoot = ({ note }: NoteRootProps) => {
   const notes = useNotes();
 
   return (
     <>
       {note.root && note.children.map((n: Note) => (
-        <NotesTree key={n.id} note={n} noteParent={undefined} />
+        <NoteTree key={n.id} note={n} noteParent={undefined} />
       ))}
 
       <List ml={5} mb={5}>

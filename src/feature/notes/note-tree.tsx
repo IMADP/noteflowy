@@ -4,12 +4,12 @@ import { NoteMenu } from './note-menu';
 import { NoteText } from './note-text';
 import { Note } from './use-notes';
 
-interface NotesTreeProps {
+interface NoteTreeProps {
   note: Note;
   noteParent: Note | undefined;
 }
 
-export const NotesTree = ({ note, noteParent }: NotesTreeProps) => {
+export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
   return (
     <List ml={5} mb={5}>
 
@@ -21,7 +21,7 @@ export const NotesTree = ({ note, noteParent }: NotesTreeProps) => {
 
         {note.children.map((n: Note) => (
           <Box key={n.id} mt={5}>
-            <NotesTree note={n} noteParent={note} />
+            <NoteTree note={n} noteParent={note} />
           </Box>
         ))}
 
