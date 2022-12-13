@@ -4,9 +4,10 @@ import { Note, useNotes } from './use-notes';
 
 interface NoteTextProps {
   note: Note;
+  noteParent: Note | undefined;
 }
 
-export const NoteText = ({ note }: NoteTextProps) => {
+export const NoteText = ({ note, noteParent }: NoteTextProps) => {
   const notes = useNotes();
 
   const onKeyDown = (e: any) => {
@@ -14,7 +15,7 @@ export const NoteText = ({ note }: NoteTextProps) => {
     // add a new note on key down
     if (e.code === 'Enter') {
       e.preventDefault();
-      notes.onAdd(notes.currentNoteParent || notes.rootNote);
+      notes.onAdd(noteParent || notes.rootNote);
     }
 
     // add a new note on key down

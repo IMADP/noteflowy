@@ -16,7 +16,7 @@ export const NotesTree = ({ note, noteParent }: NotesTreeProps) => {
       <ListItem>
 
         <NoteMenu note={note} noteParent={noteParent}/>
-        <NoteText note={note} />
+        <NoteText note={note} noteParent={noteParent} />
         <NoteDetails note={note} />
 
         {note.children.map((n: Note) => (
