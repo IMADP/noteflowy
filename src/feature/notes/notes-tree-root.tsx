@@ -20,8 +20,8 @@ export const NotesTreeRoot = ({ note, noteParent }: NotesTreeProps) => {
       <List ml={5} mb={5}>
 
         {note.root &&
-          <ListItem>
-            <IconButton aria-label='Add Note' onClick={() => notes.onAdd(note)} icon={<BiPlusCircle />} ></IconButton >
+          <ListItem ml={2}>
+            <BiPlusCircle cursor="pointer" aria-label='Add Note' onClick={() => notes.onAdd(note)} />
           </ListItem>
         }
 
