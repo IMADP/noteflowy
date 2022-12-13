@@ -1,11 +1,10 @@
-const instructionNotes = 
+import { Note } from "feature/notes/use-notes";
+
+const instructionNotes: Note = 
 {
    "id":"100c83b8-8cf3-4882-86e4-294ef27769ec",
    "root":true,
-   "text":null,
-   "details":null,
-   "collapsed":false,
-   "showDetails":false,
+   "text":"root",
    "children":[
       {
          "id":"000c83b8-8cf3-4882-86e4-294ef27769ec",
@@ -14,7 +13,6 @@ const instructionNotes =
          ],
          "text":"<b>Welcome to Noteflowy</b>",
          "details":"Noteflowy is an offline clone of Workflowy.&nbsp;<div>It saves data directly to a file on your hard drive instead of an external service, so your data is completely private.</div><div>You can make local copies of your data manually, or use a cloud sync like Dropbox.<br></div>",
-         "collapsed":false,
          "showDetails":true
       },
       {
@@ -29,15 +27,11 @@ const instructionNotes =
                         
                      ],
                      "text":"Add child notes to organize your note hierarchy.",
-                     "collapsed":false,
-                     "locked":false,
-                     "showDetails":false,
                      "details":""
                   }
                ],
                "text":"Each note acts like a document.",
-               "details":"Details",
-               "collapsed":false
+               "details":"Details"
             },
             {
                "id":"12edabb7-45c1-4c35-8df1-51247993f7ee",
@@ -45,9 +39,7 @@ const instructionNotes =
                   
                ],
                "text":"<b>Bold </b>notes with CTRL+B",
-               "details":"Details",
-               "collapsed":false,
-               "completed":false
+               "details":"Details"
             },
             {
                "id":"3257e2f3-8f14-4196-9d15-c21856840fae",
@@ -55,9 +47,7 @@ const instructionNotes =
                   
                ],
                "text":"<i>Italicize</i><b>&nbsp;</b>notes with CTRL+I",
-               "details":"Details",
-               "collapsed":false,
-               "completed":false
+               "details":"Details"
             },
             {
                "id":"0add91c5-8298-4912-b9af-4c0c500f9ec9",
@@ -65,9 +55,7 @@ const instructionNotes =
                   
                ],
                "text":"<u>Underline</u>&nbsp;notes with CTRL+U<br>",
-               "details":"Details",
-               "collapsed":false,
-               "completed":false
+               "details":"Details"
             },
             {
                "id":"81368e32-c674-4677-b386-e0e241e9bc17",
@@ -75,9 +63,7 @@ const instructionNotes =
                   
                ],
                "text":"Notes can be locked and read-only",
-               "collapsed":false,
                "locked":true,
-               "showDetails":false,
                "details":""
             },
             {
@@ -86,9 +72,6 @@ const instructionNotes =
                   
                ],
                "text":"Notes can be completed",
-               "collapsed":false,
-               "locked":false,
-               "showDetails":false,
                "details":"",
                "completed":true
             },
@@ -98,17 +81,12 @@ const instructionNotes =
                   
                ],
                "text":"Notes can be links",
-               "collapsed":false,
-               "locked":false,
-               "showDetails":false,
                "details":"",
-               "completed":false,
                "link":"https://github.com/IMADP/noteflowy"
             }
          ],
          "text":"Features",
-         "details":"Details",
-         "collapsed":false
+         "details":"Details"
       },
       {
          "id":"4db125f3-b72c-47bb-9b59-e76f8ad04b1f",
@@ -117,7 +95,6 @@ const instructionNotes =
          ],
          "text":"Getting Started<br>",
          "details":"<b>1)</b> Create an empty file on your computer<div><b>2)</b> Click the Load File button on the left nav</div><div><b>3)</b> Start adding notes</div>",
-         "collapsed":false,
          "showDetails":true
       }
    ]
