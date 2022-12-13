@@ -8,8 +8,12 @@ export const NotesContent = () => {
 
   return (
     <Box bg={mode('white', 'gray.800')} flex="1" pt="10" pl="5">
-      {notes.currentNote.root && <NotesTreeRoot note={notes.currentNote} />}
-      {!notes.currentNote.root && <NotesTree note={notes.currentNote} />}
+      {notes.currentNote.root &&
+        <NotesTreeRoot note={notes.currentNote} noteParent={notes.currentNote} />
+      }
+      {!notes.currentNote.root &&
+        <NotesTree note={notes.currentNote} noteParent={notes.currentNoteParent} />
+      }
     </Box>
   )
 }

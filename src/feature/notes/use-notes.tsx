@@ -29,9 +29,9 @@ export interface Note {
  */
 interface NotesContextType {
   fileName: string | null;
-  rootNote: any;
-  currentNote: any;
-  currentNoteParent: any;
+  rootNote: Note;
+  currentNote: Note;
+  currentNoteParent: Note | undefined;
   parentUrl: string | null;
   search: string | null;
   onLoad: () => void;
@@ -40,7 +40,7 @@ interface NotesContextType {
   onUpdate: (note: Note) => void;
   onUpdateAll: (note: Note, updateAction: (note: Note) => void) => void;
   onMove: (sourceId: string, parentId: string) => void;
-  onDuplicate: (parent: Note, note: Note) => void;
+  onDuplicate: (parent: Note | undefined, note: Note) => void;
   onDelete: (id: string) => void;
 }
 
@@ -231,7 +231,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
    * @param {*} parent 
    * @param {*} note 
    */
-  const onDuplicate = (parent: Note, note: Note) => {
+  const onDuplicate = (parent: Note | undefined, note: Note) => {
 
     // deep clone the note and all sub notes
     const duplicateNote = clone(note);
@@ -243,7 +243,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
 
     setRootNote((draftRootNote) => {
       // find the parent and add to the list of children
-      const results = findNote(draftRootNote, parent.id);
+      const results = findNote(draftRootNote, parent === undefined ? rootNote.id : parent.id);
 
       if (results) {
         const parentNote = results.note;

@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.completed {
+  text-decoration: line-through;
+}
+
+.locked {
+  color: #666;
+}
+
+.details {
+  color: #505050;
+  font-size: 1rem;
+  margin-left: 3rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  line-height: 1.3rem;
+}
