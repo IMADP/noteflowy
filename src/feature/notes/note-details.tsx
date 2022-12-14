@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { useRef } from 'react';
-import ContentEditable from "react-contenteditable";
+import { useState } from 'react';
+import NoteEditable from "./note-editable";
 import { Note, useNotes } from './use-notes';
 
 interface NoteDetailsProps {
@@ -9,23 +9,25 @@ interface NoteDetailsProps {
 
 export const NoteDetails = ({ note }: NoteDetailsProps) => {
   const notes = useNotes();
-  const text = useRef('');
-  text.current = note.details || "Details";
+  const [html, setHtml] = useState(note.details || "Details");
 
   return (
     <>
       {note.showDetails &&
-        <ContentEditable
+        <NoteEditable
           tagName='div'
           className={classNames({
             details: true,
             locked: note.locked
           })}
           spellCheck="false"
-          html={text.current}
+          html={html}
           disabled={note.locked}
-          onBlur={() => notes.onUpdate({ ...note, details: text.current })}
-          onChange={(e) => { text.current = e.target.value }}
+          onBlur={() => notes.onUpdate({ ...note, details: html })}
+          onChange={(e: any) => setHtml(e.target.value)}
+          onInput={undefined}
+          onKeyPress={undefined}
+          onKeyDown={undefined}
         />
       }
     </>

@@ -34,7 +34,7 @@ export const Navigation = () => {
             <Stack spacing="1">
               {notes.rootNote.children && notes.rootNote.children.map((note: { id: Key | null | undefined; text: string }) => (
                 <Link key={note.id} to={`/note/${note.id}`}>
-                  <NavigationItem active={isNotePath && paths[2] === note.id} icon={<BiDisc />} label={note.text.replace(/<[^>]+>/g, '')} />
+                  <NavigationItem active={isNotePath && paths[2] === note.id} icon={<BiDisc />} label={note.text.replace(/&(nbsp|amp|quot|lt|gt);/g, " ").replace(/<[^>]+>/g, '')} />
                 </Link>
               ))}
             </Stack>

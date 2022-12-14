@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { useRef } from 'react';
-import ContentEditable from "react-contenteditable";
+import { useState } from 'react';
+import NoteEditable from './note-editable';
 import { Note, useNotes } from './use-notes';
 
 interface NoteTextProps {
@@ -10,8 +10,7 @@ interface NoteTextProps {
 
 export const NoteText = ({ note, noteParent }: NoteTextProps) => {
   const notes = useNotes();
-  const text = useRef('');
-  text.current = note.text;
+  const [html, setHtml] = useState(note.text || "Note");
 
   const onKeyDown = (e: any) => {
 
@@ -29,7 +28,7 @@ export const NoteText = ({ note, noteParent }: NoteTextProps) => {
   };
 
   const editable =
-    <ContentEditable
+    <NoteEditable
       tagName='span'
       spellCheck="false"
       className={classNames({
@@ -37,11 +36,13 @@ export const NoteText = ({ note, noteParent }: NoteTextProps) => {
         locked: note.locked,
         link: !!note.link
       })}
-      html={text.current}
+      html={html}
       disabled={note.locked || !!note.link}
-      onKeyDown={(e) => onKeyDown(e)}
-      onBlur={() => notes.onUpdate({ ...note, text: text.current })}
-      onChange={(e) => { text.current = e.target.value }}
+      onKeyDown={(e: any) => onKeyDown(e)}
+      onBlur={() => notes.onUpdate({ ...note, text: html })}
+      onChange={(e: any) => setHtml(e.target.value)}
+      onInput={undefined}
+      onKeyPress={undefined}
     />;
 
   return (
