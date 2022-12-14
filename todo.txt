@@ -1,5 +1,7 @@
 Poor Mans Jira.
 
+- Bug with content editable and onBlur
+
 - Drag and drop
 
 - Link Modal/style 
