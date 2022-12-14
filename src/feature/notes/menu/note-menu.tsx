@@ -9,7 +9,7 @@ import { NoteMenuDuplicate } from './note-menu-duplicate';
 import { NoteMenuLinkAdd } from './note-menu-link-add';
 import { NoteMenuLinkRemove } from './note-menu-link-remove';
 import { NoteMenuLock } from './note-menu-lock';
-import { Note } from './use-notes';
+import { Note } from '../use-notes';
 
 interface NoteMenuProps {
   note: Note;

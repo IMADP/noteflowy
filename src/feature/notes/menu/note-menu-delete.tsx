@@ -1,6 +1,6 @@
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, MenuItem, useDisclosure } from '@chakra-ui/react';
 import { useRef } from 'react';
-import { Note, useNotes } from './use-notes';
+import { Note, useNotes } from '../use-notes';
 
 interface NoteMenuDeleteProps {
   note: Note;

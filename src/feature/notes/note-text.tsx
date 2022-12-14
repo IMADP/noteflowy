@@ -34,10 +34,11 @@ export const NoteText = ({ note, noteParent }: NoteTextProps) => {
       spellCheck="false"
       className={classNames({
         completed: note.completed,
-        locked: note.locked
+        locked: note.locked,
+        link: !!note.link
       })}
       html={text.current}
-      disabled={note.locked}
+      disabled={note.locked || !!note.link}
       onKeyDown={(e) => onKeyDown(e)}
       onBlur={() => notes.onUpdate({ ...note, text: text.current })}
       onChange={(e) => { text.current = e.target.value }}
@@ -46,7 +47,7 @@ export const NoteText = ({ note, noteParent }: NoteTextProps) => {
   return (
     <>
 
-      {note.link &&
+      {!!note.link &&
         <a href={note.link} target="#blank">
           {editable}
         </a>

@@ -16,6 +16,11 @@ code {
   text-decoration: line-through;
 }
 
+.link {
+  text-decoration: underline;
+  color: rgb(28, 73, 196);
+}
+
 .locked {
   color: #666;
 }

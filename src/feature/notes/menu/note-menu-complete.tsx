@@ -1,5 +1,5 @@
 import { MenuItem } from '@chakra-ui/react';
-import { Note, useNotes } from './use-notes';
+import { Note, useNotes } from '../use-notes';
 
 interface NoteMenuCompleteProps {
   note: Note;

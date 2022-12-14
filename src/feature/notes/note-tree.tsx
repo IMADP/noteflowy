@@ -1,6 +1,6 @@
 import { Box, List, ListItem } from '@chakra-ui/react';
 import { NoteDetails } from './note-details';
-import { NoteMenu } from './note-menu';
+import { NoteMenu } from './menu/note-menu';
 import { NoteText } from './note-text';
 import { Note } from './use-notes';
 
