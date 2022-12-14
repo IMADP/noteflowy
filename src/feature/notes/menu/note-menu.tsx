@@ -6,8 +6,7 @@ import { NoteMenuComplete } from './note-menu-complete';
 import { NoteMenuDelete } from './note-menu-delete';
 import { NoteMenuDetails } from './note-menu-details';
 import { NoteMenuDuplicate } from './note-menu-duplicate';
-import { NoteMenuLinkAdd } from './note-menu-link-add';
-import { NoteMenuLinkRemove } from './note-menu-link-remove';
+import { NoteMenuLink } from './note-menu-link';
 import { NoteMenuLock } from './note-menu-lock';
 import { Note } from '../use-notes';
 
@@ -36,8 +35,7 @@ export const NoteMenu = ({ note, noteParent }: NoteMenuProps) => {
         <NoteMenuLock note={note} />
         <NoteMenuComplete note={note} />
         <NoteMenuDetails note={note} />
-        {note.link && <NoteMenuLinkRemove note={note} />}
-        {!note.link && <NoteMenuLinkAdd note={note} />}
+        <NoteMenuLink note={note} />
         <MenuDivider />
         <NoteMenuDelete note={note} />
       </MenuList>
