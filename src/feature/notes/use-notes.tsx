@@ -15,7 +15,7 @@ export interface Note {
   children: Array<Note>,
   text: string;
   details?: string;
-  link?: string;
+  link?: string | null;
   root?: boolean;
   collapsed?: boolean;
   completed?: boolean;

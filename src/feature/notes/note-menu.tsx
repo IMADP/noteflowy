@@ -1,8 +1,15 @@
-import { Menu, MenuButton, MenuDivider, MenuItem, MenuList, useDisclosure } from '@chakra-ui/react';
+import { Menu, MenuButton, MenuDivider, MenuList } from '@chakra-ui/react';
 import { BiBullseye } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
+import { NoteMenuAdd } from './note-menu-add';
+import { NoteMenuComplete } from './note-menu-complete';
 import { NoteMenuDelete } from './note-menu-delete';
-import { Note, useNotes } from './use-notes';
+import { NoteMenuDetails } from './note-menu-details';
+import { NoteMenuDuplicate } from './note-menu-duplicate';
+import { NoteMenuLinkAdd } from './note-menu-link-add';
+import { NoteMenuLinkRemove } from './note-menu-link-remove';
+import { NoteMenuLock } from './note-menu-lock';
+import { Note } from './use-notes';
 
 interface NoteMenuProps {
   note: Note;
@@ -10,9 +17,7 @@ interface NoteMenuProps {
 }
 
 export const NoteMenu = ({ note, noteParent }: NoteMenuProps) => {
-  const notes = useNotes();
   const navigate = useNavigate();
-  const { isOpen, onOpen } = useDisclosure();
 
   const onRightClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
@@ -25,26 +30,16 @@ export const NoteMenu = ({ note, noteParent }: NoteMenuProps) => {
         <BiBullseye />
       </MenuButton>
       <MenuList>
-        <MenuItem onClick={() => notes.onAddSubNote(note)}>
-          Add Sub Note
-        </MenuItem>
-        <MenuItem onClick={() => notes.onDuplicate(noteParent, note)}>
-          Duplicate Note
-        </MenuItem>
+        <NoteMenuAdd note={note} />
+        <NoteMenuDuplicate note={note} noteParent={noteParent} />
         <MenuDivider />
-        <MenuItem onClick={() => notes.onUpdate({ ...note, locked: !note.locked })}>
-          {note.locked ? 'Unlock' : 'Lock'}
-        </MenuItem>
-        <MenuItem onClick={() => notes.onUpdate({ ...note, completed: !note.completed })}>
-          {note.completed ? 'Uncomplete' : 'Complete'}
-        </MenuItem>
-        <MenuItem onClick={() => notes.onUpdate({ ...note, showDetails: !note.showDetails })}>
-          {note.showDetails ? 'Hide Details' : 'Show Details'}
-        </MenuItem>
+        <NoteMenuLock note={note} />
+        <NoteMenuComplete note={note} />
+        <NoteMenuDetails note={note} />
+        {note.link && <NoteMenuLinkRemove note={note} />}
+        {!note.link && <NoteMenuLinkAdd note={note} />}
         <MenuDivider />
-        <MenuItem onClick={onOpen} color={"red"}>
-          Delete Note <NoteMenuDelete note={note} open={isOpen} />
-        </MenuItem>
+        <NoteMenuDelete note={note} />
       </MenuList>
     </Menu>
   )
