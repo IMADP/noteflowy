@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useRef } from 'react';
 import ContentEditable from "react-contenteditable";
 import { Note, useNotes } from './use-notes';
 
@@ -8,6 +9,8 @@ interface NoteDetailsProps {
 
 export const NoteDetails = ({ note }: NoteDetailsProps) => {
   const notes = useNotes();
+  const text = useRef('');
+  text.current = note.details || "Details";
 
   return (
     <>
@@ -19,9 +22,10 @@ export const NoteDetails = ({ note }: NoteDetailsProps) => {
             locked: note.locked
           })}
           spellCheck="false"
-          html={note.details || "Details"}
+          html={text.current}
           disabled={note.locked}
-          onChange={(e) => notes.onUpdate({ ...note, details: e.target.value })}
+          onBlur={() => notes.onUpdate({ ...note, details: text.current })}
+          onChange={(e) => { text.current = e.target.value }}
         />
       }
     </>

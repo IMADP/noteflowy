@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useRef } from 'react';
 import ContentEditable from "react-contenteditable";
 import { Note, useNotes } from './use-notes';
 
@@ -9,6 +10,8 @@ interface NoteTextProps {
 
 export const NoteText = ({ note, noteParent }: NoteTextProps) => {
   const notes = useNotes();
+  const text = useRef('');
+  text.current = note.text;
 
   const onKeyDown = (e: any) => {
 
@@ -33,16 +36,15 @@ export const NoteText = ({ note, noteParent }: NoteTextProps) => {
         completed: note.completed,
         locked: note.locked
       })}
-      html={note.text}
+      html={text.current}
       disabled={note.locked}
       onKeyDown={(e) => onKeyDown(e)}
-      onChange={(e) => notes.onUpdate({ ...note, text: e.target.value })}
-    />
-    ;
+      onBlur={() => notes.onUpdate({ ...note, text: text.current })}
+      onChange={(e) => { text.current = e.target.value }}
+    />;
 
   return (
     <>
-
 
       {note.link &&
         <a href={note.link} target="#blank">
