@@ -1,7 +1,7 @@
 import { Menu, MenuButton, MenuDivider, MenuItem, MenuList, useDisclosure } from '@chakra-ui/react';
 import { BiBullseye } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
-import { NoteMenuDeleteDialog } from './note-menu-delete';
+import { NoteMenuDelete } from './note-menu-delete';
 import { Note, useNotes } from './use-notes';
 
 interface NoteMenuProps {
@@ -42,7 +42,7 @@ export const NoteMenu = ({ note, noteParent }: NoteMenuProps) => {
         </MenuItem>
         <MenuDivider />
         <MenuItem onClick={onOpen} color={"red"}>
-          Delete Note <NoteMenuDeleteDialog note={note} open={isOpen} />
+          Delete Note <NoteMenuDelete note={note} open={isOpen} />
         </MenuItem>
       </MenuList>
     </Menu>

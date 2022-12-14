@@ -2,12 +2,12 @@ import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, Al
 import { useRef } from 'react';
 import { Note, useNotes } from './use-notes';
 
-interface NoteMenuDeleteDialogProps {
+interface NoteMenuDeleteProps {
   note: Note;
   open: boolean;
 }
 
-export const NoteMenuDeleteDialog = ({ note, open }: NoteMenuDeleteDialogProps) => {
+export const NoteMenuDelete = ({ note, open }: NoteMenuDeleteProps) => {
   const notes = useNotes();
   const cancelRef = useRef<any>();
   const { isOpen, onClose } = useDisclosure({ isOpen: open });
