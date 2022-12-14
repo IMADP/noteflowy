@@ -33,7 +33,6 @@ export const NoteText = ({ note, noteParent }: NoteTextProps) => {
       spellCheck="false"
       className={classNames({
         completed: note.completed,
-        locked: note.locked,
         link: !!note.link
       })}
       html={html}

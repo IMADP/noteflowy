@@ -17,8 +17,7 @@ export const NoteDetails = ({ note }: NoteDetailsProps) => {
         <NoteEditable
           tagName='div'
           className={classNames({
-            details: true,
-            locked: note.locked
+            details: true
           })}
           spellCheck="false"
           html={html}
