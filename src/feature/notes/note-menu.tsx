@@ -31,6 +31,7 @@ export const NoteMenu = ({ note, noteParent }: NoteMenuProps) => {
         <MenuItem onClick={() => notes.onDuplicate(noteParent, note)}>
           Duplicate Note
         </MenuItem>
+        <MenuDivider />
         <MenuItem onClick={() => notes.onUpdate({ ...note, locked: !note.locked })}>
           {note.locked ? 'Unlock' : 'Lock'}
         </MenuItem>
