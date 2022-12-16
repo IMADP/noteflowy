@@ -1,5 +1,7 @@
 Poor Mans Jira.
 
+- note-editable is screwing up the dom, navigation doesnt work because of it 
+
 - Drag and drop
 
 - Link Modal/style 
