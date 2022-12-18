@@ -1,20 +1,17 @@
 import { IconButton } from '@chakra-ui/button';
-import { Box, Center, Divider, Flex, Stack, Text } from '@chakra-ui/layout';
+import { Box, Center, Divider, Flex, Spacer, Stack } from '@chakra-ui/layout';
 import { Tooltip } from '@chakra-ui/tooltip';
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { BiArrowFromTop, BiArrowFromLeft, BiCopyAlt, BiBold, BiItalic, BiUnderline, BiStrikethrough, BiLinkAlt, BiEraser, BiCodeAlt } from 'react-icons/bi';
+import { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
+import { BiBold, BiCodeAlt, BiItalic, BiLinkAlt, BiStrikethrough, BiUnderline } from 'react-icons/bi';
 import {
-  BaseEditor,
-  Descendant,
-  createEditor,
-  Editor,
-  Transforms
-} from 'slate'
-import { Editable, ReactEditor, Slate, withReact } from 'slate-react';
+  BaseEditor, createEditor, Descendant, Editor, Transforms
+} from 'slate';
+import { withHistory } from 'slate-history';
+import { Editable, ReactEditor, Slate, useSlate, withReact } from 'slate-react';
 import { Note, useNotes } from '../use-notes';
 
 type CustomElement = { type: 'paragraph' | 'code'; children: CustomText[] }
-type CustomText = { text: string }
+type CustomText = { text: string, bold?: boolean; italic?: boolean }
 
 declare module 'slate' {
   interface CustomTypes {
@@ -30,81 +27,30 @@ interface NoteDetailsProps {
 
 export const NoteDetails = ({ note }: NoteDetailsProps) => {
   const notes = useNotes();
-  const editor = useMemo(() => withReact(createEditor()), []);
+
+  // editor initialization
+  const renderLeaf = useCallback((props: LeafProps) => <Leaf {...props} />, [])
+  const renderElement = useCallback((props: ElementProps) => <Element {...props} />, [])
+  const editor = useMemo(() => withHistory(withReact(createEditor())), [])
   const [details, setDetails] = useState<Descendant[]>(note.details);
 
+  // effect to update the editor on external note changes
   useEffect(() => {
     editor.children = note.details;
     editor.onChange();
   }, [note]);
 
-  const renderElement = useCallback((props: any) => {
-      switch (props.element.type) {
-      case 'code':
-        return <CodeElement {...props} />
-      case 'bold':
-        return <BoldElement {...props} />
-      default:
-        return <DefaultElement {...props} />
-    }
-  }, [])
-  
   return (
     <Slate editor={editor} value={details} onChange={(v) => setDetails(v)} >
       <Box tabIndex={1} px={4} py={3} borderRadius={8} border='1px' borderColor='gray.200'>
         <Flex color='black' mr="10">
           <Stack direction='row' spacing={1}>
 
-          <Tooltip hasArrow label='Bold'>
-              <IconButton
-              onClick={() => {
-                const [match] = Editor.nodes(editor, {
-                  match: n => Editor.isBlock(editor, n) && n.type === 'code'
-                })
-                // Toggle the block type depending on whether there's already a match.
-                Transforms.setNodes(
-                  editor,
-                  { type: match ? 'paragraph' : 'code' },
-                  { match: n => Editor.isBlock(editor, n) }
-                )
-              }}
-                size='xs'
-                variant='outline'
-                color='gray'
-                aria-label='Bold'
-                icon={<BiBold />}
-              />
-            </Tooltip>
-
-            <Tooltip hasArrow label='Italic'>
-              <IconButton
-                size='xs'
-                variant='outline'
-                color='gray'
-                aria-label='Italic'
-                icon={<BiItalic />}
-              />
-            </Tooltip>
-
-            <Tooltip hasArrow label='Underline'>
-              <IconButton
-                size='xs'
-                variant='outline'
-                color='gray'
-                aria-label='Underline'
-                icon={<BiUnderline />}
-              />
-            </Tooltip>
-
-            <Tooltip hasArrow label='Strikethrough'>
-              <IconButton
-                size='xs'
-                variant='outline'
-                color='gray'
-                aria-label='Strikethrough'
-                icon={<BiStrikethrough />}
-              />
-            </Tooltip>
+            <MarkButton title='Bold' format='bold' icon={<BiBold />} />
+            <MarkButton title='Italic' format='italic' icon={<BiItalic />} />
+            <MarkButton title='Underline' format='underline' icon={<BiUnderline />} />
+            <MarkButton title='Strikethrough' format='strikethrough' icon={<BiStrikethrough />} />
+            <MarkButton title='Code' format='code' icon={<BiCodeAlt />} />
 
             <Center height='1.5rem' px='2'>
               <Divider color='black' orientation='vertical' />
@@ -112,17 +58,17 @@ export const NoteDetails = ({ note }: NoteDetailsProps) => {
 
             <Tooltip hasArrow label='Code'>
               <IconButton
-              onClick={() => {
-                const [match] = Editor.nodes(editor, {
-                  match: n => Editor.isBlock(editor, n) && n.type === 'code'
-                })
-                // Toggle the block type depending on whether there's already a match.
-                Transforms.setNodes(
-                  editor,
-                  { type: match ? 'paragraph' : 'code' },
-                  { match: n => Editor.isBlock(editor, n) }
-                )
-              }}
+                onClick={() => {
+                  const [match] = Editor.nodes(editor, {
+                    match: n => Editor.isBlock(editor, n) && n.type === 'code'
+                  })
+                  // Toggle the block type depending on whether there's already a match.
+                  Transforms.setNodes(
+                    editor,
+                    { type: match ? 'paragraph' : 'code' },
+                    { match: n => Editor.isBlock(editor, n) }
+                  )
+                }}
                 size='xs'
                 variant='outline'
                 color='gray'
@@ -144,9 +90,12 @@ export const NoteDetails = ({ note }: NoteDetailsProps) => {
 
           </Stack>
         </Flex>
-        <Divider my='2' />
+        <Spacer my='3' />
         <Box color='grey'>
-          <Editable renderElement={renderElement}
+          <Editable renderLeaf={renderLeaf}
+            renderElement={renderElement}
+            autoFocus={true}
+            placeholder='Note contents'
             spellCheck={false} onBlur={() => notes.onUpdate({ ...note, details })} />
         </Box>
       </Box>
@@ -154,22 +103,135 @@ export const NoteDetails = ({ note }: NoteDetailsProps) => {
   );
 }
 
-const CodeElement = (props: any) => {
+const toggleMark = (editor: BaseEditor & ReactEditor, format: string) => {
+  const isActive = isMarkActive(editor, format)
+
+  if (isActive) {
+    Editor.removeMark(editor, format)
+  } else {
+    Editor.addMark(editor, format, true)
+  }
+}
+
+const isMarkActive = (editor: BaseEditor & ReactEditor, format: string) => {
+  const marks = Editor.marks(editor);
+  console.log(marks);
+  return marks ? (marks as any)[format] === true : false
+}
+
+interface MarkButtonProps {
+  title: string;
+  format: any;
+  icon: ReactElement;
+}
+
+const MarkButton = ({ title, format, icon }: MarkButtonProps) => {
+  const editor = useSlate();
+
   return (
-    <pre {...props.attributes}>
-      <code>{props.children}</code>
-    </pre>
+    <Tooltip hasArrow label={title}>
+      <IconButton
+        size='xs'
+        variant='outline'
+        color='gray'
+        aria-label={title}
+        isActive={isMarkActive(editor, format)}
+        onMouseDown={event => {
+          event.preventDefault()
+          toggleMark(editor, format)
+        }}
+        icon={icon}
+      />
+    </Tooltip>
   )
 }
 
-const BoldElement = (props: any) => {
-  return (
-    <pre {...props.attributes}>
-      <strong>{props.children}</strong>
-    </pre>
-  )
+interface ElementProps {
+  attributes: any;
+  children: any;
+  element: any;
 }
 
-const DefaultElement = (props: any) => {
-  return <p {...props.attributes}>{props.children}</p>
+const Element = ({ attributes, children, element }: ElementProps) => {
+  const style = { textAlign: element.align }
+  switch (element.type) {
+    case 'block-quote':
+      return (
+        <blockquote style={style} {...attributes}>
+          {children}
+        </blockquote>
+      )
+    case 'code':
+      return (
+        <pre style={style} {...attributes}>
+          {children}
+        </pre>
+      )
+    case 'bulleted-list':
+      return (
+        <ul style={style} {...attributes}>
+          {children}
+        </ul>
+      )
+    case 'heading-one':
+      return (
+        <h1 style={style} {...attributes}>
+          {children}
+        </h1>
+      )
+    case 'heading-two':
+      return (
+        <h2 style={style} {...attributes}>
+          {children}
+        </h2>
+      )
+    case 'list-item':
+      return (
+        <li style={style} {...attributes}>
+          {children}
+        </li>
+      )
+    case 'numbered-list':
+      return (
+        <ol style={style} {...attributes}>
+          {children}
+        </ol>
+      )
+    default:
+      return (
+        <p style={style} {...attributes}>
+          {children}
+        </p>
+      )
+  }
+}
+
+interface LeafProps {
+  attributes: any;
+  children: any;
+  leaf: any;
+}
+
+const Leaf = ({ attributes, children, leaf }: LeafProps) => {
+  if (leaf.bold) {
+    children = <strong>{children}</strong>
+  }
+
+  if (leaf.code) {
+    children = <code>{children}</code>
+  }
+
+  if (leaf.italic) {
+    children = <em>{children}</em>
+  }
+
+  if (leaf.underline) {
+    children = <u>{children}</u>
+  }
+
+  if (leaf.strikethrough) {
+    children = <s>{children}</s>
+  }
+
+  return <span {...attributes}>{children}</span>
 }
