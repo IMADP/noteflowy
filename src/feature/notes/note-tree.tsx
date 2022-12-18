@@ -1,11 +1,13 @@
 import { Box, Button, Center, Divider, Flex, IconButton, Input, InputGroup, InputRightElement, List, ListItem, Spacer, Square, Stack, Text, Textarea, Tooltip, useDisclosure } from '@chakra-ui/react';
-import { NoteDetails } from './note-details';
+
 import { NoteMenu } from './menu/note-menu';
 import { NoteText } from './edit/note-text';
 import { Note, useNotes } from './use-notes';
 import { BiArrowFromLeft, BiArrowFromTop, BiBold, BiBullseye, BiCopyAlt, BiCrosshair, BiCurrentLocation, BiDisc, BiEraser, BiItalic, BiLinkAlt, BiRadioCircleMarked, BiStrikethrough, BiUnderline } from 'react-icons/bi';
 import { useState } from 'react';
 import { NoteLink } from './note-link';
+import NoteEditable from './note-editable';
+import { NoteDetails } from './edit/note-details';
 
 interface NoteTreeProps {
   note: Note;
@@ -37,8 +39,7 @@ export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
             <BiArrowFromTop style={{ visibility: 'hidden' }} />
           </Box>
           <Box p='1' flex='1' bg="white" >
-            <Textarea rows={!!note.details ? 3 : 1} placeholder='Details' defaultValue={note.details} />
-
+            <NoteDetails note={note} />
           </Box>
         </Flex>
 

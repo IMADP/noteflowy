@@ -2,6 +2,7 @@ import instructionNotes from 'instructions';
 import { FileHandle } from 'node:fs/promises';
 import { createContext, useContext, useEffect } from "react";
 import { useLocation, useSearchParams } from 'react-router-dom';
+import { Descendant } from 'slate';
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
 import { clone, filterNote, findCurrentNote, findNote, findParentUrl, visitNoteTree } from "./notes-util";
@@ -14,7 +15,7 @@ export interface Note {
   id: string;
   children: Array<Note>,
   text: string;
-  details?: string;
+  details: Array<Descendant>;
   link?: string | null;
   root?: boolean;
   collapsed?: boolean;
@@ -124,8 +125,11 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
         draftNote.children.push({
           id: uuidv4(),
           children: [],
-          text: 'New Note',
-          details: 'Details'
+          text: '',
+          details: [{
+              type: 'paragraph',
+              children: [{ text: '' }],
+            }]
         });
       }
     })
@@ -146,8 +150,11 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
         note.children.push({
           id: uuidv4(),
           children: [],
-          text: 'New Sub Note',
-          details: 'Details'
+          text: '',
+          details: [{
+              type: 'paragraph',
+              children: [{ text: '' }],
+            }]
         });
       }
 
