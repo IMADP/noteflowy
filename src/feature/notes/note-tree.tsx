@@ -1,9 +1,11 @@
 import { Box, Button, Center, Divider, Flex, IconButton, Input, InputGroup, InputRightElement, List, ListItem, Spacer, Square, Stack, Text, Textarea, Tooltip, useDisclosure } from '@chakra-ui/react';
 import { NoteDetails } from './note-details';
 import { NoteMenu } from './menu/note-menu';
-import { NoteText } from './note-text';
+import { NoteText } from './edit/note-text';
 import { Note, useNotes } from './use-notes';
-import { BiArrowFromLeft, BiArrowFromTop, BiBold, BiBullseye, BiCopyAlt, BiEraser, BiItalic, BiLinkAlt, BiStrikethrough, BiUnderline } from 'react-icons/bi';
+import { BiArrowFromLeft, BiArrowFromTop, BiBold, BiBullseye, BiCopyAlt, BiCrosshair, BiCurrentLocation, BiDisc, BiEraser, BiItalic, BiLinkAlt, BiRadioCircleMarked, BiStrikethrough, BiUnderline } from 'react-icons/bi';
+import { useState } from 'react';
+import { NoteLink } from './note-link';
 
 interface NoteTreeProps {
   note: Note;
@@ -12,7 +14,8 @@ interface NoteTreeProps {
 
 export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
   const notes = useNotes();
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
 
 
   return (
@@ -21,13 +24,11 @@ export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
       <ListItem>
 
         <Flex color='black' mr="10">
-          <Center pt='1' pr="2" bg='white'>
-            <BiBullseye />
+          <Center pt='1' bg='white'>
+            <NoteLink note={note} />
           </Center>
           <Center p='1' flex='1' bg='white'>
-            <Input
-              placeholder='Note text...' defaultValue={note.text}
-            />
+            <NoteText note={note} />
           </Center>
         </Flex>
 
@@ -55,6 +56,8 @@ export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
                   variant='outline'
                   color='gray'
                   aria-label='Add another note'
+                  disabled={notes.currentNote.id === note.id}
+                  onClick={() => notes.onAdd(noteParent || notes.rootNote)}
                   icon={<BiArrowFromTop />}
                 />
               </Tooltip>
@@ -65,6 +68,7 @@ export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
                   variant='outline'
                   color='gray'
                   aria-label='Add a child note'
+                  onClick={() => notes.onAdd(note)}
                   icon={<BiArrowFromLeft />}
                 />
               </Tooltip>
