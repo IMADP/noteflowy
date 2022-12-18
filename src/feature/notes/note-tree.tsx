@@ -74,9 +74,6 @@ export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
                 />
               </Tooltip>
 
-              <Center height='2rem' px='2'>
-                <Divider color='black' orientation='vertical' />
-              </Center>
 
               <Tooltip hasArrow label='Clone Note'>
                 <IconButton
@@ -87,64 +84,6 @@ export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
                   icon={<BiCopyAlt />}
                 />
               </Tooltip>
-
-              <Center height='2rem' px='2'>
-                <Divider color='black' orientation='vertical' />
-              </Center>
-
-              <Tooltip hasArrow label='Bold'>
-                <IconButton
-                  size='sm'
-                  variant='outline'
-                  color='gray'
-                  aria-label='Bold'
-                  icon={<BiBold />}
-                />
-              </Tooltip>
-
-              <Tooltip hasArrow label='Italic'>
-                <IconButton
-                  size='sm'
-                  variant='outline'
-                  color='gray'
-                  aria-label='Italic'
-                  icon={<BiItalic />}
-                />
-              </Tooltip>
-
-              <Tooltip hasArrow label='Underline'>
-                <IconButton
-                  size='sm'
-                  variant='outline'
-                  color='gray'
-                  aria-label='Underline'
-                  icon={<BiUnderline />}
-                />
-              </Tooltip>
-
-              <Tooltip hasArrow label='Strikethrough'>
-                <IconButton
-                  size='sm'
-                  variant='outline'
-                  color='gray'
-                  aria-label='Strikethrough'
-                  icon={<BiStrikethrough />}
-                />
-              </Tooltip>
-
-              <Tooltip hasArrow label='Link'>
-                <IconButton
-                  size='sm'
-                  variant='outline'
-                  color='gray'
-                  aria-label='Link'
-                  icon={<BiLinkAlt />}
-                />
-              </Tooltip>
-
-              <Center height='2rem' px='2'>
-                <Divider color='black' orientation='vertical' />
-              </Center>
 
               <Tooltip hasArrow label='Delete Note'>
                 <IconButton
