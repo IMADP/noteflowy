@@ -7,7 +7,7 @@ export const NotesContent = () => {
   const notes = useNotes();
 
   return (
-    <Box bg={mode('white', 'gray.800')} flex="1" pt="10" pl="5">
+    <Box bg={mode('white', 'gray.800')} flex="1" pt="5" pl="5">
       {notes.currentNote.root &&
         <NoteRoot note={notes.currentNote} />
       }
