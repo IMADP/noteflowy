@@ -15,7 +15,7 @@ export interface Note {
   id: string;
   children: Array<Note>,
   text: string;
-  details: Array<Descendant>;
+  details: string;
   link?: string | null;
   root?: boolean;
   collapsed?: boolean;
@@ -126,10 +126,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
           id: uuidv4(),
           children: [],
           text: '',
-          details: [{
-              type: 'paragraph',
-              children: [{ text: '' }],
-            }]
+          details: ""
         });
       }
     })
@@ -151,10 +148,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
           id: uuidv4(),
           children: [],
           text: '',
-          details: [{
-              type: 'paragraph',
-              children: [{ text: '' }],
-            }]
+          details: ""
         });
       }
 

@@ -5,12 +5,7 @@ const instructionNotes: Note =
    "id":"100c83b8-8cf3-4882-86e4-294ef27769ec",
    "root":true,
    "text":"root",
-   "details": [
-      {
-        type: 'paragraph',
-        children: [{ text: '' }],
-      },
-    ],
+   "details": '',
    "children":[
       {
          "id":"000c83b8-8cf3-4882-86e4-294ef27769ec",
@@ -18,12 +13,7 @@ const instructionNotes: Note =
             
          ],
          "text":"Welcome to Noteflowy",
-         "details":[
-            {
-              type: 'paragraph',
-              children: [{ text: 'Noteflowy blah blah' }],
-            },
-          ]
+         "details":"test"
       },
       {
          "id":"e90f49c8-74e2-465a-8bb9-d79a504de44b",
@@ -37,21 +27,12 @@ const instructionNotes: Note =
                         
                      ],
                      "text":"Add child notes to organize your note hierarchy.",
-                     "details": [
-                        {
-                          type: 'paragraph',
-                          children: [{ text: '' }],
-                        },
-                      ]
+                     "details": ""
                   }
                ],
                "text":"Each note acts like a document.",
-               "details": [
-                  {
-                    type: 'paragraph',
-                    children: [{ text: '' }],
-                  },
-                ]
+               "details": ""
+
             },
             {
                "id":"12edabb7-45c1-4c35-8df1-51247993f7ee",
@@ -59,12 +40,8 @@ const instructionNotes: Note =
                   
                ],
                "text":"<b>Bold </b>notes with CTRL+B",
-               "details": [
-                  {
-                    type: 'paragraph',
-                    children: [{ text: '' }],
-                  },
-                ]
+               "details": ""
+
             },
             {
                "id":"3257e2f3-8f14-4196-9d15-c21856840fae",
@@ -72,12 +49,8 @@ const instructionNotes: Note =
                   
                ],
                "text":"<i>Italicize</i><b>&nbsp;</b>notes with CTRL+I",
-               "details": [
-                  {
-                    type: 'paragraph',
-                    children: [{ text: '' }],
-                  },
-                ]
+               "details": ""
+
             },
             {
                "id":"0add91c5-8298-4912-b9af-4c0c500f9ec9",
@@ -85,12 +58,8 @@ const instructionNotes: Note =
                   
                ],
                "text":"<u>Underline</u>&nbsp;notes with CTRL+U<br>",
-               "details": [
-                  {
-                    type: 'paragraph',
-                    children: [{ text: '' }],
-                  },
-                ]
+               "details":""
+
             },
             {
                "id":"81368e32-c674-4677-b386-e0e241e9bc17",
@@ -98,12 +67,8 @@ const instructionNotes: Note =
                   
                ],
                "text":"Notes can be locked and read-only",
-               "details": [
-                  {
-                    type: 'paragraph',
-                    children: [{ text: '' }],
-                  },
-                ],
+               "details":""
+               ,
                "locked":true
             },
             {
@@ -112,12 +77,8 @@ const instructionNotes: Note =
                   
                ],
                "text":"Notes can be completed",
-               "details": [
-                  {
-                    type: 'paragraph',
-                    children: [{ text: '' }],
-                  },
-                ],
+               "details": ""
+               ,
                "completed":true
             },
             {
@@ -126,22 +87,14 @@ const instructionNotes: Note =
                   
                ],
                "text":"Notes can be links",
-               "details": [
-                  {
-                    type: 'paragraph',
-                    children: [{ text: '' }],
-                  },
-                ],
+               "details": ""
+               ,
                "link":"https://github.com/IMADP/noteflowy"
             }
          ],
          "text":"Features",
-         "details": [
-            {
-              type: 'paragraph',
-              children: [{ text: '' }],
-            },
-          ]
+         "details": ""
+
       },
       {
          "id":"4db125f3-b72c-47bb-9b59-e76f8ad04b1f",
@@ -149,12 +102,8 @@ const instructionNotes: Note =
             
          ],
          "text":"Getting Started",
-         "details": [
-            {
-              type: 'paragraph',
-              children: [{ text: '' }],
-            },
-          ]
+         "details": ""
+
       }
    ]
 };   
