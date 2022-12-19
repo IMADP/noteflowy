@@ -1,12 +1,12 @@
 import { IconButton } from '@chakra-ui/button';
 import { Box, Center, Divider, Flex, Spacer, Stack } from '@chakra-ui/layout';
 import { Tooltip } from '@chakra-ui/tooltip';
-import { ReactElement, useEffect } from 'react';
-import { BiBold, BiCode, BiCodeAlt, BiCodeBlock, BiItalic, BiLinkAlt, BiListOl, BiListUl, BiRedo, BiStrikethrough, BiUndo } from 'react-icons/bi';
-import { Note, useNotes } from '../use-notes';
-
+import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import { ReactElement, useEffect } from 'react';
+import { BiBold, BiCode, BiCodeBlock, BiItalic, BiLinkAlt, BiListOl, BiListUl, BiRedo, BiStrikethrough, BiUnderline, BiUndo } from 'react-icons/bi';
+import { Note, useNotes } from '../use-notes';
 
 
 
@@ -17,6 +17,13 @@ interface NoteDetailsProps {
 export const NoteDetails = ({ note }: NoteDetailsProps) => {
   const notes = useNotes();
 
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Underline
+    ],
+    content: note.details,
+  })
 
   // effect to update the editor on external note changes
   useEffect(() => {
@@ -27,15 +34,10 @@ export const NoteDetails = ({ note }: NoteDetailsProps) => {
     if (editorDetails !== noteDetails) {
       editor?.commands.setContent(note.details);
     }
-  }, [note]);
+  }, [note, editor]);
 
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-    ],
-    content: note.details,
-  })
 
+  
   if (!editor) {
     return null
   }
@@ -54,11 +56,18 @@ export const NoteDetails = ({ note }: NoteDetailsProps) => {
             onClick={() => editor.chain().focus().toggleBold().run()} />
 
           <MarkButton
-            title='Underline'
+            title='Italic'
             icon={<BiItalic />}
             active={editor.isActive('italic')}
             disabled={!editor.can().chain().focus().toggleItalic().run()}
             onClick={() => editor.chain().focus().toggleItalic().run()} />
+
+          <MarkButton
+            title='Underline'
+            icon={<BiUnderline />}
+            active={editor.isActive('underline')}
+            disabled={!editor.can().chain().focus().toggleUnderline().run()}
+            onClick={() => editor.chain().focus().toggleUnderline().run()} />
 
           <MarkButton
             title='Strikethrough'
