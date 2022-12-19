@@ -1,8 +1,9 @@
 import { Box, Center, Flex, IconButton, List, ListItem, Stack, Tooltip } from '@chakra-ui/react';
 
 import { BiArrowFromLeft, BiArrowFromTop, BiCopyAlt, BiEraser } from 'react-icons/bi';
-import { NoteDetails } from './edit/note-details';
+import { NoteDetailsEditor } from './edit/note-details';
 import { NoteText } from './edit/note-text';
+import { NoteDetails } from './note-details';
 import { NoteLink } from './note-link';
 import { Note, useNotes } from './use-notes';
 
@@ -33,7 +34,9 @@ export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
             <BiArrowFromTop style={{ visibility: 'hidden' }} />
           </Box>
           <Box p='1' flex='1' bg="white" >
-            <NoteDetails note={note} />
+
+          {note.locked && <NoteDetails note={note} />}
+            {!note.locked && <NoteDetailsEditor note={note} />}
           </Box>
         </Flex>
 

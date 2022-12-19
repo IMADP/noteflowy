@@ -10,11 +10,11 @@ import { Note, useNotes } from '../use-notes';
 
 
 
-interface NoteDetailsProps {
+interface NoteDetailsEditorProps {
   note: Note;
 }
 
-export const NoteDetails = ({ note }: NoteDetailsProps) => {
+export const NoteDetailsEditor = ({ note }: NoteDetailsEditorProps) => {
   const notes = useNotes();
 
   const editor = useEditor({
