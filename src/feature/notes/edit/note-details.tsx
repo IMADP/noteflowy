@@ -2,10 +2,10 @@ import { IconButton } from '@chakra-ui/button';
 import { Box, Center, Divider, Flex, Spacer, Stack } from '@chakra-ui/layout';
 import { Tooltip } from '@chakra-ui/tooltip';
 import { ReactElement, useEffect } from 'react';
-import { BiBold, BiCodeAlt, BiItalic, BiLinkAlt, BiStrikethrough, BiUnderline } from 'react-icons/bi';
+import { BiBold, BiCode, BiCodeAlt, BiCodeBlock, BiItalic, BiLinkAlt, BiListOl, BiListUl, BiRedo, BiStrikethrough, BiUndo } from 'react-icons/bi';
 import { Note, useNotes } from '../use-notes';
 
-import { Editor, EditorContent, useEditor } from '@tiptap/react';
+import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
 
@@ -17,12 +17,18 @@ interface NoteDetailsProps {
 export const NoteDetails = ({ note }: NoteDetailsProps) => {
   const notes = useNotes();
 
-  
+
   // effect to update the editor on external note changes
   useEffect(() => {
-    editor?.commands.setContent(note.details);
+    const editorDetails = editor?.getHTML() || '';
+    const noteDetails = note.details;
+
+    // this is necessary to prevent the content from changing focus unnecessarily
+    if (editorDetails !== noteDetails) {
+      editor?.commands.setContent(note.details);
+    }
   }, [note]);
-  
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -40,26 +46,65 @@ export const NoteDetails = ({ note }: NoteDetailsProps) => {
       <Flex color='black' mr="10">
         <Stack direction='row' spacing={1}>
 
-          <MarkButton editor={editor} title='Bold' format='bold' icon={<BiBold />} />
-          <MarkButton editor={editor} title='Italic' format='italic' icon={<BiItalic />} />
-          <MarkButton editor={editor} title='Underline' format='underline' icon={<BiUnderline />} />
-          <MarkButton editor={editor} title='Strikethrough' format='strikethrough' icon={<BiStrikethrough />} />
-          <MarkButton editor={editor} title='Code' format='code' icon={<BiCodeAlt />} />
+          <MarkButton
+            title='Bold'
+            icon={<BiBold />}
+            active={editor.isActive('bold')}
+            disabled={!editor.can().chain().focus().toggleBold().run()}
+            onClick={() => editor.chain().focus().toggleBold().run()} />
+
+          <MarkButton
+            title='Underline'
+            icon={<BiItalic />}
+            active={editor.isActive('italic')}
+            disabled={!editor.can().chain().focus().toggleItalic().run()}
+            onClick={() => editor.chain().focus().toggleItalic().run()} />
+
+          <MarkButton
+            title='Strikethrough'
+            icon={<BiStrikethrough />}
+            active={editor.isActive('strike')}
+            disabled={!editor.can().chain().focus().toggleStrike().run()}
+            onClick={() => editor.chain().focus().toggleStrike().run()} />
+
+          <MarkButton
+            title='Code'
+            icon={<BiCode />}
+            active={editor.isActive('code')}
+            disabled={!editor.can().chain().focus().toggleCode().run()}
+            onClick={() => editor.chain().focus().toggleCode().run()} />
 
           <Center height='1.5rem' px='2'>
             <Divider color='black' orientation='vertical' />
           </Center>
 
-          <Tooltip hasArrow label='Code'>
-            <IconButton
-              onClick={() => { }}
-              size='xs'
-              variant='outline'
-              color='gray'
-              aria-label='Bold'
-              icon={<BiCodeAlt />}
-            />
-          </Tooltip>
+          <MarkButton
+            title='Bullet List'
+            icon={<BiListUl />}
+            active={editor.isActive('bulletList')}
+            disabled={!editor.can().chain().focus().toggleBulletList().run()}
+            onClick={() => editor.chain().focus().toggleBulletList().run()} />
+
+          <MarkButton
+            title='Ordered List'
+            icon={<BiListOl />}
+            active={editor.isActive('orderedList')}
+            disabled={!editor.can().chain().focus().toggleOrderedList().run()}
+            onClick={() => editor.chain().focus().toggleOrderedList().run()} />
+
+          <MarkButton
+            title='Code Block'
+            icon={<BiCodeBlock />}
+            active={editor.isActive('codeBlock')}
+            disabled={!editor.can().chain().focus().toggleCodeBlock().run()}
+            onClick={() => editor.chain().focus().toggleCodeBlock().run()} />
+
+
+
+          <Center height='1.5rem' px='2'>
+            <Divider color='black' orientation='vertical' />
+          </Center>
+
 
           <Tooltip hasArrow label='Link'>
             <IconButton
@@ -71,15 +116,34 @@ export const NoteDetails = ({ note }: NoteDetailsProps) => {
             />
           </Tooltip>
 
+          <Center height='1.5rem' px='2'>
+            <Divider color='black' orientation='vertical' />
+          </Center>
+
+          <MarkButton
+            title='Undo'
+            icon={<BiUndo />}
+            active={editor.isActive('codeBlock')}
+            disabled={!editor.can().chain().focus().undo().run()}
+            onClick={() => editor.chain().focus().undo().run()} />
+          <MarkButton
+            title='Redo'
+            icon={<BiRedo />}
+            active={editor.isActive('codeBlock')}
+            disabled={!editor.can().chain().focus().redo().run()}
+            onClick={() => editor.chain().focus().redo().run()} />
+
+
 
         </Stack>
       </Flex>
       <Spacer my='3' />
       <Box color='grey' my="1">
         <EditorContent editor={editor}
-            placeholder='Note contents'
-            spellCheck={false} 
-            onBlur={() => notes.onUpdate({ ...note, details: editor?.getHTML() || note.details})} />
+          placeholder='Note contents'
+          spellCheck={false}
+          onBlur={() => notes.onUpdate({ ...note, details: editor?.getHTML() || note.details })}
+        />
       </Box>
     </Box>
   );
@@ -87,12 +151,13 @@ export const NoteDetails = ({ note }: NoteDetailsProps) => {
 
 interface MarkButtonProps {
   title: string;
-  format: any;
   icon: ReactElement;
-  editor: Editor;
+  active: boolean;
+  disabled: boolean;
+  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-const MarkButton = ({ editor, title, format, icon }: MarkButtonProps) => {
+const MarkButton = ({ title, icon, active, disabled, onClick }: MarkButtonProps) => {
   return (
     <Tooltip hasArrow label={title}>
       <IconButton
@@ -100,9 +165,9 @@ const MarkButton = ({ editor, title, format, icon }: MarkButtonProps) => {
         variant='outline'
         color='gray'
         aria-label={title}
-        isActive={editor.isActive('bold')}
-        disabled={!editor.can().chain().focus().toggleBold().run()}
-        onMouseDown={() => editor.chain().focus().toggleBold().run()}
+        isActive={active}
+        disabled={disabled}
+        onClick={onClick}
         icon={icon}
       />
     </Tooltip>

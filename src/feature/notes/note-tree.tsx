@@ -1,13 +1,10 @@
-import { Box, Button, Center, Divider, Flex, IconButton, Input, InputGroup, InputRightElement, List, ListItem, Spacer, Square, Stack, Text, Textarea, Tooltip, useDisclosure } from '@chakra-ui/react';
+import { Box, Center, Flex, IconButton, List, ListItem, Stack, Tooltip } from '@chakra-ui/react';
 
-import { NoteMenu } from './menu/note-menu';
-import { NoteText } from './edit/note-text';
-import { Note, useNotes } from './use-notes';
-import { BiArrowFromLeft, BiArrowFromTop, BiBold, BiBullseye, BiCopyAlt, BiCrosshair, BiCurrentLocation, BiDisc, BiEraser, BiItalic, BiLinkAlt, BiRadioCircleMarked, BiStrikethrough, BiUnderline } from 'react-icons/bi';
-import { useState } from 'react';
-import { NoteLink } from './note-link';
-import NoteEditable from './note-editable';
+import { BiArrowFromLeft, BiArrowFromTop, BiCopyAlt, BiEraser } from 'react-icons/bi';
 import { NoteDetails } from './edit/note-details';
+import { NoteText } from './edit/note-text';
+import { NoteLink } from './note-link';
+import { Note, useNotes } from './use-notes';
 
 interface NoteTreeProps {
   note: Note;
@@ -16,9 +13,6 @@ interface NoteTreeProps {
 
 export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
   const notes = useNotes();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-
 
   return (
     <List ml={5} mt={5}>
