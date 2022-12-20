@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect } from "react";
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
-import { clone, filterNote, findCurrentNote, findNote, findParentUrl, visitNoteTree } from "./notes-util";
+import { clone, filterNote, findCurrentNote, findNote, findParentUrl, visitNoteTree } from "./note-util";
 
 /**
  * Note

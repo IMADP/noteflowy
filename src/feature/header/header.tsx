@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { BiSearchAlt } from 'react-icons/bi';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useImmer } from 'use-immer';
-import { CollapseButton } from './collapse-button';
 import { EditButton } from './edit-button';
 import { UpButton } from './up-button';
 
@@ -37,7 +36,6 @@ export const Header = () => {
         <ButtonGroup variant="ghost" spacing="1">
           <UpButton />
           <EditButton />
-          <CollapseButton />
         </ButtonGroup>
 
         <InputGroup maxW="sm">
