@@ -5,10 +5,10 @@ import { BiEditAlt, BiNotepad } from 'react-icons/bi';
 
 export const EditButton = () => {
   const notes = useNotes();
-  const edit = notes.rootNote.edit;
+  const edit = notes.isEdit;
 
   const onClick = () => {
-    notes.onUpdate({ ...notes.rootNote, edit: !edit });
+    notes.onToggleEdit();
 
     // purge any empty notes (careful about children)
     visitNoteTreeReverse(notes.rootNote, (note) => {

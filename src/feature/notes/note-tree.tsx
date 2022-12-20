@@ -21,7 +21,7 @@ export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
       <ListItem>
 
         <Flex mr="10">
-          <Box mt={notes.rootNote.edit ? 3 : 1}>
+          <Box mt={notes.isEdit ? 3 : 1}>
             <NoteLink note={note} />
           </Box>
           <Box p='1' flex='1'>
@@ -29,19 +29,19 @@ export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
 
               {note.title &&
                 <>
-                  {notes.rootNote.edit && <NoteTitleEditor note={note} />}
-                  {!notes.rootNote.edit && <NoteTitle note={note} />}
+                  {notes.isEdit && <NoteTitleEditor note={note} />}
+                  {!notes.isEdit && <NoteTitle note={note} />}
                 </>
               }
 
-              {(note.content || notes.rootNote.edit) &&
+              {(note.content || notes.isEdit) &&
                 <>
-                  {notes.rootNote.edit && <NoteContentEditor note={note} />}
-                  {!notes.rootNote.edit && <NoteContent note={note} />}
+                  {notes.isEdit && <NoteContentEditor note={note} />}
+                  {!notes.isEdit && <NoteContent note={note} />}
                 </>
               }
 
-              {notes.rootNote.edit &&
+              {notes.isEdit &&
                 <NoteEditToolbar note={note} noteParent={noteParent} />
               }
             </VStack>

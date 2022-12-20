@@ -5,7 +5,6 @@ const instructionNotes: Note =
    "id":"100c83b8-8cf3-4882-86e4-294ef27769ec",
    "root":true,
    "title":"root",
-   "edit": false,
    "content": '',
    "children":[
       {

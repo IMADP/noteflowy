@@ -16,7 +16,6 @@ export interface Note {
   title: string;
   content: string;
   root?: boolean;
-  edit?: boolean;
 }
 
 /**
@@ -30,6 +29,7 @@ interface NotesContextType {
   currentNoteParent: Note | undefined;
   parentUrl: string | null;
   search: string | null;
+  isEdit: boolean;
   onLoad: () => void;
   onAdd: (parent: Note) => void;
   onAddSubNote: (parent: Note) => void;
@@ -38,6 +38,7 @@ interface NotesContextType {
   onMove: (sourceId: string, parentId: string) => void;
   onDuplicate: (parent: Note | undefined, note: Note) => void;
   onDelete: (id: string) => void;
+  onToggleEdit: () => void;
 }
 
 const NotesContext = createContext<NotesContextType>(null!);
@@ -52,6 +53,7 @@ export const useNotes = () => useContext(NotesContext);
 export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
   const [fileHandle, setFileHandle] = useImmer<FileHandle | null>(null);
   const [rootNote, setRootNote] = useImmer<Note>(instructionNotes);
+  const [isEdit, setEdit] = useImmer<boolean>(false);
 
   // use location path to determine the current note
   const location = useLocation();
@@ -163,7 +165,6 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
         const draftNote = results.note;
         draftNote.title = note.title;
         draftNote.content = note.content;
-        draftNote.edit = note.edit;
       }
 
     })
@@ -261,6 +262,14 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
 
     })
   };
+
+  /**
+   * Sets the edit flag.
+   * 
+   */
+  const onToggleEdit = () => {
+    setEdit(!isEdit);
+  };
   
   let value = {
     fileName: fileHandle == null ? null : (fileHandle as any).name,
@@ -269,6 +278,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
     currentNoteParent,
     parentUrl,
     search,
+    isEdit,
     onLoad,
     onAdd,
     onAddSubNote,
@@ -276,7 +286,8 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
     onUpdateAll,
     onMove,
     onDuplicate,
-    onDelete
+    onDelete,
+    onToggleEdit
   };
 
   return <NotesContext.Provider value={value}>{children}</NotesContext.Provider>;
