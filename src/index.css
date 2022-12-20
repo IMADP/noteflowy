@@ -41,6 +41,10 @@ body {
   max-width: 100%;
   height: auto;
 }
+.ProseMirror a {
+  color: blue;
+  text-decoration: underline;
+}
 .ProseMirror blockquote {
   padding-left: 1rem;
   border-left: 2px solid rgba(13, 13, 13, 0.1);

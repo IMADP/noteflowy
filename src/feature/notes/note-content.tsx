@@ -1,3 +1,4 @@
+import Link from '@tiptap/extension-link';
 import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -12,7 +13,12 @@ export const NoteContent = ({ note }: NoteContentProps) => {
   const editor = useEditor({
     editable: false,
     content: note.content,
-    extensions: [StarterKit, Underline],
+    extensions: [
+      StarterKit, 
+      Underline,
+      Link.configure({
+        openOnClick: true,
+      }),],
   })
 
   // effect to update the editor on external note changes
