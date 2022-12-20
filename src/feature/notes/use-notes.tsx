@@ -15,10 +15,7 @@ export interface Note {
   children: Array<Note>,
   title: string;
   content: string;
-  link?: string | null;
   root?: boolean;
-  collapsed?: boolean;
-  completed?: boolean;
   edit?: boolean;
 }
 
@@ -166,10 +163,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
         const draftNote = results.note;
         draftNote.title = note.title;
         draftNote.content = note.content;
-        draftNote.collapsed = note.collapsed;
-        draftNote.completed = note.completed;
         draftNote.edit = note.edit;
-        draftNote.link = note.link;
       }
 
     })

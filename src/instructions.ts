@@ -69,8 +69,6 @@ const instructionNotes: Note =
                ],
                "title":"Notes can be completed",
                "content": ""
-               ,
-               "completed":true
             },
             {
                "id":"3b60be00-9167-4dd4-a4af-a2ee2ba0101c",
@@ -79,8 +77,6 @@ const instructionNotes: Note =
                ],
                "title":"Notes can be links",
                "content": ""
-               ,
-               "link":"https://github.com/IMADP/noteflowy"
             }
          ],
          "title":"Features",

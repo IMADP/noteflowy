@@ -5,7 +5,7 @@ import { Input } from '@chakra-ui/input';
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/modal';
 import { Tooltip } from '@chakra-ui/tooltip';
 import { Editor } from '@tiptap/react';
-import { useCallback, useRef } from 'react';
+import { useRef } from 'react';
 import { BiLinkAlt } from 'react-icons/bi';
 
 
@@ -19,7 +19,7 @@ export const NoteContentEditorLink = ({ editor }: NoteContentEditorLinkProps) =>
   const isActive = editor.isActive('link');
   const unsetLink = () => editor.chain().focus().unsetLink().run();
 
-  const setLink = useCallback((event: React.ChangeEvent<HTMLFormElement>) => {
+  const setLink = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const url = formData.get("url") as string;
@@ -40,7 +40,7 @@ export const NoteContentEditorLink = ({ editor }: NoteContentEditorLinkProps) =>
     // update link
     editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
     onClose();
-  }, [editor]);
+  };
 
   return (
     <>

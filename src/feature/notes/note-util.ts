@@ -154,7 +154,6 @@ export function filterNote(search: string | null, note: Note): Note {
 
     if (titleFound || contentFound) {
       (currentNote as SearchNote).keep = true;
-      currentNote.collapsed = false;
     }
 
     // filter any children who are not matches or parents of matches
@@ -163,7 +162,6 @@ export function filterNote(search: string | null, note: Note): Note {
       // keep notes marked by child matches
       if ((c as SearchNote).keep) {
         (currentNote as SearchNote).keep = true;
-        currentNote.collapsed = false;
         return true;
       }
 
@@ -174,7 +172,6 @@ export function filterNote(search: string | null, note: Note): Note {
       // keep matches and mark parent to be kept
       if (titleFound || contentFound) {
         (currentNote as SearchNote).keep = true;
-        currentNote.collapsed = false;
         return true;
       }
 
