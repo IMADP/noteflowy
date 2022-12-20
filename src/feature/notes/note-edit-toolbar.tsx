@@ -1,5 +1,5 @@
-import { IconButton, Stack, Tooltip } from '@chakra-ui/react';
-
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, IconButton, Stack, Tooltip, useDisclosure } from '@chakra-ui/react';
+import { useRef } from 'react';
 import { BiArrowFromLeft, BiArrowFromTop, BiCopyAlt, BiEraser } from 'react-icons/bi';
 import { Note, useNotes } from './use-notes';
 
@@ -10,6 +10,13 @@ interface NoteEditToolbarProps {
 
 export const NoteEditToolbar = ({ note, noteParent }: NoteEditToolbarProps) => {
   const notes = useNotes();
+  const cancelRef = useRef<any>();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const onDelete = () => {
+    notes.onDelete(note.id);
+    onClose();
+  };
 
   return (
 
@@ -45,6 +52,7 @@ export const NoteEditToolbar = ({ note, noteParent }: NoteEditToolbarProps) => {
           variant='outline'
           color='gray'
           aria-label='Clone Note'
+          onClick={() => notes.onDuplicate(noteParent, note)}
           icon={<BiCopyAlt />}
         />
       </Tooltip>
@@ -55,10 +63,37 @@ export const NoteEditToolbar = ({ note, noteParent }: NoteEditToolbarProps) => {
           variant='outline'
           color='gray'
           aria-label='Delete Note'
+          onClick={onOpen}
           icon={<BiEraser />}
         />
       </Tooltip>
 
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Delete Note
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? This will delete the note and all sub-notes.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button colorScheme='red' onClick={onDelete} ml={3}>
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
 
     </Stack>
   )

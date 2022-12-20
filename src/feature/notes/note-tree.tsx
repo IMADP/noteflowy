@@ -32,7 +32,7 @@ export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
           </Box>
         </Flex>
 
-        {note.content &&
+        {(note.content || notes.rootNote.edit) &&
           <Flex color='black' mr="10">
             <Box pt='2' pr="2" bg="white">
               <BiArrowFromTop style={{ visibility: 'hidden' }} />

@@ -9,7 +9,7 @@ body {
 
 /* Basic editor styles */
 .ProseMirror > * + * {
-  margin-top: 0.75em;
+  margin-top: 1.2em;
 }
 .ProseMirror:focus {
   outline: none;
