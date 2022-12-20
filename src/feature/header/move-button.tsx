@@ -1,5 +1,7 @@
 import { Button, List, ListItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
+import { canDropNote, findNote } from 'feature/notes/note-util';
 import { Note, useNotes } from 'feature/notes/use-notes';
+import { useDrag, useDrop } from 'react-dnd';
 import { BiMove } from 'react-icons/bi';
 
 interface MoveButtonProps {
@@ -49,18 +51,36 @@ interface MoveTreeProps {
 }
 
 const MoveTree = ({ note, noteParent }: MoveTreeProps) => {
+  const notes = useNotes();
+  
+  // get the drag and preview refs
+   const [, drag, dragPreview] = useDrag(() => ({
+      type: 'note',
+      item: { id: note.id }
+  }));
+
+  const [{ canDrop }, drop] = useDrop(
+    () => ({
+        accept: 'note',
+        drop: (droppedNote: Note) => notes.onMove(droppedNote.id, note.id),
+        canDrop: (item: Note) => canDropNote(findNote(notes.rootNote, item.id)?.note, note),
+        collect: (monitor) => ({
+            canDrop: !!monitor.canDrop()
+        })
+    }), [note]
+);
 
   return (
     <List ml={5} >
 
       <ListItem>
 
-        <Button cursor='move' colorScheme='teal' variant='outline'>
+        <Button ref={(node) => drag(drop(node))} cursor='move' colorScheme='teal' variant='outline'>
           {note.title}
         </Button>
 
         {note.children.map((n: Note) => (
-          <MoveTree note={n} noteParent={note} />
+          <MoveTree key={n.id} note={n} noteParent={note} />
         ))}
 
       </ListItem>

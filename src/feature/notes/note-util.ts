@@ -98,6 +98,29 @@ export function isDescendent(parentNote: Note, childId: string): boolean | undef
 }
 
 /**
+ * Returns true if the source note can be drag and dropped onto a target note.
+ * 
+ * @param {*} source 
+ * @param {*} target 
+ * @returns boolean
+ */
+export function canDropNote(source: Note | undefined, target: Note): boolean {
+
+  // don't allow dragging to itself
+  if (!source || source.id === target.id) {
+    return false;
+  }
+
+  // don't allow dragging to direct parent
+  if (source.children.find(n => n.id === source.id)) {
+    return false;
+  }
+
+  // don't allow a parent note to be dragged into a descendent
+  return !isDescendent(target, source.id);
+}
+
+/**
  * Finds the current note from the url paths, or the rootNote if not found.
  * 
  * @param {*} paths 
