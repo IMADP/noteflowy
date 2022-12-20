@@ -7,37 +7,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-.completed {
-  text-decoration: line-through;
-}
-
-.link {
-  text-decoration: underline;
-  color: rgb(28, 73, 196);
-}
-
-.details {
-  color: #505050;
-  font-size: 1rem;
-  margin-left: 3rem;
-  margin-top: 0.2rem;
-  margin-bottom: 0.2rem;
-  line-height: 1.3rem;
-}
-
-.ProseMirror:focus {
- outline: none;
-}
-
 /* Basic editor styles */
 .ProseMirror > * + * {
   margin-top: 0.75em;
 }
+.ProseMirror:focus {
+  outline: none;
+ }
 .ProseMirror ul, .ProseMirror ol {
   padding: 0 1rem;
 }

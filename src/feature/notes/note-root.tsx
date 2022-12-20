@@ -6,7 +6,7 @@ export const NoteRoot = () => {
   const notes = useNotes();
 
   return (
-    <Box bg={mode('white', 'gray.800')} flex="1" pt="5" pl="5">
+    <Box bg={mode('white', 'gray.800')} flex="1" py="5" pl="5">
 
       {notes.currentNote.root && notes.currentNote.children.map((n: Note) => (
         <NoteTree key={n.id} note={n} noteParent={undefined} />
