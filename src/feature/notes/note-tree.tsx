@@ -1,11 +1,12 @@
-import { Box, Center, Flex, List, ListItem, Text } from '@chakra-ui/react';
+import { Box, Center, Flex, List, ListItem } from '@chakra-ui/react';
 
 import { BiArrowFromTop } from 'react-icons/bi';
-import { NoteDetails } from './note-details';
-import { NoteDetailsEditor } from './note-details-editor';
+import { NoteContent } from './note-content';
+import { NoteContentEditor } from './note-content-editor';
 import { NoteEditToolbar } from './note-edit-toolbar';
 import { NoteLink } from './note-link';
-import { NoteText } from './note-text-editor';
+import { NoteTitle } from './note-title';
+import { NoteTitleEditor } from './note-title-editor';
 import { Note, useNotes } from './use-notes';
 
 interface NoteTreeProps {
@@ -26,20 +27,22 @@ export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
             <NoteLink note={note} />
           </Center>
           <Box p='1' flex='1' bg='white'>
-            {notes.rootNote.edit && <NoteText note={note} />}
-            {!notes.rootNote.edit && <Text style={{fontWeight: 600}}>{note.text}</Text>}
+            {notes.rootNote.edit && <NoteTitleEditor note={note} />}
+            {!notes.rootNote.edit && <NoteTitle note={note} />}
           </Box>
         </Flex>
 
-        <Flex color='black' mr="10">
-          <Box pt='2' pr="2" bg="white">
-            <BiArrowFromTop style={{ visibility: 'hidden' }} />
-          </Box>
-          <Box p='1' flex='1' bg="white" >
-            {notes.rootNote.edit && <NoteDetailsEditor note={note} />}
-            {!notes.rootNote.edit && <NoteDetails note={note} />}
-          </Box>
-        </Flex>
+        {note.content &&
+          <Flex color='black' mr="10">
+            <Box pt='2' pr="2" bg="white">
+              <BiArrowFromTop style={{ visibility: 'hidden' }} />
+            </Box>
+            <Box p='1' flex='1' bg="white" >
+              {notes.rootNote.edit && <NoteContentEditor note={note} />}
+              {!notes.rootNote.edit && <NoteContent note={note} />}
+            </Box>
+          </Flex>
+        }
 
         {notes.rootNote.edit &&
           <Flex color='black' mt='1' mr="10">

@@ -1,9 +1,8 @@
-
 import { theme } from '@chakra-ui/pro-theme';
 import { Box, ChakraProvider, Divider, Flex, Stack } from '@chakra-ui/react';
 import { Header } from 'feature/header/header';
 import { Navigation } from 'feature/navigation/navigation';
-import { NotesContent } from 'feature/notes/notes-content';
+import { NoteRoot } from 'feature/notes/note-root';
 import { NotesProvider } from 'feature/notes/use-notes';
 import React from 'react';
 import { DndProvider } from 'react-dnd';
@@ -28,7 +27,7 @@ root.render(
                 <Stack flex="1" overflow="auto" spacing="0">
                   <Header />
                   <Divider />
-                  <NotesContent />
+                  <NoteRoot />
                 </Stack>
               </Flex>
             </Box>

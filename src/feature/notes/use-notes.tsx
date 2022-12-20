@@ -13,8 +13,8 @@ import { clone, filterNote, findCurrentNote, findNote, findParentUrl, visitNoteT
 export interface Note {
   id: string;
   children: Array<Note>,
-  text: string;
-  details: string;
+  title: string;
+  content: string;
   link?: string | null;
   root?: boolean;
   collapsed?: boolean;
@@ -123,8 +123,8 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
         draftNote.children.push({
           id: uuidv4(),
           children: [],
-          text: '',
-          details: ""
+          title: '',
+          content: ''
         });
       }
     })
@@ -145,8 +145,8 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
         note.children.push({
           id: uuidv4(),
           children: [],
-          text: '',
-          details: ""
+          title: '',
+          content: ''
         });
       }
 
@@ -164,8 +164,8 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (results) {
         const draftNote = results.note;
-        draftNote.text = note.text;
-        draftNote.details = note.details;
+        draftNote.title = note.title;
+        draftNote.content = note.content;
         draftNote.collapsed = note.collapsed;
         draftNote.completed = note.completed;
         draftNote.edit = note.edit;

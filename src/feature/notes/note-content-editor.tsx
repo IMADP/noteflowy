@@ -10,11 +10,11 @@ import { Note, useNotes } from './use-notes';
 
 
 
-interface NoteDetailsEditorProps {
+interface NoteContentEditorProps {
   note: Note;
 }
 
-export const NoteDetailsEditor = ({ note }: NoteDetailsEditorProps) => {
+export const NoteContentEditor = ({ note }: NoteContentEditorProps) => {
   const notes = useNotes();
 
   const editor = useEditor({
@@ -22,26 +22,23 @@ export const NoteDetailsEditor = ({ note }: NoteDetailsEditorProps) => {
       StarterKit,
       Underline
     ],
-    content: note.details,
+    content: note.content,
   })
 
   // effect to update the editor on external note changes
   useEffect(() => {
-    const editorDetails = editor?.getHTML() || '';
-    const noteDetails = note.details;
+    const editorContent = editor?.getHTML() || '';
+    const noteContent = note.content;
 
     // this is necessary to prevent the content from changing focus unnecessarily
-    if (editorDetails !== noteDetails) {
-      editor?.commands.setContent(note.details);
+    if (editorContent !== noteContent) {
+      editor?.commands.setContent(note.content);
     }
   }, [note, editor]);
 
-
-  
   if (!editor) {
     return null
   }
-
 
   return (
     <Box tabIndex={1} px={4} py={3} borderRadius={8} border='1px' borderColor='gray.200'>
@@ -151,7 +148,7 @@ export const NoteDetailsEditor = ({ note }: NoteDetailsEditorProps) => {
         <EditorContent editor={editor}
           placeholder='Note contents'
           spellCheck={false}
-          onBlur={() => notes.onUpdate({ ...note, details: editor?.getHTML() || note.details })}
+          onBlur={() => notes.onUpdate({ ...note, content: editor?.getHTML() || note.content })}
         />
       </Box>
     </Box>

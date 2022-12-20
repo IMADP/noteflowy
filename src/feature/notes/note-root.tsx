@@ -2,7 +2,7 @@ import { Box, useColorModeValue as mode } from '@chakra-ui/react';
 import { NoteTree } from './note-tree';
 import { Note, useNotes } from './use-notes';
 
-export const NotesContent = () => {
+export const NoteRoot = () => {
   const notes = useNotes();
 
   return (

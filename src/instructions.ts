@@ -4,17 +4,17 @@ const instructionNotes: Note =
 {
    "id":"100c83b8-8cf3-4882-86e4-294ef27769ec",
    "root":true,
-   "text":"root",
+   "title":"root",
    "edit": false,
-   "details": '',
+   "content": '',
    "children":[
       {
          "id":"000c83b8-8cf3-4882-86e4-294ef27769ec",
          "children":[
             
          ],
-         "text":"Welcome to Noteflowy",
-         "details":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>"
+         "title":"Welcome to Noteflowy",
+         "content":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>"
       },
       {
          "id":"e90f49c8-74e2-465a-8bb9-d79a504de44b",
@@ -27,12 +27,12 @@ const instructionNotes: Note =
                      "children":[
                         
                      ],
-                     "text":"Add child notes to organize your note hierarchy.",
-                     "details": ""
+                     "title":"Add child notes to organize your note hierarchy.",
+                     "content": ""
                   }
                ],
-               "text":"Each note acts like a document.",
-               "details": ""
+               "title":"Each note acts like a document.",
+               "content": ""
 
             },
             {
@@ -40,8 +40,8 @@ const instructionNotes: Note =
                "children":[
                   
                ],
-               "text":"<b>Bold </b>notes with CTRL+B",
-               "details": ""
+               "title":"<b>Bold </b>notes with CTRL+B",
+               "content": ""
 
             },
             {
@@ -49,8 +49,8 @@ const instructionNotes: Note =
                "children":[
                   
                ],
-               "text":"<i>Italicize</i><b>&nbsp;</b>notes with CTRL+I",
-               "details": ""
+               "title":"<i>Italicize</i><b>&nbsp;</b>notes with CTRL+I",
+               "content": ""
 
             },
             {
@@ -58,8 +58,8 @@ const instructionNotes: Note =
                "children":[
                   
                ],
-               "text":"<u>Underline</u>&nbsp;notes with CTRL+U<br>",
-               "details":""
+               "title":"<u>Underline</u>&nbsp;notes with CTRL+U<br>",
+               "content":""
 
             },
             {
@@ -67,8 +67,8 @@ const instructionNotes: Note =
                "children":[
                   
                ],
-               "text":"Notes can be completed",
-               "details": ""
+               "title":"Notes can be completed",
+               "content": ""
                ,
                "completed":true
             },
@@ -77,14 +77,14 @@ const instructionNotes: Note =
                "children":[
                   
                ],
-               "text":"Notes can be links",
-               "details": ""
+               "title":"Notes can be links",
+               "content": ""
                ,
                "link":"https://github.com/IMADP/noteflowy"
             }
          ],
-         "text":"Features",
-         "details": ""
+         "title":"Features",
+         "content": ""
 
       },
       {
@@ -92,8 +92,8 @@ const instructionNotes: Note =
          "children":[
             
          ],
-         "text":"Getting Started",
-         "details": ""
+         "title":"Getting Started",
+         "content": ""
 
       }
    ]

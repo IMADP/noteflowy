@@ -3,14 +3,14 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Note } from './use-notes';
 
-interface NoteDetailsProps {
+interface NoteContentProps {
   note: Note;
 }
 
-export const NoteDetails = ({ note }: NoteDetailsProps) => {
+export const NoteContent = ({ note }: NoteContentProps) => {
   const editor = useEditor({
     editable: false,
-    content: note.details,
+    content: note.content,
     extensions: [StarterKit, Underline],
   })
 
@@ -20,7 +20,7 @@ export const NoteDetails = ({ note }: NoteDetailsProps) => {
 
   return (
     <>
-      {note.details && <EditorContent editor={editor} />}
+      {note.content && <EditorContent editor={editor} />}
     </>
 
   );

@@ -1,6 +1,5 @@
 import { Box, Flex, Stack, Text } from '@chakra-ui/react'
-import { useNotes } from 'feature/notes/use-notes'
-import { Key } from 'react'
+import { Note, useNotes } from 'feature/notes/use-notes'
 import { BiDisc, BiNotepad } from 'react-icons/bi'
 import { Link, useLocation } from 'react-router-dom'
 import { FileLoadButton } from './file-load-button'
@@ -32,9 +31,9 @@ export const Navigation = () => {
               </Text>
             </Link>
             <Stack spacing="1">
-              {notes.rootNote.children && notes.rootNote.children.map((note: { id: Key | null | undefined; text: string }) => (
+              {notes.rootNote.children && notes.rootNote.children.map((note: Note) => (
                 <Link key={note.id} to={`/note/${note.id}`}>
-                  <NavigationItem active={isNotePath && paths[2] === note.id} icon={<BiDisc />} label={note.text.replace(/&(nbsp|amp|quot|lt|gt);/g, " ").replace(/<[^>]+>/g, '')} />
+                  <NavigationItem active={isNotePath && paths[2] === note.id} icon={<BiDisc />} label={note.title} />
                 </Link>
               ))}
             </Stack>

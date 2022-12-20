@@ -149,10 +149,10 @@ export function filterNote(search: string | null, note: Note): Note {
   visitNoteTreeReverse(clonedNote, (currentNote) => {
 
     // search for a match on the note itself and mark it as keep
-    const textFound = currentNote.text != null && currentNote.text.toUpperCase().includes(term);
-    const detailsFound = currentNote.details != null && currentNote.details.toUpperCase().includes(term);
+    const titleFound = currentNote.title != null && currentNote.title.toUpperCase().includes(term);
+    const contentFound = currentNote.content != null && currentNote.content.toUpperCase().includes(term);
 
-    if (textFound || detailsFound) {
+    if (titleFound || contentFound) {
       (currentNote as SearchNote).keep = true;
       currentNote.collapsed = false;
     }
@@ -168,11 +168,11 @@ export function filterNote(search: string | null, note: Note): Note {
       }
 
       // search for text matches
-      const textFound = c.text != null && c.text.toUpperCase().includes(term);
-      const detailsFound = c.details != null && c.details.toUpperCase().includes(term);
+      const titleFound = c.title != null && c.title.toUpperCase().includes(term);
+      const contentFound = c.content != null && c.content.toUpperCase().includes(term);
 
       // keep matches and mark parent to be kept
-      if (textFound || detailsFound) {
+      if (titleFound || contentFound) {
         (currentNote as SearchNote).keep = true;
         currentNote.collapsed = false;
         return true;
