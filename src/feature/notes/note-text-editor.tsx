@@ -1,6 +1,6 @@
 import { Input } from '@chakra-ui/input';
 import { useEffect, useState } from 'react';
-import { Note, useNotes } from '../use-notes';
+import { Note, useNotes } from './use-notes';
 
 interface NoteTextProps {
   note: Note;

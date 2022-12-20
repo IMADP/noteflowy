@@ -6,7 +6,7 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { ReactElement, useEffect } from 'react';
 import { BiBold, BiCode, BiCodeBlock, BiItalic, BiLinkAlt, BiListOl, BiListUl, BiRedo, BiStrikethrough, BiUnderline, BiUndo } from 'react-icons/bi';
-import { Note, useNotes } from '../use-notes';
+import { Note, useNotes } from './use-notes';
 
 
 

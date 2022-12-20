@@ -5,6 +5,7 @@ const instructionNotes: Note =
    "id":"100c83b8-8cf3-4882-86e4-294ef27769ec",
    "root":true,
    "text":"root",
+   "edit": false,
    "details": '',
    "children":[
       {
@@ -60,16 +61,6 @@ const instructionNotes: Note =
                "text":"<u>Underline</u>&nbsp;notes with CTRL+U<br>",
                "details":""
 
-            },
-            {
-               "id":"81368e32-c674-4677-b386-e0e241e9bc17",
-               "children":[
-                  
-               ],
-               "text":"Notes can be locked and read-only",
-               "details":""
-               ,
-               "locked":true
             },
             {
                "id":"4b60be00-9167-4dd4-a4af-a2ee2ba0101c",

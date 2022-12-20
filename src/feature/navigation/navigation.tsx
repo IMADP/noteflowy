@@ -43,7 +43,7 @@ export const Navigation = () => {
         </Stack>
         <Box>
           <Stack spacing="1">
-            <NavigationItem subtle disabled icon={<BiNotepad />} label="Noteflowy v2.0" />
+            <NavigationItem subtle disabled icon={<BiNotepad />} label="Noteflowy v2.5" />
           </Stack>
         </Box>
       </Flex>

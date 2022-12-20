@@ -4,7 +4,7 @@ import { BiSearchAlt } from 'react-icons/bi';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import { CollapseButton } from './collapse-button';
-import { LockButton } from './lock-button';
+import { EditButton } from './edit-button';
 import { UpButton } from './up-button';
 
 export const Header = () => {
@@ -36,7 +36,7 @@ export const Header = () => {
 
         <ButtonGroup variant="ghost" spacing="1">
           <UpButton />
-          <LockButton />
+          <EditButton />
           <CollapseButton />
         </ButtonGroup>
 

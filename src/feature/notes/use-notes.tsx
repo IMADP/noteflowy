@@ -2,7 +2,6 @@ import instructionNotes from 'instructions';
 import { FileHandle } from 'node:fs/promises';
 import { createContext, useContext, useEffect } from "react";
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { Descendant } from 'slate';
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
 import { clone, filterNote, findCurrentNote, findNote, findParentUrl, visitNoteTree } from "./notes-util";
@@ -20,8 +19,7 @@ export interface Note {
   root?: boolean;
   collapsed?: boolean;
   completed?: boolean;
-  locked?: boolean;
-  showDetails?: boolean;
+  edit?: boolean;
 }
 
 /**
@@ -170,8 +168,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
         draftNote.details = note.details;
         draftNote.collapsed = note.collapsed;
         draftNote.completed = note.completed;
-        draftNote.locked = note.locked;
-        draftNote.showDetails = note.showDetails;
+        draftNote.edit = note.edit;
         draftNote.link = note.link;
       }
 
