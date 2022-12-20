@@ -1,24 +1,7 @@
 Poor Mans Jira.
 
-- note-editable is screwing up the dom, navigation doesnt work because of it 
-
 - Drag and drop
-
-- Link Modal/style 
 
 - Note ordering needing, maintain order on update, dragging
 
-- Animations for link clicking, collapsing notes
-
-- Keyboard commands (shift and ctrl+shift to change parent)
-
-- Pressing enter to create note should give focus
-- Pressing enter to create note should create next to previous (requires ordering)
-
-- Add partial hyperlink support? (onselectionchange event needed to popover highlighted text)
-
-- Adding a new note while searching will immediately hide it if it doesn't match, which makes sense but is confusing
-
-- Add a copy to clipboard button next to details?
-
-- Menu stays open after deleting/add url
+- Animations for link clicking
