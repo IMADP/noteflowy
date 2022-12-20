@@ -4,6 +4,7 @@ import { BiSearchAlt } from 'react-icons/bi';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import { EditButton } from './edit-button';
+import { MoveButton } from './move-button';
 import { UpButton } from './up-button';
 
 export const Header = () => {
@@ -11,7 +12,7 @@ export const Header = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get('search');
   const [query, setQuery] = useImmer(search === null ? '' : search);
- 
+
   // this effect will reset the search bar when navigating away
   useEffect(() => {
     if (searchParams.get('search') == null) {
@@ -36,6 +37,7 @@ export const Header = () => {
         <ButtonGroup variant="ghost" spacing="1">
           <UpButton />
           <EditButton />
+          <MoveButton />
         </ButtonGroup>
 
         <InputGroup maxW="sm">
