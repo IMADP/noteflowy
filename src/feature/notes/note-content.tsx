@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import Link from '@tiptap/extension-link';
 import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -38,7 +39,10 @@ export const NoteContent = ({ note }: NoteContentProps) => {
 
   return (
     <>
-      {note.content && <EditorContent editor={editor} />}
+      {note.content && 
+      <Box color='grey' my="1">
+        <EditorContent editor={editor} />
+      </Box>}
     </>
 
   );
