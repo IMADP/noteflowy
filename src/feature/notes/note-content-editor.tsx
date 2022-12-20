@@ -1,14 +1,14 @@
 import { IconButton } from '@chakra-ui/button';
 import { Box, Center, Divider, Flex, Spacer, Stack } from '@chakra-ui/layout';
 import { Tooltip } from '@chakra-ui/tooltip';
+import Link from '@tiptap/extension-link';
 import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { BiBold, BiCode, BiCodeBlock, BiItalic, BiLinkAlt, BiListOl, BiListUl, BiRedo, BiStrikethrough, BiUnderline, BiUndo } from 'react-icons/bi';
+import { ReactElement, useEffect } from 'react';
+import { BiBold, BiCode, BiCodeBlock, BiItalic, BiListOl, BiListUl, BiRedo, BiStrikethrough, BiUnderline, BiUndo } from 'react-icons/bi';
+import { NoteContentEditorLink } from './note-content-editor-link';
 import { Note, useNotes } from './use-notes';
-import Link from '@tiptap/extension-link';
-
 
 interface NoteContentEditorProps {
   note: Note;
@@ -38,25 +38,6 @@ export const NoteContentEditor = ({ note }: NoteContentEditorProps) => {
       editor?.commands.setContent(note.content);
     }
   }, [note, editor]);
-
-  const setLink = useCallback(() => {
-    const previousUrl = editor?.getAttributes('link').href;
-    const url = window.prompt('URL', previousUrl);
-
-    // cancelled
-    if (url === null) {
-      return;
-    }
-
-    // empty
-    if (url === '') {
-      editor?.chain().focus().extendMarkRange('link').unsetLink().run();
-      return;
-    }
-
-    // update link
-    editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
-  }, [editor]);
 
   if (!editor) {
     return null;
@@ -131,13 +112,8 @@ export const NoteContentEditor = ({ note }: NoteContentEditorProps) => {
             <Divider color='black' orientation='vertical' />
           </Center>
 
-          <MarkButton
-            title='Link'
-            icon={<BiLinkAlt />}
-            active={editor.isActive('link')}
-            disabled={false}
-            onClick={editor.isActive('link') ? () => editor.chain().focus().unsetLink().run() : setLink} />
-            
+          <NoteContentEditorLink editor={editor} />
+
           <Center height='1.5rem' px='2'>
             <Divider color='black' orientation='vertical' />
           </Center>
@@ -148,7 +124,7 @@ export const NoteContentEditor = ({ note }: NoteContentEditorProps) => {
             active={editor.isActive('codeBlock')}
             disabled={!editor.can().chain().focus().undo().run()}
             onClick={() => editor.chain().focus().undo().run()} />
-            
+
           <MarkButton
             title='Redo'
             icon={<BiRedo />}
