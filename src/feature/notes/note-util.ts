@@ -79,11 +79,15 @@ export function findNote(rootNote: Note, id: string, parent?: Note): FindNoteRes
  * @param {*} childId 
  * @returns boolean
  */
-export function isDescendent(parentNote: Note, childId: string): boolean | undefined {
+export function isDescendent(parentNote: Note | undefined, childId: string): boolean | undefined {
+
+  if(!parentNote) {
+    return false;
+  }
 
   // if a child is a direct descendent, return true
   if (parentNote.children.find(n => n.id === childId)) {
-    return true;
+    //return true;
   }
 
   // recursively search each child
@@ -95,6 +99,29 @@ export function isDescendent(parentNote: Note, childId: string): boolean | undef
     }
   }
 
+}
+
+/**
+ * Returns true if the source note can be drag and dropped onto a target note.
+ * 
+ * @param {*} source 
+ * @param {*} target 
+ * @returns boolean
+ */
+export function canDropNote(source: Note | undefined, target: Note): boolean {
+
+  // don't allow dragging to itself
+  if (!source || source.id === target.id) {
+    return false;
+  }
+
+  // don't allow dragging to direct parent
+  if (target.children.find(n => n.id === source.id)) {
+    return false;
+  }
+
+  // don't allow a parent note to be dragged into a descendent
+  return !isDescendent(target, source.id);
 }
 
 /**
@@ -149,12 +176,11 @@ export function filterNote(search: string | null, note: Note): Note {
   visitNoteTreeReverse(clonedNote, (currentNote) => {
 
     // search for a match on the note itself and mark it as keep
-    const textFound = currentNote.text != null && currentNote.text.toUpperCase().includes(term);
-    const detailsFound = currentNote.details != null && currentNote.details.toUpperCase().includes(term);
+    const titleFound = currentNote.title != null && currentNote.title.toUpperCase().includes(term);
+    const contentFound = currentNote.content != null && currentNote.content.toUpperCase().includes(term);
 
-    if (textFound || detailsFound) {
+    if (titleFound || contentFound) {
       (currentNote as SearchNote).keep = true;
-      currentNote.collapsed = false;
     }
 
     // filter any children who are not matches or parents of matches
@@ -163,18 +189,16 @@ export function filterNote(search: string | null, note: Note): Note {
       // keep notes marked by child matches
       if ((c as SearchNote).keep) {
         (currentNote as SearchNote).keep = true;
-        currentNote.collapsed = false;
         return true;
       }
 
       // search for text matches
-      const textFound = c.text != null && c.text.toUpperCase().includes(term);
-      const detailsFound = c.details != null && c.details.toUpperCase().includes(term);
+      const titleFound = c.title != null && c.title.toUpperCase().includes(term);
+      const contentFound = c.content != null && c.content.toUpperCase().includes(term);
 
       // keep matches and mark parent to be kept
-      if (textFound || detailsFound) {
+      if (titleFound || contentFound) {
         (currentNote as SearchNote).keep = true;
-        currentNote.collapsed = false;
         return true;
       }
 

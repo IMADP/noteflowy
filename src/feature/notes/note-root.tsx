@@ -1,30 +1,20 @@
-import { List, ListItem } from '@chakra-ui/react';
-import { BiPlusCircle } from 'react-icons/bi';
+import { Box, useColorModeValue as mode } from '@chakra-ui/react';
 import { NoteTree } from './note-tree';
 import { Note, useNotes } from './use-notes';
 
-interface NoteRootProps {
-  note: Note;
-}
-
-export const NoteRoot = ({ note }: NoteRootProps) => {
+export const NoteRoot = () => {
   const notes = useNotes();
 
   return (
-    <>
-      {note.root && note.children.map((n: Note) => (
+    <Box bg={mode('white', 'gray.800')} flex="1" py="5" pl="5">
+
+      {notes.currentNote.root && notes.currentNote.children.map((n: Note) => (
         <NoteTree key={n.id} note={n} noteParent={undefined} />
       ))}
 
-      <List ml={5} mb={5}>
-
-        {note.root &&
-          <ListItem ml={2}>
-            <BiPlusCircle cursor="pointer" aria-label='Add Note' onClick={() => notes.onAdd(note)} />
-          </ListItem>
-        }
-
-      </List>
-    </>
+      {!notes.currentNote.root &&
+        <NoteTree note={notes.currentNote} noteParent={notes.currentNoteParent} />
+      }
+    </Box>
   )
 }

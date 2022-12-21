@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect } from "react";
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
-import { clone, filterNote, findCurrentNote, findNote, findParentUrl, visitNoteTree } from "./notes-util";
+import { clone, filterNote, findCurrentNote, findNote, findParentUrl, visitNoteTree } from "./note-util";
 
 /**
  * Note
@@ -13,14 +13,10 @@ import { clone, filterNote, findCurrentNote, findNote, findParentUrl, visitNoteT
 export interface Note {
   id: string;
   children: Array<Note>,
-  text: string;
-  details?: string;
-  link?: string | null;
+  title: string;
+  content: string;
   root?: boolean;
-  collapsed?: boolean;
-  completed?: boolean;
-  locked?: boolean;
-  showDetails?: boolean;
+  index: number;
 }
 
 /**
@@ -34,6 +30,7 @@ interface NotesContextType {
   currentNoteParent: Note | undefined;
   parentUrl: string | null;
   search: string | null;
+  isEdit: boolean;
   onLoad: () => void;
   onAdd: (parent: Note) => void;
   onAddSubNote: (parent: Note) => void;
@@ -42,6 +39,7 @@ interface NotesContextType {
   onMove: (sourceId: string, parentId: string) => void;
   onDuplicate: (parent: Note | undefined, note: Note) => void;
   onDelete: (id: string) => void;
+  onToggleEdit: () => void;
 }
 
 const NotesContext = createContext<NotesContextType>(null!);
@@ -56,6 +54,7 @@ export const useNotes = () => useContext(NotesContext);
 export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
   const [fileHandle, setFileHandle] = useImmer<FileHandle | null>(null);
   const [rootNote, setRootNote] = useImmer<Note>(instructionNotes);
+  const [isEdit, setEdit] = useImmer<boolean>(false);
 
   // use location path to determine the current note
   const location = useLocation();
@@ -124,8 +123,9 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
         draftNote.children.push({
           id: uuidv4(),
           children: [],
-          text: 'New Note',
-          details: 'Details'
+          title: '',
+          content: '',
+          index: 0
         });
       }
     })
@@ -146,8 +146,9 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
         note.children.push({
           id: uuidv4(),
           children: [],
-          text: 'New Sub Note',
-          details: 'Details'
+          title: '',
+          content: '',
+          index: 0
         });
       }
 
@@ -165,13 +166,14 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (results) {
         const draftNote = results.note;
-        draftNote.text = note.text;
-        draftNote.details = note.details;
-        draftNote.collapsed = note.collapsed;
-        draftNote.completed = note.completed;
-        draftNote.locked = note.locked;
-        draftNote.showDetails = note.showDetails;
-        draftNote.link = note.link;
+        draftNote.title = note.title;
+        draftNote.content = note.content;
+        draftNote.index = note.index;
+
+        // resort all indexes
+        const parent = results.parent || draftRootNote;
+        parent.children = parent.children.sort((a, b) => a.index - b.index);
+        parent.children.forEach((c, i) => c.index = i);
       }
 
     })
@@ -269,7 +271,15 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
 
     })
   };
-  
+
+  /**
+   * Sets the edit flag.
+   * 
+   */
+  const onToggleEdit = () => {
+    setEdit(!isEdit);
+  };
+
   let value = {
     fileName: fileHandle == null ? null : (fileHandle as any).name,
     rootNote,
@@ -277,6 +287,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
     currentNoteParent,
     parentUrl,
     search,
+    isEdit,
     onLoad,
     onAdd,
     onAddSubNote,
@@ -284,7 +295,8 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
     onUpdateAll,
     onMove,
     onDuplicate,
-    onDelete
+    onDelete,
+    onToggleEdit
   };
 
   return <NotesContext.Provider value={value}>{children}</NotesContext.Provider>;
