@@ -207,7 +207,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
 
         // resort and reindex as whole numbers
         const draftNoteParent = results.parent || draftRootNote;
-        draftNoteParent.children = draftNoteParent.children.sort((a, b) => a.index - b.index);
+        draftNoteParent.children.sort((a, b) => a.index - b.index);
         draftNoteParent.children.forEach((c, i) => c.index = i);
       }
 
@@ -235,11 +235,11 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
       // remove from original parent and add to new parent
       if (sourceResults && sourceResults.parent && targetResults) {
         sourceResults.parent.children = sourceResults.parent.children.filter(n => n.id !== sourceId);
-        sourceResults.parent.children = sourceResults.parent.children.sort((a, b) => a.index - b.index);
+        sourceResults.parent.children.sort((a, b) => a.index - b.index);
         sourceResults.parent.children.forEach((c, i) => c.index = i);
 
         targetResults.note.children.push(sourceResults.note);
-        targetResults.note.children = targetResults.note.children.sort((a, b) => a.index - b.index);
+        targetResults.note.children.sort((a, b) => a.index - b.index);
         targetResults.note.children.forEach((c, i) => c.index = i);
       }
 
@@ -269,7 +269,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
       if (results) {
         const parentNote = results.note;
         parentNote.children.push(duplicateNote);
-        parentNote.children = parentNote.children.sort((a, b) => a.index - b.index);
+        parentNote.children.sort((a, b) => a.index - b.index);
         parentNote.children.forEach((c, i) => c.index = i);
       }
 
@@ -287,7 +287,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
       visitNoteTree(draftRootNote, (child, parent) => {
         if (parent && child.id === id) {
           parent.children = parent.children.filter(childNote => childNote.id !== id);
-          parent.children = parent.children.sort((a, b) => a.index - b.index);
+          parent.children.sort((a, b) => a.index - b.index);
           parent.children.forEach((c, i) => c.index = i);
         }
       });
