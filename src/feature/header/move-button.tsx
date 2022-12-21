@@ -65,10 +65,11 @@ const MoveTree = ({ note, noteParent }: MoveTreeProps) => {
         drop: (droppedNote: Note) => notes.onMove(droppedNote.id, note.id),
         canDrop: (item: Note) => canDropNote(findNote(notes.rootNote, item.id)?.note, note),
         collect: (monitor) => ({
-            canDrop: !!monitor.canDrop()
+            canDrop: monitor.canDrop()
         })
     }), [note]
 );
+
 
   return (
     <List ml={5} >

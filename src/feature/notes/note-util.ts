@@ -79,11 +79,15 @@ export function findNote(rootNote: Note, id: string, parent?: Note): FindNoteRes
  * @param {*} childId 
  * @returns boolean
  */
-export function isDescendent(parentNote: Note, childId: string): boolean | undefined {
+export function isDescendent(parentNote: Note | undefined, childId: string): boolean | undefined {
+
+  if(!parentNote) {
+    return false;
+  }
 
   // if a child is a direct descendent, return true
   if (parentNote.children.find(n => n.id === childId)) {
-    return true;
+    //return true;
   }
 
   // recursively search each child
@@ -112,7 +116,7 @@ export function canDropNote(source: Note | undefined, target: Note): boolean {
   }
 
   // don't allow dragging to direct parent
-  if (source.children.find(n => n.id === source.id)) {
+  if (target.children.find(n => n.id === source.id)) {
     return false;
   }
 
