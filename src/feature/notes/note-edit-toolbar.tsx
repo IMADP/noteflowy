@@ -1,5 +1,5 @@
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, IconButton, Stack, Tooltip, useDisclosure } from '@chakra-ui/react';
-import { Children, useRef } from 'react';
+import { useRef } from 'react';
 import { BiArrowFromLeft, BiArrowFromTop, BiCopyAlt, BiEraser } from 'react-icons/bi';
 import { Note, useNotes } from './use-notes';
 

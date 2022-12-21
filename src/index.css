@@ -24,6 +24,9 @@ body {
   background-color: rgba(97, 97, 97, 0.1);
   color: #616161;
 }
+.ProseMirror strong {
+  font-weight: 700;
+}
 .ProseMirror pre {
   background: #0D0D0D;
   color: #FFF;
