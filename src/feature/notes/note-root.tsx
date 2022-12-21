@@ -18,7 +18,7 @@ export const NoteRoot = () => {
       }
 
       {notes.isEdit &&
-        <List ml={5} mt={5}>
+        <List ml={4} mt={5}>
           <ListItem>
 
             <Tooltip hasArrow label='Add Note'>

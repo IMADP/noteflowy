@@ -1,21 +1,31 @@
-import { IconButton } from '@chakra-ui/button';
+import { Button, IconButton } from '@chakra-ui/button';
+import { useDisclosure } from '@chakra-ui/hooks';
 import { Box, Center, Divider, Flex, Spacer, Stack } from '@chakra-ui/layout';
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay } from '@chakra-ui/modal';
 import { Tooltip } from '@chakra-ui/tooltip';
 import Link from '@tiptap/extension-link';
 import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { ReactElement, useEffect } from 'react';
-import { BiBold, BiCode, BiCodeBlock, BiItalic, BiListOl, BiListUl, BiRedo, BiStrikethrough, BiUnderline, BiUndo } from 'react-icons/bi';
+import { ReactElement, useEffect, useRef } from 'react';
+import { BiBold, BiCode, BiCodeBlock, BiCopyAlt, BiEraser, BiItalic, BiListOl, BiListUl, BiRedo, BiStrikethrough, BiUnderline, BiUndo } from 'react-icons/bi';
 import { NoteContentEditorLink } from './note-content-editor-link';
 import { Note, useNotes } from './use-notes';
 
 interface NoteContentEditorProps {
   note: Note;
+  noteParent?: Note;
 }
 
-export const NoteContentEditor = ({ note }: NoteContentEditorProps) => {
+export const NoteContentEditor = ({ note, noteParent }: NoteContentEditorProps) => {
   const notes = useNotes();
+  const cancelRef = useRef<any>();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const onDelete = () => {
+    notes.onDelete(note.id);
+    onClose();
+  };
 
   const editor = useEditor({
     extensions: [
@@ -132,7 +142,50 @@ export const NoteContentEditor = ({ note }: NoteContentEditorProps) => {
             disabled={!editor.can().chain().focus().redo().run()}
             onClick={() => editor.chain().focus().redo().run()} />
 
+          <Center height='1.5rem' px='2'>
+            <Divider color='black' orientation='vertical' />
+          </Center>
 
+          <MarkButton
+            title='Clone Note'
+            icon={<BiCopyAlt />}
+            active={false}
+            disabled={false}
+            onClick={() => notes.onDuplicate(noteParent, note)} />
+
+          <MarkButton
+            title='Delete Note'
+            icon={<BiEraser />}
+            active={false}
+            disabled={false}
+            onClick={onOpen} />
+
+          <AlertDialog
+            isOpen={isOpen}
+            leastDestructiveRef={cancelRef}
+            onClose={onClose}
+          >
+            <AlertDialogOverlay>
+              <AlertDialogContent>
+                <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                  Delete Note
+                </AlertDialogHeader>
+
+                <AlertDialogBody>
+                  Are you sure? This will delete the note and all sub-notes.
+                </AlertDialogBody>
+
+                <AlertDialogFooter>
+                  <Button ref={cancelRef} onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button colorScheme='red' onClick={onDelete} ml={3}>
+                    Delete
+                  </Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialogOverlay>
+          </AlertDialog>
 
         </Stack>
       </Flex>
