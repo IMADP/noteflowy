@@ -27,7 +27,7 @@ export const NoteTree = ({ note, noteParent }: NoteTreeProps) => {
           <Box p='1' flex='1'>
             <VStack spacing={3} align='stretch'>
 
-              {note.title &&
+              {(note.title  || notes.isEdit) && 
                 <>
                   {notes.isEdit && <NoteTitleEditor note={note} />}
                   {!notes.isEdit && <NoteTitle note={note} />}

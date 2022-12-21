@@ -42,6 +42,22 @@ interface NotesContextType {
   onToggleEdit: () => void;
 }
 
+const defaultRootNote: Note = {
+  id: uuidv4(),
+  title: 'Root',
+  content: '',
+  index: 0,
+  root: true,
+  children: [{
+    id: uuidv4(),
+    title: 'Note Title',
+    content: '',
+    index: 0,
+    root: true,
+    children: []
+  }]
+};
+
 const NotesContext = createContext<NotesContextType>(null!);
 export const useNotes = () => useContext(NotesContext);
 
@@ -98,12 +114,15 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
    */
   const onLoad = () => {
     const onLoadAsync = async () => {
-      let [fileHandle] = await (window as any).showOpenFilePicker();
+
+      // get the file handle and parse the root note
+      const [fileHandle] = await (window as any).showOpenFilePicker();
       const file = await fileHandle.getFile();
       const contents = await file.text();
-      var data = Object.keys(contents).length > 0 ? JSON.parse(contents) : { root: true, children: [] };
+      const root = Object.keys(contents).length > 0 ? JSON.parse(contents) : defaultRootNote;
+
+      setRootNote(root); 
       setFileHandle(fileHandle);
-      setRootNote(data);
     }
     onLoadAsync();
   };

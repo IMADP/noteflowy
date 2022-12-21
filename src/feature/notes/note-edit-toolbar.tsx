@@ -1,5 +1,5 @@
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, IconButton, Stack, Tooltip, useDisclosure } from '@chakra-ui/react';
-import { useRef } from 'react';
+import { Children, useRef } from 'react';
 import { BiArrowFromLeft, BiArrowFromTop, BiCopyAlt, BiEraser } from 'react-icons/bi';
 import { Note, useNotes } from './use-notes';
 
@@ -63,6 +63,7 @@ export const NoteEditToolbar = ({ note, noteParent }: NoteEditToolbarProps) => {
           variant='outline'
           color='gray'
           aria-label='Delete Note'
+          disabled={notes.currentNote.root && notes.currentNote.children.length === 1}
           onClick={onOpen}
           icon={<BiEraser />}
         />
