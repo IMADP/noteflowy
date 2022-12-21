@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/noteflowy/static/css/main.0975a8d5.css",
+    "main.js": "/noteflowy/static/js/main.3c2c5935.js",
+    "index.html": "/noteflowy/index.html",
+    "main.0975a8d5.css.map": "/noteflowy/static/css/main.0975a8d5.css.map",
+    "main.3c2c5935.js.map": "/noteflowy/static/js/main.3c2c5935.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0975a8d5.css",
+    "static/js/main.3c2c5935.js"
+  ]
+}
