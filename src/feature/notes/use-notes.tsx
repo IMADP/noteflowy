@@ -33,7 +33,6 @@ interface NotesContextType {
   isEdit: boolean;
   onLoad: () => void;
   onAdd: (parent: Note) => void;
-  onAddSubNote: (parent: Note) => void;
   onUpdate: (note: Note) => void;
   onOrder: (note: Note, up: boolean) => void;
   onMove: (sourceId: string, parentId: string) => void;
@@ -147,30 +146,6 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
           index: draftNote.children.length
         });
       }
-    })
-  };
-
-  /**
-   * Adds a sub note to a parent note.
-   * 
-   * @param {*} parent 
-   */
-  const onAddSubNote = (parent: Note) => {
-    setRootNote((draftRootNote) => {
-      const results = findNote(draftRootNote, parent.id);
-
-      if (results) {
-        const note = results.note;
-
-        note.children.push({
-          id: uuidv4(),
-          children: [],
-          title: '',
-          content: '',
-          index: note.children.length
-        });
-      }
-
     })
   };
 
@@ -313,7 +288,6 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
     isEdit,
     onLoad,
     onAdd,
-    onAddSubNote,
     onUpdate,
     onOrder,
     onMove,
