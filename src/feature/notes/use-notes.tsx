@@ -35,7 +35,6 @@ interface NotesContextType {
   onAdd: (parent: Note) => void;
   onAddSubNote: (parent: Note) => void;
   onUpdate: (note: Note) => void;
-  onUpdateAll: (note: Note, updateAction: (note: Note) => void) => void;
   onOrder: (note: Note, up: boolean) => void;
   onMove: (sourceId: string, parentId: string) => void;
   onDuplicate: (parent: Note | undefined, note: Note) => void;
@@ -194,27 +193,6 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   /**
-   * Updates all notes and sub notes.
-   * 
-   * @param {*} notes 
-   * @param {*} collapsed 
-   */
-  const onUpdateAll = (note: Note, updateAction: (note: Note) => void) => {
-    setRootNote((draftRootNote) => {
-      const results = findNote(draftRootNote, note.id);
-
-      if (results) {
-        const draftNote = results.note;
-
-        visitNoteTree(draftNote, (n) => {
-          updateAction(n);
-        })
-      }
-
-    })
-  }
-
-  /**
    * Orders a note by moving it up or down.
    * 
    * @param {*} note 
@@ -257,7 +235,12 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
       // remove from original parent and add to new parent
       if (sourceResults && sourceResults.parent && targetResults) {
         sourceResults.parent.children = sourceResults.parent.children.filter(n => n.id !== sourceId);
+        sourceResults.parent.children = sourceResults.parent.children.sort((a, b) => a.index - b.index);
+        sourceResults.parent.children.forEach((c, i) => c.index = i);
+
         targetResults.note.children.push(sourceResults.note);
+        targetResults.note.children = targetResults.note.children.sort((a, b) => a.index - b.index);
+        targetResults.note.children.forEach((c, i) => c.index = i);
       }
 
     })
@@ -286,6 +269,8 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
       if (results) {
         const parentNote = results.note;
         parentNote.children.push(duplicateNote);
+        parentNote.children = parentNote.children.sort((a, b) => a.index - b.index);
+        parentNote.children.forEach((c, i) => c.index = i);
       }
 
     })
@@ -302,6 +287,8 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
       visitNoteTree(draftRootNote, (child, parent) => {
         if (parent && child.id === id) {
           parent.children = parent.children.filter(childNote => childNote.id !== id);
+          parent.children = parent.children.sort((a, b) => a.index - b.index);
+          parent.children.forEach((c, i) => c.index = i);
         }
       });
 
@@ -328,7 +315,6 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
     onAdd,
     onAddSubNote,
     onUpdate,
-    onUpdateAll,
     onOrder,
     onMove,
     onDuplicate,
