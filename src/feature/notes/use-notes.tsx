@@ -36,6 +36,7 @@ interface NotesContextType {
   onAddSubNote: (parent: Note) => void;
   onUpdate: (note: Note) => void;
   onUpdateAll: (note: Note, updateAction: (note: Note) => void) => void;
+  onOrder: (note: Note, up: boolean) => void;
   onMove: (sourceId: string, parentId: string) => void;
   onDuplicate: (parent: Note | undefined, note: Note) => void;
   onDelete: (id: string) => void;
@@ -187,12 +188,6 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
         const draftNote = results.note;
         draftNote.title = note.title;
         draftNote.content = note.content;
-        draftNote.index = note.index;
-
-        // resort all indexes
-        const parent = results.parent || draftRootNote;
-        parent.children = parent.children.sort((a, b) => a.index - b.index);
-        parent.children.forEach((c, i) => c.index = i);
       }
 
     })
@@ -218,6 +213,28 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
 
     })
   }
+
+  /**
+   * Orders a note by moving it up or down.
+   * 
+   * @param {*} note 
+   */
+  const onOrder = (note: Note, up: boolean) => {
+    setRootNote((draftRootNote) => {
+      const results = findNote(draftRootNote, note.id);
+
+      if (results) {
+        const draftNote = results.note;
+        draftNote.index = up ? note.index - 1.5 : note.index + 1.5;
+
+        // resort and reindex as whole numbers
+        const parent = results.parent || draftRootNote;
+        parent.children = parent.children.sort((a, b) => a.index - b.index);
+        parent.children.forEach((c, i) => c.index = i);
+      }
+
+    })
+  };
 
   /**
    * Moves a note from one parent to another.
@@ -312,6 +329,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
     onAddSubNote,
     onUpdate,
     onUpdateAll,
+    onOrder,
     onMove,
     onDuplicate,
     onDelete,

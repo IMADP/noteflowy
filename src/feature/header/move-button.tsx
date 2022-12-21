@@ -72,7 +72,7 @@ const MoveTree = ({ note }: MoveTreeProps) => {
             variant='outline'
             colorScheme='teal'
             aria-label='Send email'
-            onClick={() => notes.onUpdate({ ...note, index: note.index - 1.5 })}
+            onClick={() => notes.onOrder(note, true)}
             icon={<BiChevronsUp />}
           />
         }
@@ -92,7 +92,7 @@ const MoveTree = ({ note }: MoveTreeProps) => {
             variant='outline'
             colorScheme='teal'
             aria-label='Send email'
-            onClick={() => notes.onUpdate({ ...note, index: note.index + 1.5 })}
+            onClick={() => notes.onOrder(note, false)}
             icon={<BiChevronsDown />}
           />
         }
