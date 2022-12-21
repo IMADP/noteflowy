@@ -2,105 +2,39 @@ import { Note } from "feature/notes/use-notes";
 
 const instructionNotes: Note = 
 {
-   "id":"100c83b8-8cf3-4882-86e4-294ef27769ec",
+   "id":"1324df6a-7c7a-4e02-98d2-8bef70b6ec30",
+   "title":"Root",
+   "content":"",
+   "index":0,
    "root":true,
-   "title":"root",
-   "content": '',
-   "index": 0,
    "children":[
       {
-         "id":"000c83b8-8cf3-4882-86e4-294ef27769ec",
-         "children":[
-            
-         ],
-         "index": 0,
+         "id":"e87a6091-cf35-4f29-ad91-8348a27a580a",
          "title":"Welcome to Noteflowy",
-         "content":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>"
-      },
-      {
-         "id":"e90f49c8-74e2-465a-8bb9-d79a504de44b",
-         "index": 0,
+         "content":"<p>Noteflowy is an offline clone of <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://workflowy.com/\">Workflowy</a>. It saves data directly to a file on your hard drive instead of an external service, so your data is completely private. You can make local copies of your data manually, or use a cloud sync like Dropbox. Each note in Noteflowy is its own miniature document, which allows you to create a hierarchy of notes for organizational purposes. However, you can click on the bullet points to focus on one note at a time.</p>",
+         "index":0,
+         "root":false,
          "children":[
-            {
-               "id":"42a778ee-78f1-4ab7-8c6b-71c203ab08ad",
-               "index": 0,
-               "children":[
-                  {
-                     "id":"0d7d3c8f-0db6-4703-a05b-798839b5e823",
-                     "index": 0,
-                     "children":[
-                        
-                     ],
-                     "title":"Add child notes to organize your note hierarchy.",
-                     "content": ""
-                  }
-               ],
-               "title":"Each note acts like a document.",
-               "content": ""
-
-            },
-            {
-               "id":"12edabb7-45c1-4c35-8df1-51247993f7ee",
-               "index": 0,
-               "children":[
-                  
-               ],
-               "title":"<b>Bold </b>notes with CTRL+B",
-               "content": ""
-
-            },
-            {
-               "id":"3257e2f3-8f14-4196-9d15-c21856840fae",
-               "index": 0,
-               "children":[
-                  
-               ],
-               "title":"<i>Italicize</i><b>&nbsp;</b>notes with CTRL+I",
-               "content": ""
-
-            },
-            {
-               "id":"0add91c5-8298-4912-b9af-4c0c500f9ec9",
-               "index": 0,
-               "children":[
-                  
-               ],
-               "title":"<u>Underline</u>&nbsp;notes with CTRL+U<br>",
-               "content":""
-
-            },
-            {
-               "id":"4b60be00-9167-4dd4-a4af-a2ee2ba0101c",
-               "index": 0,
-               "children":[
-                  
-               ],
-               "title":"Notes can be completed",
-               "content": ""
-            },
-            {
-               "id":"3b60be00-9167-4dd4-a4af-a2ee2ba0101c",
-               "index": 0,
-               "children":[
-                  
-               ],
-               "title":"Notes can be links",
-               "content": ""
-            }
-         ],
-         "title":"Features",
-         "content": ""
-
+            
+         ]
       },
       {
-         "id":"4db125f3-b72c-47bb-9b59-e76f8ad04b1f",
-         "index": 0,
+         "id":"fff52f81-e01a-498d-b486-bc3ae29559a5",
          "children":[
             
          ],
-         "title":"Getting Started",
-         "content": ""
-
+         "title":"Content Styling",
+         "content":"<p>Common formatting options are available for styling notes. Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>, sed do eiusmod tempor incididunt ut<em> labore et dolore</em> magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea <u>commodo consequat</u>. Duis aute irure dolor in <s>reprehenderit in voluptate</s> velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat <code>non proident</code>, sunt in culpa qui officia deserunt mollit anim id est <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://www.google.com\">www.google.com</a>.</p><p></p><p>Keyboard Support</p><ul><li><p><code>CTRL+B</code> for <strong>Bold</strong></p></li><li><p><code>CTRL+I</code> for <em>Italic</em></p></li><li><p><code>CTRL+U</code> for <u>Underline</u></p></li><li><p><code>CTRL+Z</code> for Undo</p></li><li><p><code>CTRL+Y</code> for Redo</p></li></ul><p></p><p><strong>Code Blocks</strong></p><pre><code>// search for any text pattern recursively\ngrep -rnw '/path/to/somewhere/' -e 'pattern' </code></pre>",
+         "index":1
+      },
+      {
+         "id":"71eb7993-fb22-42bc-8577-bfae0531feba",
+         "children":[
+            
+         ],
+         "title":"Changelog",
+         "content":"<p><strong>Version: 1.0</strong></p><ul><li><p>Initial release candidate</p></li></ul><p></p><p><strong>Version: 0.5</strong></p><ul><li><p>Chakra UI component styling</p></li><li><p>TipTap content editor</p></li><li><p>Conversion to TypeScript</p></li><li><p>Conversion to package-by-feature and corresponding file naming conventions</p></li><li><p>Changed to Edit Mode toggling for updates</p></li></ul><p></p><p><strong>Version: 0.1</strong></p><ul><li><p>Proof of Concept</p></li><li><p>Complete crap, really</p></li></ul>",
+         "index":2
       }
    ]
 };   

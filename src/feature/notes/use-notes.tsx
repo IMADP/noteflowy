@@ -53,7 +53,7 @@ const defaultRootNote: Note = {
     title: 'Note Title',
     content: '',
     index: 0,
-    root: true,
+    root: false,
     children: []
   }]
 };
