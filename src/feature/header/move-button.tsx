@@ -12,10 +12,6 @@ export const MoveButton = ({ }: MoveButtonProps) => {
   const notes = useNotes();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const onClick = () => {
-
-  };
-
   return (
     <>
       {notes.isEdit &&
