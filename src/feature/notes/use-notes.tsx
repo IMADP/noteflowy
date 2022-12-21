@@ -145,7 +145,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
           children: [],
           title: '',
           content: '',
-          index: 0
+          index: draftNote.children.length
         });
       }
     })
@@ -168,7 +168,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
           children: [],
           title: '',
           content: '',
-          index: 0
+          index: note.children.length
         });
       }
 
@@ -228,9 +228,9 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
         draftNote.index = up ? note.index - 1.5 : note.index + 1.5;
 
         // resort and reindex as whole numbers
-        const parent = results.parent || draftRootNote;
-        parent.children = parent.children.sort((a, b) => a.index - b.index);
-        parent.children.forEach((c, i) => c.index = i);
+        const draftNoteParent = results.parent || draftRootNote;
+        draftNoteParent.children = draftNoteParent.children.sort((a, b) => a.index - b.index);
+        draftNoteParent.children.forEach((c, i) => c.index = i);
       }
 
     })

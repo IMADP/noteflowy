@@ -45,7 +45,6 @@ export const NoteEditToolbar = ({ note, noteParent }: NoteEditToolbarProps) => {
         />
       </Tooltip>
 
-
       <Tooltip hasArrow label='Clone Note'>
         <IconButton
           size='sm'

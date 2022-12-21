@@ -2,7 +2,7 @@ import { Button, IconButton, List, ListItem, Modal, ModalBody, ModalCloseButton,
 import { canDropNote, findNote } from 'feature/notes/note-util';
 import { Note, useNotes } from 'feature/notes/use-notes';
 import { useDrag, useDrop } from 'react-dnd';
-import { BiChevronsDown, BiChevronsUp, BiMove } from 'react-icons/bi';
+import { BiDownArrowAlt, BiMove, BiUpArrowAlt } from 'react-icons/bi';
 
 export const MoveButton = () => {
   const notes = useNotes();
@@ -69,16 +69,28 @@ const MoveTree = ({ note }: MoveTreeProps) => {
 
         {notes.currentNote.id !== note.id &&
           <IconButton
+            size='sm'
             variant='outline'
             colorScheme='teal'
             aria-label='Send email'
             onClick={() => notes.onOrder(note, true)}
-            icon={<BiChevronsUp />}
+            icon={<BiUpArrowAlt />}
+          />
+        }
+
+        {notes.currentNote.id !== note.id &&
+          <IconButton
+            size='sm'
+            variant='outline'
+            colorScheme='teal'
+            aria-label='Send email'
+            onClick={() => notes.onOrder(note, false)}
+            icon={<BiDownArrowAlt />}
           />
         }
 
         <Button
-          size='md'
+          size='sm'
           cursor='move'
           colorScheme='teal'
           variant='outline'
@@ -86,16 +98,6 @@ const MoveTree = ({ note }: MoveTreeProps) => {
           ref={(node) => drag(drop(node))}>
           {note.title}
         </Button>
-
-        {notes.currentNote.id !== note.id &&
-          <IconButton
-            variant='outline'
-            colorScheme='teal'
-            aria-label='Send email'
-            onClick={() => notes.onOrder(note, false)}
-            icon={<BiChevronsDown />}
-          />
-        }
 
         {note.children.map((n: Note) => (
           <MoveTree key={n.id} note={n} noteParent={note} />
