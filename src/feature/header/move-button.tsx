@@ -4,11 +4,7 @@ import { Note, useNotes } from 'feature/notes/use-notes';
 import { useDrag, useDrop } from 'react-dnd';
 import { BiChevronsDown, BiChevronsUp, BiMove } from 'react-icons/bi';
 
-interface MoveButtonProps {
-
-}
-
-export const MoveButton = ({ }: MoveButtonProps) => {
+export const MoveButton = () => {
   const notes = useNotes();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
