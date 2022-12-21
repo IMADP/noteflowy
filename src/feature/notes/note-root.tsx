@@ -1,4 +1,5 @@
-import { Box, useColorModeValue as mode } from '@chakra-ui/react';
+import { Box, IconButton, List, ListItem, Tooltip, useColorModeValue as mode } from '@chakra-ui/react';
+import { BiPlusMedical } from 'react-icons/bi';
 import { NoteTree } from './note-tree';
 import { Note, useNotes } from './use-notes';
 
@@ -14,6 +15,25 @@ export const NoteRoot = () => {
 
       {!notes.currentNote.root &&
         <NoteTree note={notes.currentNote} noteParent={notes.currentNoteParent} />
+      }
+
+      {notes.isEdit &&
+        <List ml={5} mt={5}>
+          <ListItem>
+
+            <Tooltip hasArrow label='Add Note'>
+              <IconButton
+                size='sm'
+                variant='outline'
+                color='gray'
+                aria-label='Add a note'
+                onClick={() => notes.onAdd(notes.currentNote)}
+                icon={<BiPlusMedical />}
+              />
+            </Tooltip>
+
+          </ListItem>
+        </List>
       }
     </Box>
   )

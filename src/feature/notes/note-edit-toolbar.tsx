@@ -22,29 +22,6 @@ export const NoteEditToolbar = ({ note, noteParent }: NoteEditToolbarProps) => {
 
     <Stack direction='row' spacing={2}>
 
-      <Tooltip hasArrow label='Add New Note'>
-        <IconButton
-          size='sm'
-          variant='outline'
-          color='gray'
-          aria-label='Add another note'
-          disabled={notes.currentNote.id === note.id}
-          onClick={() => notes.onAdd(noteParent || notes.rootNote)}
-          icon={<BiArrowFromTop />}
-        />
-      </Tooltip>
-
-      <Tooltip hasArrow label='Add Child Note'>
-        <IconButton
-          size='sm'
-          variant='outline'
-          color='gray'
-          aria-label='Add a child note'
-          onClick={() => notes.onAdd(note)}
-          icon={<BiArrowFromLeft />}
-        />
-      </Tooltip>
-
       <Tooltip hasArrow label='Clone Note'>
         <IconButton
           size='sm'
