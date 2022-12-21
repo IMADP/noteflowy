@@ -1,7 +1,3 @@
 Poor Mans Jira.
 
-- Drag and drop
-
-- Note ordering needing, maintain order on update, dragging
-
 - Animations for link clicking

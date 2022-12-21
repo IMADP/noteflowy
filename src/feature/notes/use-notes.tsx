@@ -16,6 +16,7 @@ export interface Note {
   title: string;
   content: string;
   root?: boolean;
+  index: number;
 }
 
 /**
@@ -123,7 +124,8 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
           id: uuidv4(),
           children: [],
           title: '',
-          content: ''
+          content: '',
+          index: 0
         });
       }
     })
@@ -145,7 +147,8 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
           id: uuidv4(),
           children: [],
           title: '',
-          content: ''
+          content: '',
+          index: 0
         });
       }
 
@@ -165,6 +168,12 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
         const draftNote = results.note;
         draftNote.title = note.title;
         draftNote.content = note.content;
+        draftNote.index = note.index;
+
+        // resort all indexes
+        const parent = results.parent || draftRootNote;
+        parent.children = parent.children.sort((a, b) => a.index - b.index);
+        parent.children.forEach((c, i) => c.index = i);
       }
 
     })
@@ -270,7 +279,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
   const onToggleEdit = () => {
     setEdit(!isEdit);
   };
-  
+
   let value = {
     fileName: fileHandle == null ? null : (fileHandle as any).name,
     rootNote,

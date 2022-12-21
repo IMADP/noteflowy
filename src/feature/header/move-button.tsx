@@ -1,8 +1,8 @@
-import { Button, List, ListItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
+import { Button, IconButton, List, ListItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 import { canDropNote, findNote } from 'feature/notes/note-util';
 import { Note, useNotes } from 'feature/notes/use-notes';
 import { useDrag, useDrop } from 'react-dnd';
-import { BiMove } from 'react-icons/bi';
+import { BiChevronsDown, BiChevronsUp, BiMove } from 'react-icons/bi';
 
 interface MoveButtonProps {
 
@@ -50,35 +50,60 @@ interface MoveTreeProps {
   noteParent?: Note
 }
 
-const MoveTree = ({ note, noteParent }: MoveTreeProps) => {
+const MoveTree = ({ note }: MoveTreeProps) => {
   const notes = useNotes();
-  
+
   // get the drag and preview refs
-   const [, drag, dragPreview] = useDrag(() => ({
-      type: 'note',
-      item: { id: note.id }
+  const [, drag] = useDrag(() => ({
+    type: 'note',
+    item: { id: note.id }
   }));
 
   const [{ canDrop }, drop] = useDrop(
     () => ({
-        accept: 'note',
-        drop: (droppedNote: Note) => notes.onMove(droppedNote.id, note.id),
-        canDrop: (item: Note) => canDropNote(findNote(notes.rootNote, item.id)?.note, note),
-        collect: (monitor) => ({
-            canDrop: monitor.canDrop()
-        })
+      accept: 'note',
+      drop: (droppedNote: Note) => notes.onMove(droppedNote.id, note.id),
+      canDrop: (item: Note) => canDropNote(findNote(notes.rootNote, item.id)?.note, note),
+      collect: (monitor) => ({
+        canDrop: monitor.canDrop()
+      })
     }), [note]
-);
-
+  );
 
   return (
     <List ml={5} >
 
       <ListItem>
 
-        <Button ref={(node) => drag(drop(node))} cursor='move' colorScheme='teal' variant='outline'>
+        {notes.currentNote.id !== note.id &&
+          <IconButton
+            variant='outline'
+            colorScheme='teal'
+            aria-label='Send email'
+            onClick={() => notes.onUpdate({ ...note, index: note.index - 1.5 })}
+            icon={<BiChevronsUp />}
+          />
+        }
+
+        <Button
+          size='md'
+          cursor='move'
+          colorScheme='teal'
+          variant='outline'
+          borderColor={canDrop ? 'green' : ''}
+          ref={(node) => drag(drop(node))}>
           {note.title}
         </Button>
+
+        {notes.currentNote.id !== note.id &&
+          <IconButton
+            variant='outline'
+            colorScheme='teal'
+            aria-label='Send email'
+            onClick={() => notes.onUpdate({ ...note, index: note.index + 1.5 })}
+            icon={<BiChevronsDown />}
+          />
+        }
 
         {note.children.map((n: Note) => (
           <MoveTree key={n.id} note={n} noteParent={note} />
@@ -86,6 +111,6 @@ const MoveTree = ({ note, noteParent }: MoveTreeProps) => {
 
       </ListItem>
 
-    </List>
+    </List >
   )
 }
