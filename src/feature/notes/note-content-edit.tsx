@@ -272,7 +272,7 @@ const HeadingButton = ({ level, editor }: HeadingButtonProps) => {
         color='gray'
         aria-label={'H' + level}
         isActive={editor.isActive('heading', { level })}
-        disabled={false}
+        disabled={editor.isActive('heading', { level: 1 })}
         onClick={() => editor.chain().focus().toggleHeading({ level }).run()}
       >
         H{level}
