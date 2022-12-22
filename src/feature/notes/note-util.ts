@@ -2,7 +2,7 @@ import _ from "lodash";
 import { Note } from "./use-notes";
 
 /**
-   * Visits the note and all sub notes, applying the given function to them.
+   * Deep clones the object.
    * 
    * @param {*} object
    */
