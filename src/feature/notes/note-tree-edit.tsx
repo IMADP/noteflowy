@@ -2,7 +2,7 @@ import { Box, Flex, List, ListItem, VStack } from '@chakra-ui/react';
 import { NoteContentEdit } from './note-content-edit';
 import { NoteLink } from './note-link';
 import { NoteTitleEdit } from './note-title-edit';
-import { Note, useNotes } from './use-notes';
+import { Note } from './use-notes';
 
 interface NoteTreeEditProps {
   note: Note;
@@ -10,8 +10,6 @@ interface NoteTreeEditProps {
 }
 
 export const NoteTreeEdit = ({ note, noteParent }: NoteTreeEditProps) => {
-  const notes = useNotes();
-
   return (
     <List ml={5} mt={5}>
 
