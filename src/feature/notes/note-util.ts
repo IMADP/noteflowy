@@ -176,10 +176,9 @@ export function filterNote(search: string | null, note: Note): Note {
   visitNoteTreeReverse(clonedNote, (currentNote) => {
 
     // search for a match on the note itself and mark it as keep
-    const titleFound = currentNote.title != null && currentNote.title.toUpperCase().includes(term);
     const contentFound = currentNote.content != null && currentNote.content.toUpperCase().includes(term);
 
-    if (titleFound || contentFound) {
+    if (contentFound) {
       (currentNote as SearchNote).keep = true;
     }
 
@@ -193,11 +192,10 @@ export function filterNote(search: string | null, note: Note): Note {
       }
 
       // search for text matches
-      const titleFound = c.title != null && c.title.toUpperCase().includes(term);
       const contentFound = c.content != null && c.content.toUpperCase().includes(term);
 
       // keep matches and mark parent to be kept
-      if (titleFound || contentFound) {
+      if (contentFound) {
         (currentNote as SearchNote).keep = true;
         return true;
       }

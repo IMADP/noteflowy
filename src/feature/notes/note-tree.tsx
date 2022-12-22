@@ -1,7 +1,6 @@
 import { Box, Flex, List, ListItem, VStack } from '@chakra-ui/react';
 import { NoteContent } from './note-content';
 import { NoteLink } from './note-link';
-import { NoteTitle } from './note-title';
 import { Note } from './use-notes';
 
 interface NoteTreeProps {
@@ -18,10 +17,9 @@ export const NoteTree = ({ note }: NoteTreeProps) => {
           <Box mt={1.5}>
             <NoteLink note={note} />
           </Box>
-          <Box p='1' pt={note.title ? 1 : 0} flex='1'>
+          <Box p='1' flex='1'>
             <VStack spacing={3} align='stretch'>
-              {note.title && <NoteTitle note={note} />}
-              {note.content && <NoteContent note={note} />}
+              <NoteContent note={note} />
             </VStack>
           </Box>
         </Flex>

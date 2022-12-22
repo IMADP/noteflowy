@@ -3,9 +3,12 @@ import { useDisclosure } from '@chakra-ui/hooks';
 import { Box, Center, Divider, Flex, Spacer, Stack } from '@chakra-ui/layout';
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay } from '@chakra-ui/modal';
 import { Tooltip } from '@chakra-ui/tooltip';
+import Document from '@tiptap/extension-document';
+import { Level } from '@tiptap/extension-heading';
 import Link from '@tiptap/extension-link';
+import Placeholder from '@tiptap/extension-placeholder';
 import Underline from '@tiptap/extension-underline';
-import { EditorContent, useEditor } from '@tiptap/react';
+import { Editor, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { ReactElement, useEffect, useRef } from 'react';
 import { BiBold, BiCode, BiCodeBlock, BiCopyAlt, BiEraser, BiItalic, BiListOl, BiListUl, BiRedo, BiStrikethrough, BiUnderline, BiUndo } from 'react-icons/bi';
@@ -16,6 +19,10 @@ interface NoteContentEditProps {
   note: Note;
   noteParent?: Note;
 }
+
+const CustomDocument = Document.extend({
+  content: 'heading block*',
+})
 
 export const NoteContentEdit = ({ note, noteParent }: NoteContentEditProps) => {
   const notes = useNotes();
@@ -29,7 +36,13 @@ export const NoteContentEdit = ({ note, noteParent }: NoteContentEditProps) => {
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      CustomDocument,
+      StarterKit.configure({
+        document: false,
+      }),
+      Placeholder.configure({
+        placeholder: 'Note title...'
+      }),
       Underline,
       Link.configure({
         openOnClick: false,
@@ -128,6 +141,26 @@ export const NoteContentEdit = ({ note, noteParent }: NoteContentEditProps) => {
             <Divider color='black' orientation='vertical' />
           </Center>
 
+          <HeadingButton
+            level={2}
+            editor={editor} />
+          <HeadingButton
+            level={3}
+            editor={editor} />
+          <HeadingButton
+            level={4}
+            editor={editor} />
+          <HeadingButton
+            level={5}
+            editor={editor} />
+          <HeadingButton
+            level={6}
+            editor={editor} />
+
+          <Center height='1.5rem' px='2'>
+            <Divider color='black' orientation='vertical' />
+          </Center>
+
           <MarkButton
             title='Undo'
             icon={<BiUndo />}
@@ -190,9 +223,8 @@ export const NoteContentEdit = ({ note, noteParent }: NoteContentEditProps) => {
         </Stack>
       </Flex>
       <Spacer my='3' />
-      <Box color='grey' my="1">
+      <Box color='grey' mt="6" mb="2">
         <EditorContent editor={editor}
-          placeholder='Note contents'
           spellCheck={false}
           onBlur={() => notes.onUpdate({ ...note, content: editor?.getHTML() || note.content })}
         />
@@ -222,6 +254,29 @@ const MarkButton = ({ title, icon, active, disabled, onClick }: MarkButtonProps)
         onClick={onClick}
         icon={icon}
       />
+    </Tooltip>
+  )
+}
+
+interface HeadingButtonProps {
+  level: Level;
+  editor: Editor;
+}
+
+const HeadingButton = ({ level, editor }: HeadingButtonProps) => {
+  return (
+    <Tooltip hasArrow label={'H' + level}>
+      <Button
+        size='xs'
+        variant='outline'
+        color='gray'
+        aria-label={'H' + level}
+        isActive={editor.isActive('heading', { level })}
+        disabled={false}
+        onClick={() => editor.chain().focus().toggleHeading({ level }).run()}
+      >
+        H{level}
+      </Button>
     </Tooltip>
   )
 }

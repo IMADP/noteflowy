@@ -1,14 +1,12 @@
-import { Box, Flex, Stack, Text } from '@chakra-ui/react'
+import { Box, Flex, HStack, Stack, Text } from '@chakra-ui/react'
 import { Note, useNotes } from 'feature/notes/use-notes'
-import { BiDisc, BiNotepad } from 'react-icons/bi'
-import { Link, useLocation } from 'react-router-dom'
+import { BiNotepad } from 'react-icons/bi'
+import { Link } from 'react-router-dom'
 import { FileLoadButton } from './file-load-button'
 import { NavigationItem } from './navigation-item'
 
 export const Navigation = () => {
   const notes = useNotes();
-  const paths = useLocation().pathname.split('/');
-  const isNotePath = paths[1] === 'note';
 
   return (
     <Box w="72" bg="gray.900" color="white" fontSize="sm">
@@ -32,9 +30,7 @@ export const Navigation = () => {
             </Link>
             <Stack spacing="1">
               {notes.rootNote.children && notes.rootNote.children.map((note: Note) => (
-                <Link key={note.id} to={`/note/${note.id}`}>
-                  <NavigationItem active={isNotePath && paths[2] === note.id} icon={<BiDisc />} label={note.title} />
-                </Link>
+                <NavigationItem key={note.id} note={note} />
               ))}
             </Stack>
           </Box>
@@ -42,7 +38,15 @@ export const Navigation = () => {
         </Stack>
         <Box>
           <Stack spacing="1">
-            <NavigationItem subtle disabled icon={<BiNotepad />} label="Noteflowy v1.0" />
+            <HStack as="div" w="full" px="3" py="2" cursor="" userSelect="none" rounded="md"
+              transition="all 0.2s" bg={undefined} _hover={{}} _active={{}} >
+              <Box fontSize="lg" color={'gray.400'}>
+                <BiNotepad />
+              </Box>
+              <Box flex="1" fontWeight="inherit" color='gray.400'>
+                Noteflowy v1.0
+              </Box>
+            </HStack>
           </Stack>
         </Box>
       </Flex>

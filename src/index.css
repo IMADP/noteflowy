@@ -11,6 +11,16 @@ body {
 .ProseMirror > * + * {
   margin-top: .20em;
 }
+
+/* Placeholder (at the top) */
+.ProseMirror h1.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
 .ProseMirror:focus {
   outline: none;
  }
@@ -20,6 +30,27 @@ body {
 .ProseMirror h1, .ProseMirror h2, .ProseMirror h3, .ProseMirror h4, .ProseMirror h5, .ProseMirror h6 {
   line-height: 1.1;
 }
+
+.ProseMirror h1 {
+  display: block;
+  font-size: 1.1em;
+  margin-top: 0;
+  margin-bottom: 0.67em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.ProseMirror h2 {
+  display: block;
+  font-size: 1.5em;
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
 .ProseMirror code {
   background-color: rgba(97, 97, 97, 0.1);
   color: #616161;

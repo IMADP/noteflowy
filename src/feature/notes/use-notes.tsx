@@ -13,7 +13,6 @@ import { clone, filterNote, findCurrentNote, findNote, findParentUrl, visitNoteT
 export interface Note {
   id: string;
   children: Array<Note>,
-  title: string;
   content: string;
   root?: boolean;
   index: number;
@@ -43,8 +42,7 @@ interface NotesContextType {
 
 const defaultRootNote: Note = {
   id: uuidv4(),
-  title: 'Root',
-  content: '',
+  content: '<h1>Root</h1>',
   index: 0,
   root: true,
   children: []
@@ -134,7 +132,6 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
         draftNote.children.push({
           id: uuidv4(),
           children: [],
-          title: '',
           content: '',
           index: draftNote.children.length
         });
@@ -153,7 +150,6 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (results) {
         const draftNote = results.note;
-        draftNote.title = note.title;
         draftNote.content = note.content;
       }
 

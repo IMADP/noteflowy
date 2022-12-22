@@ -18,7 +18,7 @@ export const EditButton = () => {
 
         visitNoteTreeReverse(n, (cn) => {
           
-          if(!hasChildrenContent && !cn.title && !cn.content) {
+          if(!hasChildrenContent && !cn.content) {
             notes.onDelete(cn.id);
           } else {
             hasChildrenContent = true;
@@ -28,7 +28,7 @@ export const EditButton = () => {
         
       });
 
-      if(!hasChildrenContent && !note.title && !note.content) {
+      if(!hasChildrenContent && !note.content) {
         notes.onDelete(note.id);
       }
        

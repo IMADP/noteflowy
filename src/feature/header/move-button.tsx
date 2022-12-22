@@ -62,6 +62,9 @@ const MoveTree = ({ note }: MoveTreeProps) => {
     }), [note]
   );
 
+  const noteDocument = new DOMParser().parseFromString(note.content, 'text/html');
+  const title = noteDocument.querySelector("h1")?.textContent;
+
   return (
     <List ml={5} >
 
@@ -96,7 +99,7 @@ const MoveTree = ({ note }: MoveTreeProps) => {
           variant='outline'
           borderColor={canDrop ? 'green' : ''}
           ref={(node) => drag(drop(node))}>
-          {note.title}
+          {title}
         </Button>
 
         {note.children.map((n: Note) => (
