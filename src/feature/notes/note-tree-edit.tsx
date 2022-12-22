@@ -15,7 +15,7 @@ export const NoteTreeEdit = ({ note, noteParent }: NoteTreeEditProps) => {
       <ListItem>
 
         <Flex mr="10">
-          <Box mt={3}>
+          <Box mt={4.5}>
             <NoteLink note={note} />
           </Box>
           <Box p='1' flex='1'>
