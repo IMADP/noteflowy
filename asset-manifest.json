@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/noteflowy/static/css/main.0975a8d5.css",
-    "main.js": "/noteflowy/static/js/main.3c2c5935.js",
+    "main.js": "/noteflowy/static/js/main.8fd0126b.js",
     "index.html": "/noteflowy/index.html",
     "main.0975a8d5.css.map": "/noteflowy/static/css/main.0975a8d5.css.map",
-    "main.3c2c5935.js.map": "/noteflowy/static/js/main.3c2c5935.js.map"
+    "main.8fd0126b.js.map": "/noteflowy/static/js/main.8fd0126b.js.map"
   },
   "entrypoints": [
     "static/css/main.0975a8d5.css",
-    "static/js/main.3c2c5935.js"
+    "static/js/main.8fd0126b.js"
   ]
 }
