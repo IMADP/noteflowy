@@ -1,6 +1,6 @@
 import { Button, IconButton } from '@chakra-ui/button';
 import { useDisclosure } from '@chakra-ui/hooks';
-import { Box, Center, Divider, Flex, Spacer, Stack } from '@chakra-ui/layout';
+import { Box, Center, Divider, Flex, Spacer, Stack, Text } from '@chakra-ui/layout';
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay } from '@chakra-ui/modal';
 import { Tooltip } from '@chakra-ui/tooltip';
 import Document from '@tiptap/extension-document';
@@ -275,7 +275,7 @@ const HeadingButton = ({ level, editor }: HeadingButtonProps) => {
         disabled={editor.isActive('heading', { level: 1 })}
         onClick={() => editor.chain().focus().toggleHeading({ level }).run()}
       >
-        H{level}
+       <Text fontSize='.9em'>H{level}</Text> 
       </Button>
     </Tooltip>
   )
