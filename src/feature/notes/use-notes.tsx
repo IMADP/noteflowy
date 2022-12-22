@@ -47,14 +47,7 @@ const defaultRootNote: Note = {
   content: '',
   index: 0,
   root: true,
-  children: [{
-    id: uuidv4(),
-    title: 'Note Title',
-    content: '',
-    index: 0,
-    root: false,
-    children: []
-  }]
+  children: []
 };
 
 const NotesContext = createContext<NotesContextType>(null!);
