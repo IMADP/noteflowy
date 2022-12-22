@@ -1,14 +1,15 @@
 import { Box, Flex, List, ListItem, VStack } from '@chakra-ui/react';
-import { NoteContent } from './note-content';
+import { NoteContentEdit } from './note-content-edit';
 import { NoteLink } from './note-link';
-import { NoteTitle } from './note-title';
+import { NoteTitleEdit } from './note-title-edit';
 import { Note, useNotes } from './use-notes';
 
-interface NoteTreeProps {
+interface NoteTreeEditProps {
   note: Note;
+  noteParent: Note | undefined;
 }
 
-export const NoteTree = ({ note }: NoteTreeProps) => {
+export const NoteTreeEdit = ({ note, noteParent }: NoteTreeEditProps) => {
   const notes = useNotes();
 
   return (
@@ -17,20 +18,20 @@ export const NoteTree = ({ note }: NoteTreeProps) => {
       <ListItem>
 
         <Flex mr="10">
-          <Box mt={1}>
+          <Box mt={3}>
             <NoteLink note={note} />
           </Box>
-          <Box p='1' pt={note.title ? 1 : 0} flex='1'>
+          <Box p='1' flex='1'>
             <VStack spacing={3} align='stretch'>
-              {note.title && <NoteTitle note={note} />}
-              {note.content && <NoteContent note={note} />}
+              <NoteTitleEdit note={note} />
+              <NoteContentEdit note={note} noteParent={noteParent} />
             </VStack>
           </Box>
         </Flex>
 
         {note.children.map((n: Note) => (
           <Box key={n.id} >
-            <NoteTree note={n} />
+            <NoteTreeEdit note={n} noteParent={note} />
           </Box>
         ))}
 

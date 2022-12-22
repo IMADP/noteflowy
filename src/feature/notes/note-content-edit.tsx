@@ -9,15 +9,15 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { ReactElement, useEffect, useRef } from 'react';
 import { BiBold, BiCode, BiCodeBlock, BiCopyAlt, BiEraser, BiItalic, BiListOl, BiListUl, BiRedo, BiStrikethrough, BiUnderline, BiUndo } from 'react-icons/bi';
-import { NoteContentEditorLink } from './note-content-editor-link';
+import { NoteContentEditLink } from './note-content-edit-link';
 import { Note, useNotes } from './use-notes';
 
-interface NoteContentEditorProps {
+interface NoteContentEditProps {
   note: Note;
   noteParent?: Note;
 }
 
-export const NoteContentEditor = ({ note, noteParent }: NoteContentEditorProps) => {
+export const NoteContentEdit = ({ note, noteParent }: NoteContentEditProps) => {
   const notes = useNotes();
   const cancelRef = useRef<any>();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -122,7 +122,7 @@ export const NoteContentEditor = ({ note, noteParent }: NoteContentEditorProps) 
             <Divider color='black' orientation='vertical' />
           </Center>
 
-          <NoteContentEditorLink editor={editor} />
+          <NoteContentEditLink editor={editor} />
 
           <Center height='1.5rem' px='2'>
             <Divider color='black' orientation='vertical' />

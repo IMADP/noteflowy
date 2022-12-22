@@ -2,11 +2,11 @@ import { Input } from '@chakra-ui/input';
 import { useEffect, useState } from 'react';
 import { Note, useNotes } from './use-notes';
 
-interface NoteTitleEditorProps {
+interface NoteTitleEditProps {
   note: Note;
 }
 
-export const NoteTitleEditor = ({ note }: NoteTitleEditorProps) => {
+export const NoteTitleEdit = ({ note }: NoteTitleEditProps) => {
   const notes = useNotes();
   const [title, setTitle] = useState(note.title);
 

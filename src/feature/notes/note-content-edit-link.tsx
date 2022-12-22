@@ -9,11 +9,11 @@ import { useRef } from 'react';
 import { BiLinkAlt } from 'react-icons/bi';
 
 
-interface NoteContentEditorLinkProps {
+interface NoteContentEditLinkProps {
   editor: Editor;
 }
 
-export const NoteContentEditorLink = ({ editor }: NoteContentEditorLinkProps) => {
+export const NoteContentEditLink = ({ editor }: NoteContentEditLinkProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   const isActive = editor.isActive('link');
