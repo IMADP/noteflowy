@@ -8,7 +8,7 @@ interface NoteTitleProps {
 export const NoteTitle = ({ note }: NoteTitleProps) => {
   
   return (
-    <Text style={{ fontWeight: 600 }}>
+    <Text fontSize='lg' style={{ fontWeight: 600 }}>
       {note.title}
     </Text>
   )

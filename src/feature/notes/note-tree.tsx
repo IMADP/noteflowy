@@ -15,7 +15,7 @@ export const NoteTree = ({ note }: NoteTreeProps) => {
       <ListItem>
 
         <Flex mr="10">
-          <Box mt={1}>
+          <Box mt={1.5}>
             <NoteLink note={note} />
           </Box>
           <Box p='1' pt={note.title ? 1 : 0} flex='1'>
