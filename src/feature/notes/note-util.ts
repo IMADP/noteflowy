@@ -11,6 +11,15 @@ export function clone(object: any) {
 }
 
 /**
+   * Returns true if two objects are equal.
+   * 
+   * @param {*} object
+   */
+export function isEqual(object1: any, object2: any) {
+  return _.isEqual(object1, object2);
+}
+
+/**
    * Visits the note and all sub notes, applying the given function to the note first and then child notes.
    * 
    * @param {*} rootNote 

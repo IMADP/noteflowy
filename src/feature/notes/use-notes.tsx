@@ -1,6 +1,6 @@
 import instructionNotes from 'instructions';
 import { FileHandle } from 'node:fs/promises';
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext } from "react";
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
@@ -24,6 +24,7 @@ export interface Note {
  */
 interface NotesContextType {
   fileName: string | null;
+  fileRootNote: Note | null;
   rootNote: Note;
   currentNote: Note;
   currentNoteParent: Note | undefined;
@@ -31,6 +32,8 @@ interface NotesContextType {
   search: string | null;
   isEdit: boolean;
   onLoad: () => void;
+  onSave: () => void;
+  onRevert: () => void;
   onAdd: (parent: Note) => void;
   onUpdate: (note: Note) => void;
   onOrder: (note: Note, up: boolean) => void;
@@ -59,6 +62,7 @@ export const useNotes = () => useContext(NotesContext);
  */
 export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
   const [fileHandle, setFileHandle] = useImmer<FileHandle | null>(null);
+  const [fileRootNote, setFileRootNote] = useImmer<Note | null>(null);
   const [rootNote, setRootNote] = useImmer<Note>(instructionNotes);
   const [isEdit, setEdit] = useImmer<boolean>(false);
 
@@ -78,27 +82,6 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
   const parentUrl = findParentUrl(currentNoteParent, paths, search);
 
   /**
-   * This effect will save the notes state to a file on change.
-   * 
-   */
-  useEffect(() => {
-
-    // do nothing if there is no file loaded
-    if (fileHandle == null) {
-      return;
-    }
-
-    // create an async function to write to a file
-    const writeData = async () => {
-      const writable = await (fileHandle as any).createWritable();
-      await writable.write(JSON.stringify(rootNote));
-      await writable.close();
-    }
-
-    writeData();
-  }, [fileHandle, rootNote]);
-
-  /**
    * Loads a file and parses the notes data.
    * 
    */
@@ -108,13 +91,52 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
       // get the file handle and parse the root note
       const [fileHandle] = await (window as any).showOpenFilePicker();
       const file = await fileHandle.getFile();
-      const contents = await file.text();
-      const root = Object.keys(contents).length > 0 ? JSON.parse(contents) : defaultRootNote;
+      const fileContents = await file.text();
+      const fileRootNote = Object.keys(fileContents).length > 0 ? JSON.parse(fileContents) : defaultRootNote;
 
-      setRootNote(root); 
+      setRootNote(fileRootNote);
       setFileHandle(fileHandle);
+      setFileRootNote(clone(fileRootNote));
     }
     onLoadAsync();
+  };
+
+  /**
+   * Saves a the root node to a file.
+   * 
+   */
+  const onSave = () => {
+    const onSaveAsync = async () => {
+
+      // do nothing if there is no file loaded
+      if (fileHandle == null) {
+        return;
+      }
+
+      // write to the file    
+      const writable = await (fileHandle as any).createWritable();
+      await writable.write(JSON.stringify(rootNote));
+      await writable.close();
+      setFileRootNote(clone(rootNote));
+    }
+    onSaveAsync();
+  };
+
+  /**
+   * Reverts the root note to the file contents.
+   * 
+   */
+  const onRevert = () => {
+    const onRevertAsync = async () => {
+
+      // do nothing if there is no file loaded
+      if (fileRootNote == null) {
+        return;
+      }
+
+      setRootNote(clone(fileRootNote));
+    }
+    onRevertAsync();
   };
 
   /**
@@ -269,6 +291,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
 
   let value = {
     fileName: fileHandle == null ? null : (fileHandle as any).name,
+    fileRootNote,
     rootNote,
     currentNote,
     currentNoteParent,
@@ -276,6 +299,8 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
     search,
     isEdit,
     onLoad,
+    onSave,
+    onRevert,
     onAdd,
     onUpdate,
     onOrder,
