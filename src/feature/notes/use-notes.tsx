@@ -1,6 +1,6 @@
 import instructionNotes from 'instructions';
 import { FileHandle } from 'node:fs/promises';
-import { createContext, useContext } from "react";
+import React, { createContext, useCallback, useContext, useEffect } from "react";
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
@@ -105,9 +105,9 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
    * Saves a the root node to a file.
    * 
    */
-  const onSave = () => {
+  const onSave = useCallback(() => {
     const onSaveAsync = async () => {
-
+      
       // do nothing if there is no file loaded
       if (fileHandle == null) {
         return;
@@ -120,7 +120,7 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
       setFileRootNote(clone(rootNote));
     }
     onSaveAsync();
-  };
+  }, [rootNote, setFileRootNote, fileHandle]);
 
   /**
    * Reverts the root note to the file contents.
@@ -288,6 +288,21 @@ export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
   const onToggleEdit = () => {
     setEdit(!isEdit);
   };
+
+  // handle CTRL+S for saving notes
+  useEffect(() => {
+    const handleSave = (event: React.KeyboardEvent<any>) => {
+      
+      if((event.ctrlKey || event.metaKey) && event.key === 's') {
+        event.preventDefault();
+        onSave();
+      }
+
+    };
+
+    (window as any).addEventListener('keydown', handleSave);
+    return () => (window as any).removeEventListener('keydown', handleSave);
+  }, [onSave]);
 
   let value = {
     fileName: fileHandle == null ? null : (fileHandle as any).name,
