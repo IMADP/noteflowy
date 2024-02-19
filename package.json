@@ -1,7 +1,7 @@
 {
   "name": "noteflowy2",
   "version": "0.1.0",
-  "homepage": "http://IMADP.github.io/noteflowy",
+  "homepage": "https://noteflowy.io",
   "private": true,
   "dependencies": {
     "@chakra-ui/pro-theme": "^0.0.57",
