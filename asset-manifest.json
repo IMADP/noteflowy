@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/noteflowy/static/css/main.534c0e95.css",
-    "main.js": "/noteflowy/static/js/main.2683cd42.js",
-    "index.html": "/noteflowy/index.html",
-    "main.534c0e95.css.map": "/noteflowy/static/css/main.534c0e95.css.map",
-    "main.2683cd42.js.map": "/noteflowy/static/js/main.2683cd42.js.map"
+    "main.css": "/static/css/main.534c0e95.css",
+    "main.js": "/static/js/main.2683cd42.js",
+    "index.html": "/index.html",
+    "main.534c0e95.css.map": "/static/css/main.534c0e95.css.map",
+    "main.2683cd42.js.map": "/static/js/main.2683cd42.js.map"
   },
   "entrypoints": [
     "static/css/main.534c0e95.css",
